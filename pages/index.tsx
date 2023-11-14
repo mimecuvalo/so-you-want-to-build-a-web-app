@@ -3,32 +3,16 @@ import styles from 'styles/index.module.css';
 
 import Image from 'next/image';
 import Head from 'next/head';
-import gql from 'graphql-tag';
 import loadIntlMessages from 'i18n/messages';
-import { useQuery } from '@apollo/client';
-import { Experiment, Variant } from 'components/Experiment';
 import { F, defineMessages, useIntl } from 'i18n';
 import type { GetStaticPropsContext } from 'next';
 import { Link, Typography } from 'components';
-import { addApolloState, initializeApollo } from 'app/apollo';
 import { animated, useSpring } from 'react-spring';
 
 // For things like "alt" text and other strings not in JSX.
 const messages = defineMessages({
   greeting: { id: 'logo-id', defaultMessage: 'logo' },
 });
-
-// This is an GraphQL query for the Home component which passes the query result to the props.
-// It's a more complex example that lets you grab the props value of the component you're looking at.
-const HELLO_AND_ECHO_QUERY = gql`
-  query helloAndEchoQueries($str: String!) {
-    echoExample(str: $str) {
-      exampleField
-    }
-
-    hello
-  }
-`;
 
 export default function Home() {
   const intl = useIntl();
@@ -39,10 +23,6 @@ export default function Home() {
     opacity: 1,
     bottom: 50,
     from: { opacity: 0, bottom: 100 },
-  });
-
-  const { data } = useQuery(HELLO_AND_ECHO_QUERY, {
-    variables: { str: '/' },
   });
 
   if (typeof navigator !== 'undefined' && !navigator.onLine) {
@@ -96,24 +76,6 @@ export default function Home() {
         <Typography variant="h2">
           <F defaultMessage="All The Things Feature test" />
         </Typography>
-        <p>
-          <F
-            defaultMessage="GraphQL variables test (current url path): {url}"
-            values={{
-              url: data?.echoExample.exampleField || '[loading]',
-            }}
-          />
-        </p>
-        <p>
-          <Experiment name="my-experiment">
-            <Variant name="on">
-              <F defaultMessage="Experiment enabled." />
-            </Variant>
-            <Variant name="off">
-              <F defaultMessage="Experiment disabled" />
-            </Variant>
-          </Experiment>
-        </p>
         <p>
           <F
             defaultMessage="i18n pluralization test: {itemCount, plural, =0 {no items} one {# item} other {# items}}."
@@ -195,24 +157,9 @@ export default function Home() {
 }
 
 export async function getStaticProps(ctx: GetStaticPropsContext) {
-  try {
-    const apolloClient = initializeApollo();
-
-    await apolloClient.query({
-      query: HELLO_AND_ECHO_QUERY,
-      variables: { str: '/' },
-    });
-
-    return addApolloState(apolloClient, {
-      props: {
-        intlMessages: await loadIntlMessages(ctx),
-      },
-    });
-  } catch (ex) {
-    return {
-      props: {
-        intlMessages: await loadIntlMessages(ctx),
-      },
-    };
-  }
+  return {
+    props: {
+      intlMessages: await loadIntlMessages(ctx),
+    },
+  };
 }

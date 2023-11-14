@@ -1,20 +1,6 @@
 /* eslint-disable */
 const CircularDependencyPlugin = require('circular-dependency-plugin');
-// https://docs.sentry.io/platforms/javascript/guides/nextjs/
-const { withSentryConfig } = require('@sentry/nextjs');
 const webpack = require('webpack');
-
-const sentryWebpackPluginOptions = {
-  // Additional config options for the Sentry Webpack plugin. Keep in mind that
-  // the following options are set automatically, and overriding them is not
-  // recommended:
-  //   release, url, org, project, authToken, configFile, stripPrefix,
-  //   urlPrefix, include, ignore
-
-  silent: true, // Suppresses all logs
-  // For all available options, see:
-  // https://github.com/getsentry/sentry-webpack-plugin#options.
-};
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
@@ -32,13 +18,6 @@ const nextConfig = {
   i18n: {
     locales: ['en', 'fr'],
     defaultLocale: 'en',
-  },
-
-  // N.B. Production builds complain that this is not allowed (warning in Next.js version 13)
-  // However, it's ok for now. In the future, Sentry v8 will make this the default, it will
-  // be safe to remove then.
-  sentry: {
-    hideSourceMaps: true,
   },
 
   webpack: (config, { dev, buildId, ...other }) => {
@@ -101,4 +80,4 @@ const nextConfig = {
   },
 };
 
-module.exports = withSentryConfig(nextConfig, sentryWebpackPluginOptions);
+module.exports = nextConfig;

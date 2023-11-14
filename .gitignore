@@ -55,3 +55,6 @@ logs/*.log.gz
 
 # Sentry
 .sentryclirc
+
+# Tina
+.tina/__generated__
