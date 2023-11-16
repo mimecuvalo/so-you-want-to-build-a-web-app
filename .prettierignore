@@ -62,3 +62,4 @@ graphql-generated.ts
 
 # Content markdown
 *.mdx
+tina/tina-lock.json
