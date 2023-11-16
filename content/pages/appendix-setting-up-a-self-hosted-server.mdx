@@ -282,7 +282,7 @@ listen [::]:443 ssl http2;
 listen 443 ssl http2;
 ```
 
-in theory, you could also do this at your server-level (e.g. in Node using the [HTTP/2](https://nodejs.org/api/http2.html) module) but a.) i’ve found it tricky to setup with things like the [Express](https://expressjs.com/) server. (which doesn’t support it quite yet, see [this bug](https://github.com/expressjs/express/pull/3730).), b.) it’s probably [not a good idea](https://stackoverflow.com/a/41647983) since it would make things worse on your backend and c.) developing on SSL on your localhost is annoying because of the self-signed certs having to be approved by your browser — to make this work you can use the tool called `[mkcert](https://github.com/FiloSottile/mkcert)`.
+in theory, you could also do this at your server-level (e.g. in Node using the [HTTP/2](https://nodejs.org/api/http2.html) module) but a.) i’ve found it tricky to setup with things like the [Express](https://expressjs.com/) server. (which doesn’t support it quite yet, see [this bug](https://github.com/expressjs/express/pull/3730).), b.) it’s probably [not a good idea](https://stackoverflow.com/a/41647983) since it would make things worse on your backend and c.) developing on SSL on your localhost is annoying because of the self-signed certs having to be approved by your browser — to make this work you can use the tool called [`mkcert`](https://github.com/FiloSottile/mkcert).
 
 **additional headers**
 
@@ -307,7 +307,7 @@ if you really must have inline scripts in your site (which you should absolutely
 if you don’t want to use nginx and want to set these at the Express level you can use [Helmet.js](https://helmetjs.github.io/). (different than react-helmet btw)
 
 **cookies**  
-when implementing cookies, adding the `[HttpOnly](https://blog.mozilla.org/security/2018/04/24/same-site-cookies-in-firefox-60/)`, `[Secure](https://blog.mozilla.org/security/2018/04/24/same-site-cookies-in-firefox-60/)`, and `[SameSite](https://blog.mozilla.org/security/2018/04/24/same-site-cookies-in-firefox-60/)` will make sure cookies aren’t modified in transit.
+when implementing cookies, adding the [`HttpOnly`](https://blog.mozilla.org/security/2018/04/24/same-site-cookies-in-firefox-60/), [`Secure`](https://blog.mozilla.org/security/2018/04/24/same-site-cookies-in-firefox-60/), and [`SameSite`](https://blog.mozilla.org/security/2018/04/24/same-site-cookies-in-firefox-60/) will make sure cookies aren’t modified in transit.
 
 **gotchas**
 

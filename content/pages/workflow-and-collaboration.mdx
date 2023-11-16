@@ -42,7 +42,7 @@ git init [projectname]
 - `git status` — get the state of your repository.
 - `git pull` — get the latest state of your repository from the central repository.
 - `git push` — push out your changes to the central repository.
-    - `git pull` `--``rebase` — i tend to use the `--rebase` flag to not have thousands of “merge” commits in history.
+    - `git pull --rebase` — i tend to use the `--rebase` flag to not have thousands of “merge” commits in history.
 - `git log` — show the history of the repository. optionally, you can specify a branch name.
     - `git log --stat` — a more detailed view into the log.
 - `git branch` — manage different versions of your repository.
@@ -87,7 +87,7 @@ gp  # git push
 - `git rebase / merge` — merge work with others.
     - probably the hardest part of dealing with a repository.
     - you should read up more on this before using.
-    - as noted above you can use `git pull` `--``rebase` to make your workflow somewhat easier.
+    - as noted above you can use `git pull --rebase` to make your workflow somewhat easier.
 - `git ls-files` — list out the files in your repository. use with `grep` to be useful.
 - `git blame [file]` — useful to see the history of each line in a file.
 - `git reflog` — useful in case you think you lost some work accidentally. you probably didn’t.
@@ -149,7 +149,7 @@ a good structure for your project lays out the initial strokes to make organizin
 
 **editor consistency**
 
-also, using something like `[.gitattributes](https://git-scm.com/docs/gitattributes)` can be useful to make sure things like line-endings are consistent. e.g.:
+also, using something like [`.gitattributes`](https://git-scm.com/docs/gitattributes) can be useful to make sure things like line-endings are consistent. e.g.:
 ```sh
 * text=auto eol=lf
 ```
