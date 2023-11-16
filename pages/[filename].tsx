@@ -15,19 +15,19 @@ const MarkdownStyling = styled('div')`
   h1,
   h2,
   h3 {
-    font-family: ${props => props.theme.typography.h1.fontFamily};
+    font-family: ${(props) => props.theme.typography.h1.fontFamily};
   }
 
   h1 {
-    font-size: ${props => props.theme.typography.h1.fontSize};
+    font-size: ${(props) => props.theme.typography.h1.fontSize};
   }
 
   h2 {
-    font-size: ${props => props.theme.typography.h3.fontSize};
+    font-size: ${(props) => props.theme.typography.h3.fontSize};
   }
 
   h3 {
-    font-size: ${props => props.theme.typography.h4.fontSize};
+    font-size: ${(props) => props.theme.typography.h4.fontSize};
   }
 
   h1::first-letter {
@@ -42,12 +42,12 @@ const MarkdownStyling = styled('div')`
   }
 
   blockquote {
-    border-inline-start: 1px solid ${props => props.theme.palette.grey[400]};
+    border-inline-start: 1px solid ${(props) => props.theme.palette.grey[400]};
     padding-inline-start: 1.5rem;
     margin-inline-start: 0rem;
     font-style: italic;
   }
-`
+`;
 
 const TLDRPageHeader = styled(Typography)`
   margin-left: -1rem;
@@ -58,20 +58,20 @@ const TLDRPageHeader = styled(Typography)`
     font-size: 1.5rem;
     margin-right: -1rem;
   }
-`
+`;
 
 const TLDRListItem = styled('li')`
   margin-left: 3.25rem;
   font-size: 1.25rem;
-  font-family: ${props => props.theme.typography.h1.fontFamily};
-`
+  font-family: ${(props) => props.theme.typography.h1.fontFamily};
+`;
 
 const TLDRBody = styled('ul')`
   font-size: 1rem;
-  font-family: ${props => props.theme.typography.fontFamily};
+  font-family: ${(props) => props.theme.typography.fontFamily};
   list-style-type: disc;
   margin-left: -3.25rem !important;
-`
+`;
 
 const Figure = styled('span')<{
   $float: string;
@@ -86,85 +86,95 @@ const Figure = styled('span')<{
 
   .caption {
     display: block;
-    font-size: ${props => props.theme.typography.subtitle1.fontSize};
+    font-size: ${(props) => props.theme.typography.subtitle1.fontSize};
     font-style: italic;
     text-align: center;
   }
 
-  ${props => props.$float === 'right-25' && `
+  ${(props) =>
+    props.$float === 'right-25' &&
+    `
     & {
       float: right;
       width: 25%;
       margin-left: ${props.theme.spacing(2)};
     }
   `}
-`
+`;
 
 const customRenderers = (allPages: Page[]) => ({
   a: (props: any) => (
-    <Link href={props.url} target="_blank">{props.children}</Link>
+    <Link href={props.url} target="_blank">
+      {props.children}
+    </Link>
   ),
 
   // N.B. We only want one H1 on the page, and that's the title, so we downstep everything else.
-  h1: (props: any) => (
-    <Typography variant="h2">{props.children}</Typography>
-  ),
+  h1: (props: any) => <Typography variant="h2">{props.children}</Typography>,
 
   // N.B. We only want one H1 on the page, and that's the title, so we downstep everything else.
-  h2: (props: any) => (
-    <Typography variant="h3">{props.children}</Typography>
-  ),
+  h2: (props: any) => <Typography variant="h3">{props.children}</Typography>,
 
   // N.B. We only want one H1 on the page, and that's the title, so we downstep everything else.
-  h3: (props: any) => (
-    <Typography variant="h4">{props.children}</Typography>
-  ),
+  h3: (props: any) => <Typography variant="h4">{props.children}</Typography>,
 
   // N.B. This div/span wrapper matches the structure, more or less, of the Outline editor's img wrapper.
   // eslint-disable-next-line
   img: (props: any) => (
     <Figure $float={props.caption}>
       {/* eslint-disable-next-line */}
-      <img
-        src={props.url}
-        alt={props.alt}
-      />
+      <img src={props.url} alt={props.alt} />
       <span className="caption">{props.alt}</span>
     </Figure>
   ),
 
   TableOfContents: () => (
     <ol>
-    {PAGES.map(page => <li key={page.slug} style={{margin: '8px 0'}}><Link href={`/${page.slug}`}>{page.title}</Link></li>)}
-  </ol>
+      {PAGES.map((page) => (
+        <li key={page.slug} style={{ margin: '8px 0' }}>
+          <Link href={`/${page.slug}`}>{page.title}</Link>
+        </li>
+      ))}
+    </ol>
   ),
 
   TLDR: () => {
     return (
-      <ol style={{    listStyleType: 'decimal-leading-zero'}}>
-      {PAGES.map(orderedPage => 
-      <TLDRListItem key={orderedPage.slug}>
-        <TLDRPageHeader variant="h2"><Link href={pageUrl(orderedPage.slug)}>{orderedPage.title}</Link></TLDRPageHeader>
-      <TLDRBody><TinaMarkdown content={allPages.find(pageData => orderedPage.slug === pageData._sys.filename)?._body.children.find((child: any) => child.type === 'ul')} /></TLDRBody>
-      </TLDRListItem>)}
-    </ol>
-    )
-  }
+      <ol style={{ listStyleType: 'decimal-leading-zero' }}>
+        {PAGES.map((orderedPage) => (
+          <TLDRListItem key={orderedPage.slug}>
+            <TLDRPageHeader variant="h2">
+              <Link href={pageUrl(orderedPage.slug)}>{orderedPage.title}</Link>
+            </TLDRPageHeader>
+            <TLDRBody>
+              <TinaMarkdown
+                content={allPages
+                  .find((pageData) => orderedPage.slug === pageData._sys.filename)
+                  ?._body.children.find((child: any) => child.type === 'ul')}
+              />
+            </TLDRBody>
+          </TLDRListItem>
+        ))}
+      </ol>
+    );
+  },
 });
 
-function ContentHead({title, url}: {title: string, url: string}) {
-  return <Head><title>{title}</title>
-  <meta property="og:title" content={title} />
-  <meta property="og:description" content="A discerning guide to showing you the ropes." />
-  <meta property="og:type" content="website" />
-  <meta property="og:url" content={url} />
-  <meta property="og:site_name" content={SITE_NAME} />
-  <meta property="og:image" content={`${SITE_URL}/favicon.jpg`} />
+function ContentHead({ title, url }: { title: string; url: string }) {
+  return (
+    <Head>
+      <title>{title}</title>
+      <meta property="og:title" content={title} />
+      <meta property="og:description" content="A discerning guide to showing you the ropes." />
+      <meta property="og:type" content="website" />
+      <meta property="og:url" content={url} />
+      <meta property="og:site_name" content={SITE_NAME} />
+      <meta property="og:image" content={`${SITE_URL}/favicon.jpg`} />
 
-  <script
-    type="application/ld+json"
-    dangerouslySetInnerHTML={{
-      __html: `
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: `
       {
         "@context": "http://schema.org",
         "@type": "NewsArticle",
@@ -192,40 +202,64 @@ function ContentHead({title, url}: {title: string, url: string}) {
         "description": "A discerning guide to showing you the ropes."
       }
       `,
-    }}
-  />
-</Head>
+        }}
+      />
+    </Head>
+  );
 }
 
-function Pagination({slug}: {slug: string}) {
-  const currentPageIndex = PAGES.findIndex(page => page.slug === slug);
+function Pagination({ slug }: { slug: string }) {
+  const currentPageIndex = PAGES.findIndex((page) => page.slug === slug);
   const prev = PAGES[currentPageIndex - 1];
   const next = PAGES[currentPageIndex + 1];
 
   if (currentPageIndex === 0) {
-    return null
+    return null;
   }
 
-  return <><Divider sx={{mt: 4}} /><Grid container justifyContent="space-between" sx={{mt: 4}}>
-    {prev && currentPageIndex < PAGES.length - 1 && <Link sx={{fontWeight: 'bold'}} href={pageUrl(prev.slug)}><ArrowBack /> {prev.title}</Link>}
-    {next && currentPageIndex < PAGES.length - 2 && <Link sx={{fontWeight: 'bold'}} href={pageUrl(next.slug)}>{next.title} <ArrowForward /></Link>}
-  </Grid>
-  </>
+  return (
+    <>
+      <Divider sx={{ mt: 4 }} />
+      <Grid container justifyContent="space-between" sx={{ mt: 4 }}>
+        {prev && currentPageIndex < PAGES.length - 1 && (
+          <Link sx={{ fontWeight: 'bold' }} href={pageUrl(prev.slug)}>
+            <ArrowBack /> {prev.title}
+          </Link>
+        )}
+        {next && currentPageIndex < PAGES.length - 2 && (
+          <Link sx={{ fontWeight: 'bold' }} href={pageUrl(next.slug)}>
+            {next.title} <ArrowForward />
+          </Link>
+        )}
+      </Grid>
+    </>
+  );
 }
 
 export default function Page(props: InferGetStaticPropsType<typeof getStaticProps>) {
-  const { data: {page: {title, _body}} } = useTina(props);
+  const {
+    data: {
+      page: { title, _body },
+    },
+  } = useTina(props);
   const slug = props.variables.relativePath.replace('.mdx', '');
   const url = pageUrl(slug);
 
-  return   <>
-    <ContentHead title={title} url={url} />
-  <MarkdownStyling>
-    <Typography variant="h1" sx={{marginInlineStart: '-4.25rem', paddingLeft: '4.25rem', textIndent: '-4.75rem'}}>{title}</Typography>
-    <TinaMarkdown components={customRenderers(props.allPages as Page[])} content={slug === 'tldr' ? _body.children.slice(0, -1): _body} />
-    </MarkdownStyling>
-    <Pagination slug={slug} />
-    </>;
+  return (
+    <>
+      <ContentHead title={title} url={url} />
+      <MarkdownStyling>
+        <Typography variant="h1" sx={{ marginInlineStart: '-4.25rem', paddingLeft: '4.25rem', textIndent: '-4.75rem' }}>
+          {title}
+        </Typography>
+        <TinaMarkdown
+          components={customRenderers(props.allPages as Page[])}
+          content={slug === 'tldr' ? _body.children.slice(0, -1) : _body}
+        />
+      </MarkdownStyling>
+      <Pagination slug={slug} />
+    </>
+  );
 }
 
 export const getStaticProps = async ({ params }: { params: { filename: string } }) => {

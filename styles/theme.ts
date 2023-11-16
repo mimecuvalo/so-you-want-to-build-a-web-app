@@ -6,20 +6,21 @@ import { createTheme as createMuiTheme } from '@mui/material/styles';
 import palette from './palette';
 import { muiTypography as typography } from './typography';
 
-const createTheme = (mode: 'dark' | 'light') => createMuiTheme({
-  palette: {
-    ...palette,
-    mode,
-  },
-  typography,
-  components,
-  breakpoints: {
-    values: {
-      ...breakpoints,
+const createTheme = (mode: 'dark' | 'light') =>
+  createMuiTheme({
+    palette: {
+      ...palette,
+      mode,
     },
-  },
-  shape,
-});
+    typography,
+    components,
+    breakpoints: {
+      values: {
+        ...breakpoints,
+      },
+    },
+    shape,
+  });
 
 export default createTheme;
 

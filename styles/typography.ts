@@ -5,7 +5,6 @@ const SYSTEM_FONTS =
 const MONOSPACE_FONTS =
   'var(--font-noto-color-emoji), Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"';
 
-
 const constants = {
   fontFamily: `var(--font-inter), ${SYSTEM_FONTS}`,
   fontFamilyHeader: `var(--font-press-start-2p), ${MONOSPACE_FONTS}`,

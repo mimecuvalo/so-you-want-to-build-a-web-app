@@ -22,7 +22,7 @@ import { useReportWebVitals } from 'next/web-vitals';
 import ThemeModeContext from 'app/ThemeModeContext';
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter' });
-const notoColorEmoji = Noto_Color_Emoji({ subsets: ['emoji'],weight: '400',variable: '--noto-color-emoji' });
+const notoColorEmoji = Noto_Color_Emoji({ subsets: ['emoji'], weight: '400', variable: '--noto-color-emoji' });
 
 // If loading a variable font, you don't need to specify the font weight
 const pressStart2P = Press_Start_2P({
@@ -48,8 +48,16 @@ function MyApp({ Component, emotionCache = clientSideEmotionCache, pageProps }: 
 
   const muiTheme = useMemo(
     () =>
-      createTheme(isDarkModeExplicitlyOn !== undefined ? (isDarkModeExplicitlyOn ? 'dark' : 'light') : (prefersDarkMode ? 'dark' : 'light')),
-    [prefersDarkMode, isDarkModeExplicitlyOn],
+      createTheme(
+        isDarkModeExplicitlyOn !== undefined
+          ? isDarkModeExplicitlyOn
+            ? 'dark'
+            : 'light'
+          : prefersDarkMode
+          ? 'dark'
+          : 'light'
+      ),
+    [prefersDarkMode, isDarkModeExplicitlyOn]
   );
 
   useEffect(() => {
@@ -77,40 +85,40 @@ function MyApp({ Component, emotionCache = clientSideEmotionCache, pageProps }: 
     // @ts-ignore looks like IntlProvider still needs updated types after React 18 transition.
     <IntlProvider defaultLocale={locale} locale={locale} messages={messages}>
       <CacheProvider value={emotionCache}>
-        <ThemeModeContext.Provider value={{setIsDarkModeExplicitlyOn}}>
-        <ThemeProvider theme={muiTheme}>
-          {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
-          <CssBaseline />
-          <style jsx global>{`
-            :root {
-              --font-press-start-2p: ${pressStart2P.style.fontFamily};
-              --font-noto-color-emoji: ${notoColorEmoji.style.fontFamily};
-            }
-          `}</style>
-          <div
-            className={classNames({
-              'App-logged-in': true,
-              'App-is-development': process.env.NODE_ENV === 'development',
-              [pressStart2P.variable]: true,
-              [inter.variable]: true,
-              [notoColorEmoji.variable]: true,
-            })}
-          >
-            <Header />
-            <Head>
-              <meta name="viewport" content="minimum-scale=1, initial-scale=1, width=device-width" />
-            </Head>
-            <Container sx={{my: 8, width: 'clamp(45ch, 80%, 75ch)'}}>
-              <Component {...pageProps} />
-            </Container>
-            <Analytics />
-            <DebugWrapper />
-          </div>
+        <ThemeModeContext.Provider value={{ setIsDarkModeExplicitlyOn }}>
+          <ThemeProvider theme={muiTheme}>
+            {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
+            <CssBaseline />
+            <style jsx global>{`
+              :root {
+                --font-press-start-2p: ${pressStart2P.style.fontFamily};
+                --font-noto-color-emoji: ${notoColorEmoji.style.fontFamily};
+              }
+            `}</style>
+            <div
+              className={classNames({
+                'App-logged-in': true,
+                'App-is-development': process.env.NODE_ENV === 'development',
+                [pressStart2P.variable]: true,
+                [inter.variable]: true,
+                [notoColorEmoji.variable]: true,
+              })}
+            >
+              <Header />
+              <Head>
+                <meta name="viewport" content="minimum-scale=1, initial-scale=1, width=device-width" />
+              </Head>
+              <Container sx={{ my: 8, width: 'clamp(45ch, 80%, 75ch)' }}>
+                <Component {...pageProps} />
+              </Container>
+              <Analytics />
+              <DebugWrapper />
+            </div>
 
-          <noscript>
-            <F defaultMessage="You need to enable JavaScript to run this app." />
-          </noscript>
-        </ThemeProvider>
+            <noscript>
+              <F defaultMessage="You need to enable JavaScript to run this app." />
+            </noscript>
+          </ThemeProvider>
         </ThemeModeContext.Provider>
       </CacheProvider>
     </IntlProvider>

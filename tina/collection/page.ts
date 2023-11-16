@@ -20,29 +20,29 @@ const Page: Collection = {
       required: true,
     },
     {
-      type: "rich-text",
-      label: "Body",
-      name: "_body",
+      type: 'rich-text',
+      label: 'Body',
+      name: '_body',
       templates: [
         {
-          name: "TableOfContents",
-          label: "TOC",
+          name: 'TableOfContents',
+          label: 'TOC',
           fields: [
             {
-              name: "children",
-              label: "children",
-              type: "rich-text",
+              name: 'children',
+              label: 'children',
+              type: 'rich-text',
             },
           ],
         },
         {
-          name: "TLDR",
-          label: "TLDR",
+          name: 'TLDR',
+          label: 'TLDR',
           fields: [
             {
-              name: "children",
-              label: "children",
-              type: "rich-text",
+              name: 'children',
+              label: 'children',
+              type: 'rich-text',
             },
           ],
         },
