@@ -4,7 +4,7 @@ title: '🖼️ the website'
 
 or, *the "putting it all together" part.*
 
-![Periodic Table of HTML5Elements (via Smashing Magazine)](https://d2mxuefqeaa7sj.cloudfront.net/s_3C1EB5AB7D3F0FF008C3AED2D1EF037B76C79C6E746CB33AE289B834958CABEA_1542145802663_wallhaven-218342.png)
+[![Periodic Table of HTML5Elements (via Smashing Magazine)](/img/periodic.png)](https://www.smashingmagazine.com/)
 
 # tl;dr
 - **HTML**: [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML) ([HTML reference](https://developer.mozilla.org/en-US/docs/Web/HTML/Element)), semantic, [HTML5](http://diveinto.html5doctor.com/), (no) validation
@@ -28,7 +28,7 @@ you’d think a guide on building a web app would have this way in the front, eh
     - [**MDN’s HTML reference**](https://developer.mozilla.org/en-US/docs/Web/HTML/Element): an overview of all the elements.
 - **Keep it semantic**: learn the tags that are available to you as you code. not everything should be wrapped in `<div>`/`<span>`! this is especially important for robots crawling your site (i.e. SEO) to extract meaning from your document. it’s also especially important for accessibility so that users that have visual handicaps are able to still use your website through a screen reader.
 - [**HTML5**](http://diveinto.html5doctor.com/): the current version of HTML has more semantic tags than its previous iteration. (the link is a bit outdated but still a great primer.)
-- **no need to validate these days**: i know, this sounds like heresy. but things like React will give you built-in validation, so-to-speak, for your HTML. i can’t remember the last time i tried to validate my HTML — it’s just not necessary anymore. the much larger problem here is validating HTML for accessibility (a11y) purposes which i mention in the [UI](https://paper.dropbox.com/doc/ui--ARmOxiFgK77GAYPzDjHvXfQjAg-xH3LtH0Lwy33CvtoUhr6V) section of this guide. it is a woefully overlooked area in many an app and you’re much better off focusing your efforts in that area.
+- **no need to validate these days**: i know, this sounds like heresy. but things like React will give you built-in validation, so-to-speak, for your HTML. i can’t remember the last time i tried to validate my HTML — it’s just not necessary anymore. the much larger problem here is validating HTML for accessibility (a11y) purposes which i mention in the [UI](/ui) section of this guide. it is a woefully overlooked area in many an app and you’re much better off focusing your efforts in that area.
 
 
 ----------
@@ -48,7 +48,9 @@ a list of technologies to look into adding to your `<head>`  section:
     - [*Twitter Cards*](https://developer.twitter.com/en/docs/tweets/optimize-with-cards/guides/getting-started.html): from Twitter, allows you to give title, description, thumbnails, etc.
     - [*oEmbed*](https://oembed.com/): an open standard to provide an endpoint giving title, description, thumbnails, etc. (not widely used, sadly.)
 - [**mobile behavior**](https://developer.mozilla.org/en-US/docs/Mozilla/Mobile/Viewport_meta_tag): informs mobile browsers of how you would want your app to behave on mobile. for web apps you probably want to something like:
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+```html
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+```
 - [**OpenSearch**](http://www.opensearch.org/Home): allows you to define your search engine for your site. this lets your users hit `<tab>` when typing in the URL to be able to search from their browser’s address field. historically developed by Amazon. (*author’s note*: for such a common tool on the web, this has a such a crappy website?)
 
 

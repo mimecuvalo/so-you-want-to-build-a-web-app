@@ -25,7 +25,7 @@ const constants = {
   // Font sizes (in rems)
   fontSizeXS: '0.75rem',
   fontSizeSM: '0.875rem',
-  fontSizeBase: '0.875rem',
+  fontSizeBase: '1rem',
   fontSizeMD: '1.25rem',
   fontSizeLG: '1.5rem',
   fontSizeXL: '2rem',

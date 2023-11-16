@@ -13,7 +13,7 @@ or, *the “JOIN me for some fun” part*.
 
 
 ----------
-https://xkcd.com/327/
+[![xkcd: Exploits of a Mom](https://imgs.xkcd.com/comics/exploits_of_a_mom.png)](https://xkcd.com/327/)
 
 ----------
 
@@ -28,7 +28,7 @@ i don’t have too many things to comment on as far as databases go. they’re p
 ----------
 # ORM
 
-[**prisma**](https://www.prisma.io/) ****is a simple layer to have your code interface with your db.
+[**prisma**](https://www.prisma.io/) is a simple layer to have your code interface with your db.
 
 on the other hand, [there are arguments](https://blog.logrocket.com/why-you-should-avoid-orms-with-examples-in-node-js-e0baab73fa5) against using ORM’s since they can add cruft to your queries. as mentioned in the JS section about using frameworks, in general, using a higher-level wrapper doesn’t excuse you from learning how the underlying technologies works!
 
@@ -46,7 +46,6 @@ again, i’m ill-equipped to talk about db’s. but here are some options on NoS
 
 - [MongoDB](https://www.mongodb.com/)
 - [CouchDB](http://couchdb.apache.org/)
-- [OrbitDB](https://github.com/orbitdb) (well, this isn’t NoSQL actually — see: [decentralization](https://paper.dropbox.com/doc/the-future-and-decentralization--AORbOAkLt6CrHT66ydl3HMCDAg-5qqElFBI527QsUUdeeiwE))
 
 
 ----------
@@ -56,11 +55,11 @@ again, i’m ill-equipped to talk about db’s. but here are some options on NoS
 
 for when you can’t use the GUI and have to use the command line.
 
-`show databases` — like it says.
-`use [database]` — enter the context of a particular database.
-`describe [table]` — show the structure of a table.
-`show create table [table]` — show how a table is created. useful to get foreign key info.
-`select * from [table] where [conditions]` — select columns in a table.
-`insert into [table] (``'``[column1]``'``,` `'``[column2]``'``) values ('[value1]', '[value2]``'``)` — insert data into a table.
-`delete from [table] where [conditions]` — to remove rows in a table.
-`exit` — leave the program.
+- `show databases` — like it says.
+- `use [database]` — enter the context of a particular database.
+- `describe [table]` — show the structure of a table.
+- `show create table [table]` — show how a table is created. useful to get foreign key info.
+- `select * from [table] where [conditions]` — select columns in a table.
+- `insert into [table] (``'``[column1]``'``,` `'``[column2]``'``) values ('[value1]', '[value2]``'``)` — insert data into a table.
+- `delete from [table] where [conditions]` — to remove rows in a table.
+- `exit` — leave the program.

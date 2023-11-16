@@ -15,7 +15,7 @@ or, *the “it’s parentheses all the way down” part.*
 ----------
 
 
-https://xkcd.com/297/
+[![xkcd: Lisp Cycles](https://imgs.xkcd.com/comics/lisp_cycles.png)](https://xkcd.com/297/)
 
 # hardware
 
@@ -49,81 +49,83 @@ internalize this now: every engineer is a security engineer. you need to know se
     - Preferences → Profiles → Window → Style → Full-Width Top of Screen
     - Preferences → Keys → Hotkey → Show/hide all windows with a system-wide hotkey.
     - also, turn on iTerm2 → Secure Keyboard Entry
-    - **quick note**: god, terminals are so unintuitive. and nobody teaches you how to use them, at least nobody certainly taught me. they have hidden characters that you’re just supposed to know about, their manuals are hidden, and you have to just know ahead of time what you are looking for. i’ll discuss some useful commands in [the next section](https://paper.dropbox.com/doc/how-to-linux--AOPA8jkNAuE7Zk_J~I~NOZqBAg-3Meu1q3qwh1mLzXHcHiqu).
+    - **quick note**: god, terminals are so unintuitive. and nobody teaches you how to use them, at least nobody certainly taught me. they have hidden characters that you’re just supposed to know about, their manuals are hidden, and you have to just know ahead of time what you are looking for. i’ll discuss some useful commands in [the next section](/how-to-linux).
     - **watch this space**: there are some even more modern contenders in this space: [Fig](https://fig.io/), [Warp](https://www.warp.dev/)
         - who would think command lines could get even better but they are!
 - **package manager**: [Homebrew](https://brew.sh/). let’s you install all the geeky things that you’re going to need later on. MacPorts used to be the recommendation here, but god, what a mess.
-    /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
-
+```bash
+/usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+```
 
 - **shell**. [zsh + oh-my-zsh](https://github.com/robbyrussell/oh-my-zsh/wiki/Installing-ZSH). a better way for your terminal to work.
-    # install zsh
-    brew install zsh zsh-completions
-    
-    # install oh-my-zsh which adds zsh nicities. (cheatsheet of shortcuts found here)
-    sh -c "$(curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
-    
-    # you can set a custom theme for your terminal or try out the random ones to get ideas
-    vim ~/.oh-my-zsh/themes/mycustomtheme.zsh-theme
-    # try out Powerline9k:
-    git clone https://github.com/bhilburn/powerlevel9k.git ~/.oh-my-zsh/custom/themes/powerlevel9k
-    # edit your ~/.zshrc file
-    vim ~/.zshrc
-    
-    # a great theme to start with is Powerline9k:
-    ZSH_THEME="powerlevel9k/powerlevel9k"
-    
-    # install necessary fonts for the theme:
-    brew tap caskroom/fonts
-    brew cask install font-hack-nerd-font
-    # you'll then need to set in iTerm2, Preferences->Profile->Text->Non-ASCII Font to Hack Nerd Font.
-    
-    # further great config options for Powerlevel9k found in this gist. (requires some finessing)
-    POWERLEVEL9K_MODE='nerdfont-complete'
-    POWERLEVEL9K_PROMPT_ON_NEWLINE=true
-    POWERLEVEL9K_PROMPT_ADD_NEWLINE=true
-    POWERLEVEL9K_RPROMPT_ON_NEWLINE=true
-    POWERLEVEL9K_SHORTEN_DIR_LENGTH=2
-    POWERLEVEL9K_SHORTEN_STRATEGY="truncate_beginning"
-    POWERLEVEL9K_VCS_CLEAN_FOREGROUND='black'
-    POWERLEVEL9K_VCS_CLEAN_BACKGROUND='green'
-    POWERLEVEL9K_VCS_UNTRACKED_FOREGROUND='black'
-    POWERLEVEL9K_VCS_UNTRACKED_BACKGROUND='yellow'
-    POWERLEVEL9K_VCS_MODIFIED_FOREGROUND='white'
-    POWERLEVEL9K_VCS_MODIFIED_BACKGROUND='black'
-    POWERLEVEL9K_VCS_UNTRACKED_ICON='\u25CF'
-    POWERLEVEL9K_VCS_UNSTAGED_ICON='\u00b1'
-    POWERLEVEL9K_VCS_INCOMING_CHANGES_ICON='\u2193'
-    POWERLEVEL9K_VCS_OUTGOING_CHANGES_ICON='\u2191'
-    POWERLEVEL9K_VCS_COMMIT_ICON="\uf417"
-    POWERLEVEL9K_MULTILINE_FIRST_PROMPT_PREFIX="%F{blue}\u256D\u2500%F{white}"
-    POWERLEVEL9K_MULTILINE_LAST_PROMPT_PREFIX="%F{blue}\u2570\uf460%F{white} "
-    POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(os_icon ssh root_indicator dir vcs)
-    POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(command_execution_time status time)
-    POWERLEVEL9K_COMMAND_EXECUTION_TIME_THRESHOLD=1
-    HIST_STAMPS="mm/dd/yyyy"
-    # some other ideas for powerlevel9k configs are found here.
-    
-    # some extra plugins for oh-my-zsh to add to the `plugins` property:
-    plugins=(compleat dircycle dirhistory git git-extras git-flow history history-substring-search last-working-dir sudo wd)
-    # - compleat: adds completion for commands. read more here.
-    # - dircycle: adds Ctrl+Shift+Left/Right to cycle through directory history.
-    # - dirhistory: adds Alt+Up/Down and Alt+Left/Right for going through directories.
-    # - git-extras: see list here.
-    # - git-flow: adds completion for `git flow`.
-    # - history: adds `h` for `history`; also adds `hsi [searchterm]` to search.
-    # - history-substring-search: fancier autocomplete when hitting up/down on command completion.
-    # - last-working-dir: saves last working directory for your shell.
-    # - sudo: hit Escape twice to add `sudo` to command.
-    # - wd: "warp directory" - creates common directory jump points.
-    
-    # colorls is great. get that too. make sure ruby is installed first.
-    gem install colorls
-    source $(dirname $(gem which colorls))/tab_complete.sh
-    # add to your .zshrc file:
-    alias lc='colorls -lA --sd --gs'
-    alias lct='colorls --tree -A --sd --gs'
+```bash
+# install zsh
+brew install zsh zsh-completions
 
+# install oh-my-zsh which adds zsh nicities. (cheatsheet of shortcuts found here)
+sh -c "$(curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
+
+# you can set a custom theme for your terminal or try out the random ones to get ideas
+vim ~/.oh-my-zsh/themes/mycustomtheme.zsh-theme
+# try out Powerline9k:
+git clone https://github.com/bhilburn/powerlevel9k.git ~/.oh-my-zsh/custom/themes/powerlevel9k
+# edit your ~/.zshrc file
+vim ~/.zshrc
+
+# a great theme to start with is Powerline9k:
+ZSH_THEME="powerlevel9k/powerlevel9k"
+
+# install necessary fonts for the theme:
+brew tap caskroom/fonts
+brew cask install font-hack-nerd-font
+# you'll then need to set in iTerm2, Preferences->Profile->Text->Non-ASCII Font to Hack Nerd Font.
+
+# further great config options for Powerlevel9k found in this gist. (requires some finessing)
+POWERLEVEL9K_MODE='nerdfont-complete'
+POWERLEVEL9K_PROMPT_ON_NEWLINE=true
+POWERLEVEL9K_PROMPT_ADD_NEWLINE=true
+POWERLEVEL9K_RPROMPT_ON_NEWLINE=true
+POWERLEVEL9K_SHORTEN_DIR_LENGTH=2
+POWERLEVEL9K_SHORTEN_STRATEGY="truncate_beginning"
+POWERLEVEL9K_VCS_CLEAN_FOREGROUND='black'
+POWERLEVEL9K_VCS_CLEAN_BACKGROUND='green'
+POWERLEVEL9K_VCS_UNTRACKED_FOREGROUND='black'
+POWERLEVEL9K_VCS_UNTRACKED_BACKGROUND='yellow'
+POWERLEVEL9K_VCS_MODIFIED_FOREGROUND='white'
+POWERLEVEL9K_VCS_MODIFIED_BACKGROUND='black'
+POWERLEVEL9K_VCS_UNTRACKED_ICON='\u25CF'
+POWERLEVEL9K_VCS_UNSTAGED_ICON='\u00b1'
+POWERLEVEL9K_VCS_INCOMING_CHANGES_ICON='\u2193'
+POWERLEVEL9K_VCS_OUTGOING_CHANGES_ICON='\u2191'
+POWERLEVEL9K_VCS_COMMIT_ICON="\uf417"
+POWERLEVEL9K_MULTILINE_FIRST_PROMPT_PREFIX="%F{blue}\u256D\u2500%F{white}"
+POWERLEVEL9K_MULTILINE_LAST_PROMPT_PREFIX="%F{blue}\u2570\uf460%F{white} "
+POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(os_icon ssh root_indicator dir vcs)
+POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(command_execution_time status time)
+POWERLEVEL9K_COMMAND_EXECUTION_TIME_THRESHOLD=1
+HIST_STAMPS="mm/dd/yyyy"
+# some other ideas for powerlevel9k configs are found here.
+
+# some extra plugins for oh-my-zsh to add to the `plugins` property:
+plugins=(compleat dircycle dirhistory git git-extras git-flow history history-substring-search last-working-dir sudo wd)
+# - compleat: adds completion for commands. read more here.
+# - dircycle: adds Ctrl+Shift+Left/Right to cycle through directory history.
+# - dirhistory: adds Alt+Up/Down and Alt+Left/Right for going through directories.
+# - git-extras: see list here.
+# - git-flow: adds completion for `git flow`.
+# - history: adds `h` for `history`; also adds `hsi [searchterm]` to search.
+# - history-substring-search: fancier autocomplete when hitting up/down on command completion.
+# - last-working-dir: saves last working directory for your shell.
+# - sudo: hit Escape twice to add `sudo` to command.
+# - wd: "warp directory" - creates common directory jump points.
+
+# colorls is great. get that too. make sure ruby is installed first.
+gem install colorls
+source $(dirname $(gem which colorls))/tab_complete.sh
+# add to your .zshrc file:
+alias lc='colorls -lA --sd --gs'
+alias lct='colorls --tree -A --sd --gs'
+```
 
 - **ergonomics**:
     - for your eyes: [Night Shift](https://support.apple.com/en-gb/102191) (macOS). you’re gonna be looking at your computer a lot.
@@ -142,16 +144,14 @@ internalize this now: every engineer is a security engineer. you need to know se
 ----------
 # editors
 
-*a.k.a. The Holiest of Wars*
+*a.k.a. The Holiest of Wars*  
 whereas the above choices might have some contention, i’m sure the Internet will have a conniption with anything i choose below. so…i won’t choose anything in particular 🙂 
 
-**Options**
-[VSCode](https://code.visualstudio.com/): great type checking, refactoring. obviously, great TypeScript support.
-
+**Options**  
+- [VSCode](https://code.visualstudio.com/): great type checking, refactoring. obviously, great TypeScript support.
     - be sure to read their docs on [code navigation](https://code.visualstudio.com/docs/editor/editingevolved). super useful.
     - [LiveShare](https://code.visualstudio.com/learn/collaboration/live-share) is a really useful way to do pair programming.
     - [FiraCode](https://github.com/tonsky/FiraCode) is a great coding font that has fancy programming ligatures.
-    - you only need to know about the `[vscode-pets](https://marketplace.visualstudio.com/items?itemName=tonybaloney.vscode-pets)` extension. 😸 
-
-[Sublime](https://www.sublimetext.com/): speedy and small. great packages.
-[vim](http://macvim-dev.github.io/macvim/): a necessary standby for command line. learning curve is steep. i’m a huge fan (i.e. masochist).
+    - you only need to know about the [`vscode-pets`](https://marketplace.visualstudio.com/items?itemName=tonybaloney.vscode-pets) extension. 😸 
+- [Sublime](https://www.sublimetext.com/): speedy and small. great packages.
+- [vim](http://macvim-dev.github.io/macvim/): a necessary standby for command line. learning curve is steep. i’m a huge fan (i.e. masochist).

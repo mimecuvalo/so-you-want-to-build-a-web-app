@@ -23,33 +23,24 @@ btw, god help you if you need to write [shell scripts](https://en.wikipedia.org/
 ----------
 # absolute basics
 
-`cd [name]` — change directory 
-
-    `~` is shorthand for your home directory
-    `..` is shorthand for the parent directory
-    `.` is shorthand for the current directory
-    `-` is shorthand for the previous directory you were in (like your browser’s “back” button)
-    e.g. `cd ..` will take you to the parent directory
-
-`ls` — list contents of the directory you’re in
-
-    `ls -lah` is useful to list hidden files as well
-
-`rm [file]` — remove a file
-
-    `rm -r [file]` — remove a directory
-
-`mv \[origin\] [destination]` — move a file somewhere else
-
-    `clear` — also, clears screen
-
-`vim [file]` — edit a file
-
-    `i` to go to insert mode
-    `esc` to go back to command-mode
-    `/` to search in the file
-    `:w` (in command mode) to save
-    `:q` (in command mode) to quit
+- `cd [name]` — change directory 
+    - `~` is shorthand for your home directory
+    - `..` is shorthand for the parent directory
+    - `.` is shorthand for the current directory
+    - `-` is shorthand for the previous directory you were in (like your browser’s “back” button)
+    - e.g. `cd ..` will take you to the parent directory
+- `ls` — list contents of the directory you’re in
+    - `ls -lah` is useful to list hidden files as well
+- `rm [file]` — remove a file
+    - `rm -r [file]` — remove a directory
+- `mv \[origin\] [destination]` — move a file somewhere else
+    - `clear` — also, clears screen
+- `vim [file]` — edit a file
+    - `i` to go to insert mode
+    - `esc` to go back to command-mode
+    - `/` to search in the file
+    - `:w` (in command mode) to save
+    - `:q` (in command mode) to quit
 
 
 ----------
@@ -67,85 +58,70 @@ this is a pet peeve of mine that no one ever taught me these *super* handy short
 ----------
 # intermediate
 
-`|` — the “pipe”. pass the output from one process to another, e.g. `history | grep cd`
-`history` — see the list of commands you’ve tried in the past
-`grep [pattern] *` — search the files in the current directory for the pattern
-
+- `|` — the “pipe”. pass the output from one process to another, e.g. `history | grep cd`
+- `history` — see the list of commands you’ve tried in the past
+- `grep [pattern] *` — search the files in the current directory for the pattern
     - *tip*: easier, faster alternative is `[ripgrep](https://github.com/BurntSushi/ripgrep)`, you can install via `brew install ripgrep`
-
-`grep [pattern] * -rsiI` — search recursively, case-insensitive, ignoring binary files
-`history | grep [pattern]` — find relevant commands in your history you’ve used before
-`cat [file]` — output the contents of a file
-`less [file]` — scroll through the contents of a file (`space`  to page through, `q` to quit)
-`man [command]` — show help file for a command, `[cmd] -h` or `[cmd]` `--``help` also can work
-`find . -name '[file]``'` — find a file by a specific name
-
+- `grep [pattern] * -rsiI` — search recursively, case-insensitive, ignoring binary files
+- `history | grep [pattern]` — find relevant commands in your history you’ve used before
+- `cat [file]` — output the contents of a file
+- `less [file]` — scroll through the contents of a file (`space`  to page through, `q` to quit)
+- `man [command]` — show help file for a command, `[cmd] -h` or `[cmd]` `--``help` also can work
+- `find . -name '[file]``'` — find a file by a specific name
     - *tip*: easier alternative is `[fd](https://github.com/sharkdp/fd)`, you can install via `brew install f`d
-
-`df -h` — show local hard disk space
-`du -sch * |sort -hr` — show the biggest files under a particular subdirectory
-
+- `df -h` — show local hard disk space
+- `du -sch * |sort -hr` — show the biggest files under a particular subdirectory
     - *tip*: easier alternative is `[dust](https://github.com/bootandy/dust)`, you can install via `brew install dust`
-
-`sudo [command]` — run command with [elevated privileges](https://xkcd.com/149/)
-`tail -f [file]` — see real-time updates to a file, used especially with a log file on a server
-`touch [file]` — creates file if doesn’t exist, or updates its timestamp
-
-    useful to kick off a process that might be waiting for a file to change before running
-
-`alias [shortcut]=``'``[command to run]``'` — take a long command that’s hard to remember and create a shortcut for it, e.g. `alias v=``'``ls -lah``'`
-`sh` — open up another shell (`zsh` if you’re using that)
-
-    `exit` — to exit the shell
+- `sudo [command]` — run command with [elevated privileges](https://xkcd.com/149/)
+- `tail -f [file]` — see real-time updates to a file, used especially with a log file on a server
+- `touch [file]` — creates file if doesn’t exist, or updates its timestamp
+    - useful to kick off a process that might be waiting for a file to change before running
+- `alias [shortcut]=``'``[command to run]``'` — take a long command that’s hard to remember and create a shortcut for it, e.g. `alias v=``'``ls -lah``'`
+- `sh` — open up another shell (`zsh` if you’re using that)
+    - `exit` — to exit the shell
 
 
 ----------
 # processes
 
-`[cmd] &` — adding the ampersand at the end of a command will run it in the background
-`[cmd] > output.txt` — adding a `>` will save output of the program to a particular file
-`top` — find out what’s current running on your machine
-`ps aux`  — see the processes currently running on your machine
-`ps aux | grep [name]` — super common way to find the process you’re looking for
-`kill [process id]` — you can grab a process id from the `ps aux` list and kill it
-`killall [name]` — kill process(es) matching the name
-`which [command]` — find out the directory where a program lives
-`locate [pattern]` — find files on your local machine matching the pattern (macOS only)
-`fg` — start a paused program again (via [ctrl] + z), or, use `bg` to run it in the background
+- `[cmd] &` — adding the ampersand at the end of a command will run it in the background
+- `[cmd] > output.txt` — adding a `>` will save output of the program to a particular file
+- `top` — find out what’s current running on your machine
+- `ps aux`  — see the processes currently running on your machine
+- `ps aux | grep [name]` — super common way to find the process you’re looking for
+- `kill [process id]` — you can grab a process id from the `ps aux` list and kill it
+- `killall [name]` — kill process(es) matching the name
+- `which [command]` — find out the directory where a program lives
+- `locate [pattern]` — find files on your local machine matching the pattern (macOS only)
+- `fg` — start a paused program again (via [ctrl] + z), or, use `bg` to run it in the background
 
 
 ----------
 # network
 
-`curl -O [url]` — retrieve a webpage and save it disk
-`whois [domain]` — find out info about a particular website
-`traceroute [domain]` — show computer hops from router to router to a destination
-`ping [domain]` — simple test to see if a website is up or not
-
-      `ping6 [domain]` — same as above, but for [IPv6](https://en.wikipedia.org/wiki/IPv6)
-
-`lsof -i :[port]` — see which process is using which port.
-
-      `lsof -t -i tcp:[port] | xargs kill -9` — to easily kill whatever’s on a port.
-
-`scp username@remotehost:/path/to/file /path/to/save/locally` — copy a file from a remote server
+- `curl -O [url]` — retrieve a webpage and save it disk
+- `whois [domain]` — find out info about a particular website
+- `traceroute [domain]` — show computer hops from router to router to a destination
+- `ping [domain]` — simple test to see if a website is up or not
+    - `ping6 [domain]` — same as above, but for [IPv6](https://en.wikipedia.org/wiki/IPv6)
+- `lsof -i :[port]` — see which process is using which port.
+    - `lsof -t -i tcp:[port] | xargs kill -9` — to easily kill whatever’s on a port.
+- `scp username@remotehost:/path/to/file /path/to/save/locally` — copy a file from a remote server
 
 
 ----------
 # handy commands
 
-`ssh-keygen -t rsa -b 4096 -C "[example@email.com]``"` — generate SSH key
-`ssh-add -K ~/.ssh/id_rsa` — add password to your keychain to save time
-`tar -czvf \[name\] [file]` — compress a file/directory into an archive
-`tar -xzvf [file]` — uncompress an archive
-`grep [pattern] * -rsiIl | xargs sed -i '' s/[pattern]/[replacewith]/g` —
-
-    replace a pattern in all the files found recursively within a particular directory
-
-`sudo chown -R $USER:$USER file` — transfer ownership of a directory and its files to yourself
-`jq '[selector]' < example.json` — if your server logs are in JSON format you can query them using the `jq` command
-`fc` — fix command. open up the last command you tried to run in an editor.
-`<( somecommand )` — treat a command output as a file. e.g. try `diff <(ls) <(ls -a)`
-`[cmatrix](https://github.com/abishekvashok/cmatrix)` — make it look like you’re doing something important 😉
-`[shellcheck](https://github.com/koalaman/shellcheck)` — check your shell script for errors before running it.
-`[zx](https://google.github.io/zx/)` — a handy JS tool *around* shell scripting that makes running multiple commands a little more intuitive for those of us that don’t live on the command line day-to-day (i.e. most of us).
+- `ssh-keygen -t rsa -b 4096 -C "[example@email.com]``"` — generate SSH key
+- `ssh-add -K ~/.ssh/id_rsa` — add password to your keychain to save time
+- `tar -czvf \[name\] [file]` — compress a file/directory into an archive
+- `tar -xzvf [file]` — uncompress an archive
+- `grep [pattern] * -rsiIl | xargs sed -i '' s/[pattern]/[replacewith]/g` —
+    - replace a pattern in all the files found recursively within a particular directory
+- `sudo chown -R $USER:$USER file` — transfer ownership of a directory and its files to yourself
+- `jq '[selector]' < example.json` — if your server logs are in JSON format you can query them using the `jq` command
+- `fc` — fix command. open up the last command you tried to run in an editor.
+- `<( somecommand )` — treat a command output as a file. e.g. try `diff <(ls) <(ls -a)`
+- `[cmatrix](https://github.com/abishekvashok/cmatrix)` — make it look like you’re doing something important 😉
+- `[shellcheck](https://github.com/koalaman/shellcheck)` — check your shell script for errors before running it.
+- `[zx](https://google.github.io/zx/)` — a handy JS tool *around* shell scripting that makes running multiple commands a little more intuitive for those of us that don’t live on the command line day-to-day (i.e. most of us).

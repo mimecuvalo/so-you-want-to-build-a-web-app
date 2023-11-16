@@ -46,6 +46,30 @@ const Page: Collection = {
             },
           ],
         },
+        {
+          name: 'YouTube',
+          label: 'YouTube',
+          fields: [
+            {
+              type: 'string',
+              label: 'href',
+              name: 'href',
+              required: true,
+            },
+          ],
+        },
+        {
+          name: 'Twitter',
+          label: 'Twitter',
+          fields: [
+            {
+              type: 'string',
+              label: 'href',
+              name: 'href',
+              required: true,
+            },
+          ],
+        },
       ],
       isBody: true,
     },

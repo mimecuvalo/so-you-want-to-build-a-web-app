@@ -7,14 +7,14 @@ or, *the “fine-tune the machine” part.*
 # tl;dr
 - **intro**: poor performance is a bug.
 - **speed at load**: bundling, [async/defer](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/script), [HTTP2](https://nodejs.org/api/http2.html#apicontent), [placeholders](https://semantic-ui.com/elements/placeholder.html), [Progressive Web App](https://developers.google.com/web/progressive-web-apps/), [PRPL](https://developers.google.com/web/fundamentals/performance/prpl-pattern/), [fonts](https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/webfont-optimization)
-    - **images**: ****[below the fold](https://developers.google.com/web/fundamentals/performance/lazy-loading-guidance/images-and-video/), image format, placeholders, sprites, [optimized images](https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/image-optimization), predetermined size, [loading](https://calibreapp.com/blog/2018-08-16-native-lazy-load/)
+    - **images**: [below the fold](https://developers.google.com/web/fundamentals/performance/lazy-loading-guidance/images-and-video/), image format, placeholders, sprites, [optimized images](https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/image-optimization), predetermined size, [loading](https://calibreapp.com/blog/2018-08-16-native-lazy-load/)
     - **HTML**: [preload, prefetch, preconnect](https://css-tricks.com/prefetching-preloading-prebrowsing/), [loading](https://calibreapp.com/blog/2018-08-16-native-lazy-load/), [importance](https://wicg.github.io/priority-hints/)
     - **backend**: [HTTP Caching,](https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/http-caching) static files, gzip, in-memory key-value store, [Save-Data](https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/save-data/)
     - **server-side rendering:** [Google Developers on SSR](https://developers.google.com/web/updates/2019/02/rendering-on-the-web)
 - **speed at runtime**:
     - **JS**: [code splitting](https://developers.google.com/web/fundamentals/performance/optimizing-javascript/code-splitting/), [React.lazy](https://reactjs.org/docs/code-splitting.html#reactlazy) + [Suspense](https://reactjs.org/docs/code-splitting.html#reactlazy), [dynamically loading modules](https://webpack.js.org/api/module-methods/#import-), minification, [tree shaking](https://developers.google.com/web/fundamentals/performance/optimizing-javascript/tree-shaking/), throttle/debounce events, [scrolling speed](https://developers.google.com/web/tools/lighthouse/audits/passive-event-listeners), [requestAnimationFrame](https://developers.google.com/web/fundamentals/performance/rendering/optimize-javascript-execution), [requestIdleCallback](https://developers.google.com/web/updates/2015/08/using-requestidlecallback), [React.PureComponent](https://reactjs.org/docs/react-api.html#reactpurecomponent) / [React.memo](https://reactjs.org/docs/react-api.html#reactpurecomponent)
     - **CSS**: `*` selector, descendant/child selectors, transform: translateZ(0), [contain](https://developers.google.com/web/updates/2016/06/css-containment), [will-change](https://developers.google.com/web/fundamentals/design-and-ux/animations/animations-and-performance#using_the_will-change_property)
-- **usage analytics**: ****clicks, navigation patterns, user agent, location
+- **usage analytics**: clicks, navigation patterns, user agent, location
 - **tools at your disposal**: [source-map-explorer](https://www.npmjs.com/package/source-map-explorer), [DevTools Performance](https://developers.google.com/web/tools/chrome-devtools/evaluate-performance/reference), [Lighthouse](https://developers.google.com/web/fundamentals/performance/rail#lighthouse), [Web Vitals](https://web.dev/vitals/)**,** [ImageOptim](https://imageoptim.com), [Workbox](https://developers.google.com/web/tools/workbox/), [Chrome User Experience Report](https://developers.google.com/web/tools/chrome-user-experience-report/), [User Timing API](https://www.html5rocks.com/en/tutorials/webperformance/usertiming/), [Webpagetest](https://webpagetest.org/easy), [Google Analytics](https://analytics.google.com/analytics/web/) ([umami](https://umami.is/), [Guess.js](https://guess-js.github.io/))*,* [Google Search Console](https://search.google.com/search-console/about), [PageSpeed Insights](https://developers.google.com/speed/pagespeed/insights/), [Datadog](https://www.datadoghq.com/), [imgix](https://www.imgix.com/), [BundlePhobia](https://bundlephobia.com/), [Amplitude](https://amplitude.com/)
     - [**PerformanceObserver**](https://developers.google.com/web/updates/2016/06/performance-observer): [longtask](https://developers.google.com/web/fundamentals/performance/user-centric-performance-metrics#tracking_long_tasks), [first-paint and first-contentful-paint events](https://developer.mozilla.org/en-US/docs/Web/API/PerformancePaintTiming), [navigation and resource timings](https://developers.google.com/web/fundamentals/performance/navigation-and-resource-timing/), [sendBeacon](https://developers.google.com/web/fundamentals/performance/navigation-and-resource-timing/#phoning_home)
 - **resources**: [Google Developers on Performance](https://developers.google.com/web/fundamentals/performance/why-performance-matters/) ([Web Performance Made Easy](https://developers.google.com/web/updates/2018/08/web-performance-made-easy)*)*, [CodeLab on Network](https://developers.google.com/web/tools/chrome-devtools/network-performance/), [CodeLab on Runtime](https://developers.google.com/web/tools/chrome-devtools/evaluate-performance/), [CodeLab on webpack](https://github.com/GoogleChromeLabs/webpack-training-project), [Google Developers on SSR](https://developers.google.com/web/updates/2019/02/rendering-on-the-web), [Frontend Performance Checklist](https://www.smashingmagazine.com/2021/01/front-end-performance-2021-free-pdf-checklist/)
@@ -38,7 +38,7 @@ there are a lot of facets to attaining performance gains. Google puts out a mode
 
 one of the simplest things you can do is reduce the number of HTTP requests to your server. by bundling together your assets (JS, CSS, and traditionally your icons into a sprite file) you can reduce the number of round-trip requests from client↔server and improve speed *drastically*. you can get this for free basically via your bundler.
 
-**JS at the bottom**
+**JS at the bottom**  
 place JS `<script>` tags at the bottom of your HTML (near the `</body>` closing tag) whenever possible to improve page load. JS blocks page execution so saving it for the end makes your page more usable faster. additionally, one can use the `async` or `defer` attributes on a `<script>` tag to make execution faster of other parts of the page. `async` will download the file asynchronously and pause HTML execution once it’s received, and not necessarily in order. `defer` on the other hand waits until HTML execution is done, but it will execute in order.
 
 
@@ -69,42 +69,42 @@ related to Service Workers is the standard being put out to:
 
 you usually don’t need all the images to load on page load. the browser does optimizations of its own to load what it considers more important (JS and CSS) but you can also help out by reducing the amount of traffic your user has to download for your app and, likewise, reduce the amount of traffic your server has to handle.
 
-[**below the fold**](https://developers.google.com/web/fundamentals/performance/lazy-loading-guidance/images-and-video/)
+[**below the fold**](https://developers.google.com/web/fundamentals/performance/lazy-loading-guidance/images-and-video/)  
 no need to load the images below what’s currently visible on the page. you can load them in as the user scrolls! check out any page with video thumbnails on [YouTube](http://youtube.com) for an example of this works as you scroll (i point it out because i implemented this at YouTube back in the day when i worked there 😉). check out [IntersectionObserver](https://developers.google.com/web/updates/2016/04/intersectionobserver#intersect_all_the_things) as a way of doing this.
 
-**image format**
+**image format**  
 pick an appropriate image format. PNG is lossless and will tend to be larger. JPG is probably your best bet. there are a [new set of image formats](https://developers.google.com/web/tools/lighthouse/audits/webp) coming out but they’re not widely supported yet.
 
-**placeholders**
+**placeholders**  
 again, you can add placeholders for your images, perhaps getting a . check out any [Medium](https://medium.com) article to get a sense of this.
 
-**sprites**
+**sprites**  
 when it makes sense, you can use [a sprite file](https://developers.google.com/web/fundamentals/performance/get-started/httprequests-5#combine_graphical_resources) to combine your images. however, as mentioned above, if HTTP2 is enabled on your server, you might not even need this.
 
-[**optimized images (or, consider using SVGs instead of images)**](https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/image-optimization)
+[**optimized images (or, consider using SVGs instead of images)**](https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/image-optimization)  
 there are several tools available to reduce the sizes of your images.
 
-- `[*<picture>*](https://developers.google.com/web/fundamentals/design-and-ux/responsive/images#use_image_sprites)` [*+*](https://developers.google.com/web/fundamentals/design-and-ux/responsive/images#use_image_sprites) `[*srcset*](https://developers.google.com/web/fundamentals/design-and-ux/responsive/images#use_image_sprites)`: to provide different images depending on device.
+- [*`<picture>`*](https://developers.google.com/web/fundamentals/design-and-ux/responsive/images#use_image_sprites) [*+*](https://developers.google.com/web/fundamentals/design-and-ux/responsive/images#use_image_sprites) [*`srcset`*](https://developers.google.com/web/fundamentals/design-and-ux/responsive/images#use_image_sprites): to provide different images depending on device.
 - for a more automated look at optimizations, take a look at this [great and thorough article](https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/automating-image-optimization/) on other options.
 
-**predetermined size for images**
+**predetermined size for images**  
 a surprisingly expensive operation for your browser is resizing your images on the fly to fit into a particular space, especially if it’s a high quality image. if you resize your images beforehand to be the correct size for where they’re going to be displayed you’ll gain some benefits in page responsiveness.
 
-[**loading attribute**](https://calibreapp.com/blog/2018-08-16-native-lazy-load/)
-a new HTML attribute that will help hint to the browser that an image can be loaded later. just add `loading=``"``lazy``"` to your images~
+[**loading attribute**](https://calibreapp.com/blog/2018-08-16-native-lazy-load/)  
+a new HTML attribute that will help hint to the browser that an image can be loaded later. just add `loading="lazy"` to your images.
 
 
 ## HTML
 
 there are a couple of HTML attributes that can work in your favor:
 
-[**preload, prefetch, preconnect**](https://css-tricks.com/prefetching-preloading-prebrowsing/)
+[**preload, prefetch, preconnect**](https://css-tricks.com/prefetching-preloading-prebrowsing/)  
 these attributes on your `<link>` tags can optimize your resources loading in more quickly.
 
-[**loading attribute**](https://calibreapp.com/blog/2018-08-16-native-lazy-load/)
+[**loading attribute**](https://calibreapp.com/blog/2018-08-16-native-lazy-load/)  
 a new HTML attribute that will help hint to the browser that an image can be loaded later.
 
-[**importance**](https://wicg.github.io/priority-hints/)
+[**importance**](https://wicg.github.io/priority-hints/)  
 not supported anywhere yet but would let you specify priority hints on particular assets.
 
 
@@ -117,19 +117,19 @@ optimizing fonts is probably one of the last things you should look at, it’s m
 
 my backend-optimization-fu isn’t the most robust but i can offer a couple suggestions to delve into.
 
-[**HTTP Cache-Control and ETag**](https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/http-caching)
+[**HTTP Cache-Control and ETag**](https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/http-caching)  
 make sure your assets have caching headers on them.
 
-**static files**
-don’t have your app serving static resources. make sure [nginx is configured](https://paper.dropbox.com/doc/the-server--ARkDoKe3PC~ZhbDAzYaFTnDAAg-Mm6TmRuzCLA6bBuw8qxKY#:h2=nginx-reverse-proxy) to serve up static files without hitting your app server.
+**static files**  
+don’t have your app serving static resources. make sure [nginx is configured](/appendix-setting-up-a-self-hosted-server#nginx-reverse-proxy) to serve up static files without hitting your app server.
 
-**gzip**
+**gzip**  
 goes without saying maybe, but your server should have this enabled when serving assets.
 
-**in-memory key-value store**
+**in-memory key-value store**  
 tools like [redis](https://redis.io/) will cache data in memory which would be much faster than retrieving it from your DB or somewhere else.
 
-[**Save-Data HTTP header**](https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/save-data/)
+[**Save-Data HTTP header**](https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/save-data/)  
 an HTTP header that hints to your server that you should serve up a more lightweight page, if possible.
 
 
@@ -148,38 +148,38 @@ if that’s all confusing (and it is for most people), here’s [a great article
 
 a couple things to keep in mind in the JS world during runtime and load. [JS is probably your most expensive resource](https://medium.com/dev-channel/the-cost-of-javascript-84009f51e99e). since JS is single-threaded and tied with UI updates, you’ve got about 16ms of time to do any processing before your app starts feeling [janky](https://developers.google.com/web/fundamentals/performance/rendering/).
 
-[**code splitting**](https://developers.google.com/web/fundamentals/performance/optimizing-javascript/code-splitting/)
+[**code splitting**](https://developers.google.com/web/fundamentals/performance/optimizing-javascript/code-splitting/)  
 load only what’s really necessary right now and lazy-load other stuff later. webpack, along with a bunch of other libraries, provide support for this. i would recommend that you consider at least splitting off:
 
 - *external libraries*: they tend to change a lot less than your app’s main code
 - *i18n resources*: these tend to get huge and you don’t need to send everyone every language pack for your app.
 - *routes and pages*: the common paradigm here is to split based on pages in your app. it doesn’t necessarily have to be the case but it can be a good place to start. things like react-router give you support for this.
 
-[**React.lazy**](https://reactjs.org/docs/code-splitting.html#reactlazy) **+** [**Suspense**](https://reactjs.org/docs/code-splitting.html#reactlazy)
+[**React.lazy**](https://reactjs.org/docs/code-splitting.html#reactlazy) **+** [**Suspense**](https://reactjs.org/docs/code-splitting.html#reactlazy)  
 speaking of code splitting, newer versions of React offer the ability to dynamically split on components vs. splitting on routes. it’s awesome. word of warning that this isn’t working on server-side quite yet at the time of writing (Jan 2019).
 
-[**dynamically loading modules**](https://webpack.js.org/api/module-methods/#import-)
+[**dynamically loading modules**](https://webpack.js.org/api/module-methods/#import-)  
 you can load in JS on demand via the `import()` function.
 
-**minification**
+**minification**  
 tools like webpack and the like will take your code and reduce its size significantly.
 
-[**tree shaking**](https://developers.google.com/web/fundamentals/performance/optimizing-javascript/tree-shaking/)
+[**tree shaking**](https://developers.google.com/web/fundamentals/performance/optimizing-javascript/tree-shaking/)  
 discover what’s in your bundle but not being actually used. webpack also provides supports for this.
 
-**throttle/debounce events**
+**throttle/debounce events**  
 events such as mousemove send *a ton* of events to your JS. you should take a sample of them every so often (reducing it to at least once every 33ms is a good start).
 
-[**scrolling speed**](https://developers.google.com/web/tools/lighthouse/audits/passive-event-listeners)
+[**scrolling speed**](https://developers.google.com/web/tools/lighthouse/audits/passive-event-listeners)  
 don’t run (too much) JS when scrolling. if you do, take a look at the ‘passive’ option to make sure your scrolling stays smooth.
 
-[**requestAnimationFrame**](https://developers.google.com/web/fundamentals/performance/rendering/optimize-javascript-execution)
+[**requestAnimationFrame**](https://developers.google.com/web/fundamentals/performance/rendering/optimize-javascript-execution)  
 use this function instead of setTimeout for visual updates.
 
-[**requestIdleCallback**](https://developers.google.com/web/updates/2015/08/using-requestidlecallback)
+[**requestIdleCallback**](https://developers.google.com/web/updates/2015/08/using-requestidlecallback)  
 a new function (not supported by all browsers yet) that lets you do work when the user is inactive or when the browser has spare cycles it can give you.
 
-[**React.PureComponent**](https://reactjs.org/docs/react-api.html#reactpurecomponent) **/** [**React.memo**](https://reactjs.org/docs/react-api.html#reactpurecomponent)
+[**React.PureComponent**](https://reactjs.org/docs/react-api.html#reactpurecomponent) **/** [**React.memo**](https://reactjs.org/docs/react-api.html#reactpurecomponent)  
 a very simple win for your React components is to use [React.PureComponent](https://reactjs.org/docs/react-api.html#reactpurecomponent) or [React.memo](https://reactjs.org/docs/react-api.html#reactpurecomponent). they will help reduce the amount of times your component needs to re-render.
 
 
@@ -187,7 +187,7 @@ a very simple win for your React components is to use [React.PureComponent](http
 
 in general, fine-tuning CSS is one of the hardest areas to squeeze out performance gains and i recommend saving it for last. that being said, there are a couple areas that are worth mentioning.
 
-***never*** **use the** `*****` **selector**
+***never*** **use the** `*` **selector**
 CSS is parsed from right-to-left. that is to say, for a rule like `html body div span a` the browser has to start with the `a` tag, finding *alllll* the anchor tags on a page before parsing the rest of the rule. thus, an especially expensive rule is something like `.someClass *` which forces the browser to look at *allll* elements on the page first and then match by the class.
 
 **reduce the number of descendant/child selectors**

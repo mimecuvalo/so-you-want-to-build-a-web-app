@@ -30,17 +30,21 @@ after several cycles of scrubbing out bugs and fine-tuning your spectacular app,
 
 to create tests, you create `.js` files within folders named `__tests__`. alternatively, you can create files with a `.test.js` or `.spec.js` suffix. it comes bundled with create-next-app by default. if it isn’t installed you can do so via:
 
-    npm install --save-dev jest
+```sh
+npm install --save-dev jest
+```
 
 
 ## how to write basic tests
 
 the basic form of a test involves just asserting that something is true or not. for example:
 
-    it('sums numbers', () => {
-      expect(sum(1, 2)).toEqual(3);
-      expect(sum(2, 2)).toEqual(4);
-    });
+```js
+it('sums numbers', () => {
+    expect(sum(1, 2)).toEqual(3);
+    expect(sum(2, 2)).toEqual(4);
+});
+```
 
 
 ## testing components
@@ -52,7 +56,9 @@ to give you the ability to test React components, the [Testing Library](https://
 
 to get a measurement on your code to see much your tests are actually examining your code, you can do the following:
 
-    npm test -- --coverage  # (note extra -- in the middle)
+```sh
+npm test -- --coverage  # (note extra -- in the middle)
+```
 
 a widely-used product in this space that you can utilize is [coveralls](https://coveralls.io/). i hear good things about [codecov](https://about.codecov.io/) too but haven’t tested it yet.
 
@@ -70,7 +76,7 @@ here’s a [handy playground](https://testing-playground.com/) for creating and 
 ----------
 # canary server
 
-mentioned in [CI section](https://paper.dropbox.com/doc/workflow-collaboration--AVRUDQTcBGFH~wPUW9f8pO~oAg-WTOB9n0gS6r3wmilD85Go#:uid=485397698271622042933226&h2=continuous-integration-(CI)) is the fact that you can setup a server so that you can “dogfood” your app before it goes out to the public. testing can catch a lot of things but sometimes new classes of errors can only crop up with real-world use.
+mentioned in [CI section](/workflow-and-collaboration#continuous-integration---continuous-deployment--CI-CD-) is the fact that you can setup a server so that you can “dogfood” your app before it goes out to the public. testing can catch a lot of things but sometimes new classes of errors can only crop up with real-world use.
 
 
 ----------
@@ -78,7 +84,7 @@ mentioned in [CI section](https://paper.dropbox.com/doc/workflow-collaboration--
 
 the latest hotness here is [Puppeteer](https://github.com/GoogleChrome/puppeteer). this lets you automate your browser to navigate through your app by simulating clicking and typing into the browser. save this kind of testing for the very end — it’s thoroughly involved and expensive to maintain — only very mature projects should consider this route. if you do start browser automation, you should also consider sticking to just one browser (either Chrome or Firefox). automating multiple browsers will only compound your headaches with this work! (historically, there was a project called PhantomJS and in the Firefox realm you have [Selenium](https://www.seleniumhq.org/) testing.)
 
-[cypress](https://www.cypress.io/) ****has also been making splashes here — haven’t tested it yet but looks great.
+[cypress](https://www.cypress.io/) has also been making splashes here — haven’t tested it yet but looks great.
 same goes for [Playwright](https://playwright.dev/) — i’m looking to evaluate that as well soon.
 
 

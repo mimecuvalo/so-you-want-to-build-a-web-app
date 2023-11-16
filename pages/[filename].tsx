@@ -9,7 +9,13 @@ import { PAGES, SITE_NAME, SITE_URL } from 'app/constants';
 import { pageUrl } from 'util/url-factory';
 import { ArrowBack, ArrowForward } from '@mui/icons-material';
 import { Page } from '@/tina/__generated__/types';
-import { Divider } from '@mui/material';
+import { Box, Divider, PaletteMode, useTheme } from '@mui/material';
+import { Prism } from 'tinacms/dist/rich-text/prism';
+
+// ugh, complicado. see: https://github.com/FormidableLabs/prism-react-renderer
+import { Prism as OriginalPrism } from 'prism-react-renderer';
+(typeof global !== 'undefined' ? global : window).Prism = OriginalPrism;
+require('prismjs/components/prism-bash');
 
 const MarkdownStyling = styled('div')`
   h1,
@@ -23,10 +29,12 @@ const MarkdownStyling = styled('div')`
   }
 
   h2 {
+    margin-top: ${(props) => props.theme.spacing(4)};
     font-size: ${(props) => props.theme.typography.h3.fontSize};
   }
 
   h3 {
+    margin-top: ${(props) => props.theme.spacing(3)};
     font-size: ${(props) => props.theme.typography.h4.fontSize};
   }
 
@@ -41,11 +49,52 @@ const MarkdownStyling = styled('div')`
     margin-inline-start: 1.5rem;
   }
 
+  p {
+    margin-bottom: 0;
+  }
+
+  ul,
+  ol {
+    margin-top: 0;
+  }
+
   blockquote {
     border-inline-start: 1px solid ${(props) => props.theme.palette.grey[400]};
     padding-inline-start: 1.5rem;
     margin-inline-start: 0rem;
     font-style: italic;
+  }
+
+  code {
+    border-radius: 1px;
+    line-height: 1.6;
+    padding: 2px 0 1px;
+    border: 1px solid #e6e8eb;
+  }
+
+  hr {
+    margin: ${(props) => props.theme.spacing(6, 0)};
+  }
+
+  ${(props) =>
+    props.theme.palette.mode === 'dark'
+      ? `
+    code {
+      color: #f7f5f2;
+      background-color: #242121;
+      border-color: hsla(34, 3%, 54%, .2);
+    }
+  `
+      : `
+    code {
+      color: #1e1919;
+      background-color: #f7f5f2;
+      border-color: hsla(36, 23%, 55%, .2);
+    }
+  `}
+
+  a code {
+    color: ${(props) => props.theme.palette.primary.main};
   }
 `;
 
@@ -92,31 +141,48 @@ const Figure = styled('span')<{
   }
 
   ${(props) =>
-    props.$float === 'right-25' &&
+    props.$float === 'right-33' &&
     `
     & {
       float: right;
-      width: 25%;
+      width: 33%;
       margin-left: ${props.theme.spacing(2)};
     }
   `}
 `;
 
-const customRenderers = (allPages: Page[]) => ({
+const getId = (children: any) => {
+  const firstContent = children.props.content[0];
+  const text = firstContent.text || firstContent.children[0].text;
+
+  return text?.replace(/\W/g, '-');
+};
+
+const customRenderers = (allPages: Page[], themeMode: PaletteMode) => ({
   a: (props: any) => (
-    <Link href={props.url} target="_blank">
+    <Link href={props.url} target={props.url.startsWith('/') ? '' : '_blank'}>
       {props.children}
     </Link>
   ),
 
   // N.B. We only want one H1 on the page, and that's the title, so we downstep everything else.
-  h1: (props: any) => <Typography variant="h2">{props.children}</Typography>,
+  h1: (props: any) => (
+    <Typography variant="h2" id={getId(props.children)}>
+      {props.children}
+    </Typography>
+  ),
 
   // N.B. We only want one H1 on the page, and that's the title, so we downstep everything else.
-  h2: (props: any) => <Typography variant="h3">{props.children}</Typography>,
+  h2: (props: any) => (
+    <Typography variant="h3" id={getId(props.children)}>
+      {props.children}
+    </Typography>
+  ),
 
   // N.B. We only want one H1 on the page, and that's the title, so we downstep everything else.
   h3: (props: any) => <Typography variant="h4">{props.children}</Typography>,
+
+  code_block: (props: any) => <Prism {...props} theme={themeMode === 'dark' ? 'nightOwl' : 'nightOwlLight'} />,
 
   // N.B. This div/span wrapper matches the structure, more or less, of the Outline editor's img wrapper.
   // eslint-disable-next-line
@@ -127,6 +193,8 @@ const customRenderers = (allPages: Page[]) => ({
       <span className="caption">{props.alt}</span>
     </Figure>
   ),
+
+  hr: () => <Divider />,
 
   TableOfContents: () => (
     <ol>
@@ -158,6 +226,28 @@ const customRenderers = (allPages: Page[]) => ({
       </ol>
     );
   },
+
+  YouTube: (props: any) => (
+    <Grid container justifyContent="center">
+      <iframe
+        width="560"
+        height="315"
+        src={props.href}
+        title="YouTube video player"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        allowFullScreen
+      ></iframe>
+    </Grid>
+  ),
+
+  Twitter: (props: any) => (
+    <Grid container justifyContent="center">
+      <blockquote className="twitter-tweet">
+        <a href={props.href}>August 8, 2018</a>
+      </blockquote>
+      <script async src="https://platform.twitter.com/widgets.js" />
+    </Grid>
+  ),
 });
 
 function ContentHead({ title, url }: { title: string; url: string }) {
@@ -219,7 +309,7 @@ function Pagination({ slug }: { slug: string }) {
 
   return (
     <>
-      <Divider sx={{ mt: 4 }} />
+      <Divider sx={{ mt: 6 }} />
       <Grid container justifyContent="space-between" sx={{ mt: 4 }}>
         {prev && currentPageIndex < PAGES.length - 1 && (
           <Link sx={{ fontWeight: 'bold' }} href={pageUrl(prev.slug)}>
@@ -231,6 +321,7 @@ function Pagination({ slug }: { slug: string }) {
             {next.title} <ArrowForward />
           </Link>
         )}
+        {currentPageIndex === PAGES.length - 2 && <Box sx={{ fontFamily: 'cursive' }}>the end</Box>}
       </Grid>
     </>
   );
@@ -244,6 +335,15 @@ export default function Page(props: InferGetStaticPropsType<typeof getStaticProp
   } = useTina(props);
   const slug = props.variables.relativePath.replace('.mdx', '');
   const url = pageUrl(slug);
+  const theme = useTheme();
+
+  if (_body.children[0].type === 'invalid_markdown') {
+    console.debug(
+      'Invalid markdown',
+      _body.children[0].message,
+      JSON.stringify(_body.children[0].position, undefined, 2)
+    );
+  }
 
   return (
     <>
@@ -253,7 +353,8 @@ export default function Page(props: InferGetStaticPropsType<typeof getStaticProp
           {title}
         </Typography>
         <TinaMarkdown
-          components={customRenderers(props.allPages as Page[])}
+          key={theme.palette.mode}
+          components={customRenderers(props.allPages as Page[], theme.palette.mode)}
           content={slug === 'tldr' ? _body.children.slice(0, -1) : _body}
         />
       </MarkdownStyling>

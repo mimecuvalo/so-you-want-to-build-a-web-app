@@ -10,7 +10,7 @@ or, *the "how to think like a designer" part.*
 - **accessibility (a11y)**: [Google’s guide](https://developers.google.com/web/fundamentals/accessibility/), [Chrome DevTools reference](https://developers.google.com/web/tools/chrome-devtools/accessibility/reference), [aXe](https://www.deque.com/axe/), [Google’s Accessibility Developer Tools](https://github.com/GoogleChrome/accessibility-developer-tools), [VoiceOver Utility](https://www.apple.com/accessibility/mac/vision/)
 - **internationalization (i18n)**: [react-intl](https://github.com/yahoo/react-intl/wiki)
 - **responsiveness**: avoid fixed widths, fluid layouts, font sizes, image/icon responsiveness, device toolbar
-- **web components**: [Custom Elements](https://developers.google.com/web/fundamentals/web-components/customelements), `[<template>](https://www.html5rocks.com/en/tutorials/webcomponents/template/)`, [Shadow DOM](https://developers.google.com/web/fundamentals/web-components/shadowdom), [ES modules](https://www.html5rocks.com/en/tutorials/webcomponents/imports/)
+- **web components**: [Custom Elements](https://developers.google.com/web/fundamentals/web-components/customelements), [`<template>`](https://www.html5rocks.com/en/tutorials/webcomponents/template/), [Shadow DOM](https://developers.google.com/web/fundamentals/web-components/shadowdom), [ES modules](https://www.html5rocks.com/en/tutorials/webcomponents/imports/)
 - **toolkits and widgets**: [MUI](https://material-ui.com/), [Mantine](https://mantine.dev/)
 - **typography**: [Google Fonts](https://fonts.google.com/), system font stack
 - **iconography**: [MUI Icons](https://material.io/tools/icons/?style=baseline), [Nerd Fonts](https://nerdfonts.com/), [Doodle Ipsum](https://doodleipsum.com/), [unDraw](https://undraw.co/)
@@ -68,7 +68,7 @@ the recommended library here is [**react-intl**](https://github.com/yahoo/react-
 ----------
 # responsiveness
 
-today’s devices are part of a Cambrian explosion of which the variety is astounding. as such, you need to make your UI’s adaptable if you are to survive in this new world. most of this involves using CSS media queries (example: `@media (min-width: 600px) {`) to gate certain CSS to only apply when a smaller device is being used. learn more [here](https://developers.google.com/web/fundamentals/design-and-ux/responsive/).
+today’s devices are part of a Cambrian explosion of which the variety is astounding. as such, you need to make your UI’s adaptable if you are to survive in this new world. most of this involves using CSS media queries (example: `@media (min-width: 600px)`) to gate certain CSS to only apply when a smaller device is being used. learn more [here](https://developers.google.com/web/fundamentals/design-and-ux/responsive/).
 
 
 ## avoid fixed widths
@@ -99,7 +99,7 @@ in the top left of Chrome DevTools, next to the Inspect element icon is a button
 ----------
 # web components
 
-oof, there is a lot going on here that it can make the head spin. you’ll hear related technologies under the umbrella term of web components, including: [Custom Elements](https://developers.google.com/web/fundamentals/web-components/customelements), `[<template>](https://www.html5rocks.com/en/tutorials/webcomponents/template/)`, [Shadow DOM](https://developers.google.com/web/fundamentals/web-components/shadowdom), and [ES modules](https://www.html5rocks.com/en/tutorials/webcomponents/imports/).
+oof, there is a lot going on here that it can make the head spin. you’ll hear related technologies under the umbrella term of web components, including: [Custom Elements](https://developers.google.com/web/fundamentals/web-components/customelements), [`<template>`](https://www.html5rocks.com/en/tutorials/webcomponents/template/), [Shadow DOM](https://developers.google.com/web/fundamentals/web-components/shadowdom), and [ES modules](https://www.html5rocks.com/en/tutorials/webcomponents/imports/).
 
 web components are a way to create reusable components that are encapsulated in the DOM. cross-browser support is almost here but not quite yet so this technology is still a bit bleeding edge. because of all the ups and downs in this area historically, i’m *almost* ready to recommend going this route vs. more vanilla widgets.
 
@@ -131,26 +131,31 @@ a good custom font (i.e. from Google Fonts) can add a lot of flavor to your site
 
 by defaulting to a system font you gain speed and a look for your site that matches the user’s operating system. here’s how to implement it:
 
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
-          "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
-    }
-    code {
-      font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
-    }
+```css
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+      "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+}
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
+}
+```
 
 
 ## readability
 
 for the human eye, reading a wide swath of text is tricky. an ideal width of 45–75 characters can be achieved thusly:
 
-    p {
-      width: clamp(45ch, 50%, 75ch);
-    }
-    /* or */
-    p {
-      font-size: clamp(1.5rem, 5vw, 3rem);
-    }
+```css
+p {
+  width: clamp(45ch, 50%, 75ch);
+}
+/* or */
+p {
+  font-size: clamp(1.5rem, 5vw, 3rem);
+}
+```
+
 ----------
 # iconography
 

@@ -5,7 +5,7 @@ title: '🐛 debugging'
 or, *the “rinse, lather, (hopefully don’t) repeat” part.*
 
 # tl;dr
-- [**Chrome DevTools**](https://developers.google.com/web/tools/chrome-devtools/): `**$0**`, `**$r**`, breakpoints, logpoints, device toolbar, network throttling, user agent spoofing, workspaces
+- [**Chrome DevTools**](https://developers.google.com/web/tools/chrome-devtools/): **`$0`**, **`$`**, breakpoints, logpoints, device toolbar, network throttling, user agent spoofing, workspaces
 - [**React DevTools**](https://chrome.google.com/webstore/detail/react-developer-tools/fmkadmapgofadopljbjfkapdkoienihi)
 - **node**: `--inspect`
 - **tracking errors**: exception handling, [error boundaries](https://reactjs.org/docs/error-boundaries.html), logging, [Sentry](https://sentry.io/welcome/), “kernel panic”, kill switch
@@ -20,7 +20,7 @@ the tools built into your browser are *incredibly* powerful these days. there’
 
 i won’t go over every feature in this guide, but i’d like to point out some highlights and tricks/tips that i’ve found commonly ignored by engineers:
 
-- `**$0**`: select an element via the Elements panel and it will be available via the Console as the `$0` variable.
+- **`$0`**: select an element via the Elements panel and it will be available via the Console as the `$0` variable.
 - **breakpoints**: i have found over the years to be rather surprised that a lot engineers don’t know this is available. click on any source line to pause execution there.
     - **conditional breakpoints**: related to the above you can right-click on a line to add a line that only executes given a certain set of circumstances.
     - **add logpoint**: Chrome 73+ has a new feature that lets you add `console.log` statements on the fly to your code, without having to pause execution (which can throw off timing and prevent reproducing certain classes of bugs.)
@@ -41,7 +41,7 @@ a must-have tool to debug React components, changing their state and props on de
 
 some highlights and tricks/tips for React DevTools:
 
-- `**$r**`: i’ll mention here that related to the `$0` variable is the sister variable `$r` that gives you the last selected React component from React DevTools.
+- **`$r`**: i’ll mention here that related to the `$0` variable is the sister variable `$r` that gives you the last selected React component from React DevTools.
 
 
 ----------
@@ -65,10 +65,10 @@ at the very least, you need to gather exceptions from your clients and send them
 
 some other notes:
 
-- in addition to your own custom error reporting, make sure you listen to the `[onerror](https://developer.mozilla.org/en-US/docs/Web/API/GlobalEventHandlers/onerror)` event since you might have errors that occur *before* your client even initializes.
-- a new listener is `[onunhandledrejection](https://developer.mozilla.org/en-US/docs/Web/API/WindowEventHandlers/onunhandledrejection)` which listens to Promises that had unhandled rejections. could be useful, depending on your app.
-- `[ReportingObserver](https://developers.google.com/web/updates/2018/07/reportingobserver)`: not widely supported, but provides a way to see if your users are getting deprecation or browser interventions that are shutting down features in your app.
-- `[securitypolicyviolation](https://developer.mozilla.org/en-US/docs/Web/API/SecurityPolicyViolationEvent)`: an event fired if CSP is violated.
+- in addition to your own custom error reporting, make sure you listen to the [`onerror](https://developer.mozilla.org/en-US/docs/Web/API/GlobalEventHandlers/onerror) event since you might have errors that occur *before* your client even initializes.
+- a new listener is [`onunhandledrejection`](https://developer.mozilla.org/en-US/docs/Web/API/WindowEventHandlers/onunhandledrejection) which listens to Promises that had unhandled rejections. could be useful, depending on your app.
+- [`ReportingObserver`](https://developers.google.com/web/updates/2018/07/reportingobserver): not widely supported, but provides a way to see if your users are getting deprecation or browser interventions that are shutting down features in your app.
+- [`securitypolicyviolation`](https://developer.mozilla.org/en-US/docs/Web/API/SecurityPolicyViolationEvent): an event fired if CSP is violated.
 - [error boundaries](https://reactjs.org/docs/error-boundaries.html): in React, you have the option to isolate components from one another.
 
 
@@ -92,7 +92,7 @@ related to the “kernel panic” above, another safety check that can be implem
 ----------
 # post-mortems
 
-one thing to mention here is documenting via a process called a “post-mortem” *especially* if they happen in production taking your website down. by writing down what went wrong and how you solved it, you start to build the to help notice patterns of failure, learn from your mistakes and cohesively learn how to solve it going forward. TODO see workflow / collaboration.
+one thing to mention here is documenting via a process called a “post-mortem” *especially* if they happen in production taking your website down. by writing down what went wrong and how you solved it, you start to build the to help notice patterns of failure, learn from your mistakes and cohesively learn how to solve it going forward.
 
 
 ----------

@@ -49,34 +49,38 @@ once you create an account at DigitalOcean you’ll want to go through these ste
         1. recommended: `TXT @ v=spf1 a mx include:_spf.google.com -all`
     3. rename your droplet to have a FQDN (e.g. example.com) — this will set up a PTR record for email to help verify your mail server.
     4. secure email:
-    # first, need to shutdown nginx
-    sudo systemctl stop nginx
-    sudo certbot certonly --standalone -d mail.example.com
-    
-    # then in /etc/postfix/main.cf update:
-    # pay attention to `smtp_use_tls=yes` because it's usually `smtpd_use_tls=yes`
-    # with a 'd' which doesn't work :-/
-    smtpd_tls_cert_file=/etc/ssl/certs/fullchain.pem (change to suit your system)
-    smtpd_tls_key_file=/etc/ssl/private/privkey.pem (change to suit your system)
-    smtp_use_tls=yes
-    smtpd_tls_session_cache_database = btree:${data_directory}/smtpd_scache
-    smtp_tls_session_cache_database = btree:${data_directory}/smtp_scache
-    
-    # don't forget to restart postfix and nginx again
-    sudo systemctl restart postfix
-    sudo systemctl restart nginx
+```sh
+# first, need to shutdown nginx
+sudo systemctl stop nginx
+sudo certbot certonly --standalone -d mail.example.com
+
+# then in /etc/postfix/main.cf update:
+# pay attention to `smtp_use_tls=yes` because it's usually `smtpd_use_tls=yes`
+# with a 'd' which doesn't work :-/
+smtpd_tls_cert_file=/etc/ssl/certs/fullchain.pem (change to suit your system)
+smtpd_tls_key_file=/etc/ssl/private/privkey.pem (change to suit your system)
+smtp_use_tls=yes
+smtpd_tls_session_cache_database = btree:${data_directory}/smtpd_scache
+smtp_tls_session_cache_database = btree:${data_directory}/smtp_scache
+
+# don't forget to restart postfix and nginx again
+sudo systemctl restart postfix
+sudo systemctl restart nginx
+```
 
 from there, DigitalOcean has a great [article](https://www.digitalocean.com/community/tutorials/initial-server-setup-with-ubuntu-18-04) that goes over how to login as root and then create some users. Basically:
 
 1. **add user**
-    adduser user
-    usermod -aG sudo user
-    rsync --archive --chown=user:user ~/.ssh /home/user
-
-
+```sh
+adduser user
+usermod -aG sudo user
+rsync --archive --chown=user:user ~/.ssh /home/user
+```
 2. **test new user**
-    ssh user@your_server_ip
-    sudo ls
+```sh
+ssh user@your_server_ip
+sudo ls
+```
 
 
 ----------
@@ -86,140 +90,170 @@ from there, DigitalOcean has a great [article](https://www.digitalocean.com/comm
 
 **update first**
 
-    sudo apt update
-    sudo apt-get upgrade
+```sh
+sudo apt update
+sudo apt-get upgrade
+```
 
 (optional) **upgrade MySQL to version 8**
 
-    # Update MySQL to the latest version 8 instead of 5.7
-    wget https://dev.mysql.com/get/mysql-apt-config_0.8.10-1_all.deb
-    sudo dpkg -i mysql-apt-config_0.8.10-1_all.deb
-    # MySQL Server & Cluster -> Choose version 8.0
-    # Then, Choose 'Ok' on the screen, leave the configs alone.
-    sudo apt-get update
-    sudo apt install mysql-server mysql-client
-    sudo mysql_upgrade -u root
+```sh
+# Update MySQL to the latest version 8 instead of 5.7
+wget https://dev.mysql.com/get/mysql-apt-config_0.8.10-1_all.deb
+sudo dpkg -i mysql-apt-config_0.8.10-1_all.deb
+# MySQL Server & Cluster -> Choose version 8.0
+# Then, Choose 'Ok' on the screen, leave the configs alone.
+sudo apt-get update
+sudo apt install mysql-server mysql-client
+sudo mysql_upgrade -u root
     
-    # If you use PHP/Wordpress you might need to edit your mysql.conf until the new password scheme is supported. This is a temporary shim.
-    vim /etc/mysql/mysql.conf.d/mysqld.cnf
-    # then, add:
-    [mysqld]
-    default-authentication-plugin=mysql_native_password
+# If you use PHP/Wordpress you might need to edit your mysql.conf until the new password scheme is supported. This is a temporary shim.
+vim /etc/mysql/mysql.conf.d/mysqld.cnf
+# then, add:
+[mysqld]
+default-authentication-plugin=mysql_native_password
+```
 
 **MySQL password**
 
-    cat root/.digitalocean_password
+```sh
+cat root/.digitalocean_password
+```
 
 **create nginx**
 
-    vim /etc/nginx/sites-available/example.com
+```sh
+vim /etc/nginx/sites-available/example.com
+```
 
 **enable the site**
 
-    sudo ln -s /etc/nginx/sites-available/example.com /etc/nginx/sites-enabled/
+```sh
+sudo ln -s /etc/nginx/sites-available/example.com /etc/nginx/sites-enabled/
+```
 
-**some tweaks to** `**/etc/nginx/nginx.conf**`
+**some tweaks to** **`/etc/nginx/nginx.conf`**
 
-    server_names_hash_bucket_size 64;
-    client_max_body_size 100M;
-    gzip on;
-    gzip_types text/plain text/css application/json application/javascript text/xml application/xml application/xml+rss text/javascript;
+```sh
+server_names_hash_bucket_size 64;
+client_max_body_size 100M;
+gzip on;
+gzip_types text/plain text/css application/json application/javascript text/xml application/xml application/xml+rss text/javascript;
+```
 
 **WWW redirects (DigitalOcean** [**article**](https://www.digitalocean.com/community/tutorials/how-to-redirect-www-to-non-www-with-nginx-on-centos-7)**)**
 
-    sudo vim /etc/nginx/conf.d/redirect.conf
-    server {
-        server_name www.example.com;
-        return 301 $scheme://example.com$request_uri;
-    }
+```sh
+sudo vim /etc/nginx/conf.d/redirect.conf
+server {
+    server_name www.example.com;
+    return 301 $scheme://example.com$request_uri;
+}
+```
 
 **PHP max upload size**
 
-    sudo vim /etc/php/7.2/fpm/php.ini
-    upload_max_filesize = 100M
-    sudo systemctl restart php7.2-fpm
+```sh
+sudo vim /etc/php/7.2/fpm/php.ini
+upload_max_filesize = 100M
+sudo systemctl restart php7.2-fpm
+```
 
 **nginx reverse proxy**
 
-    server {
-        server_name example.com;
-    
-        location ^~ /static/ {
-          root /var/www/project;
-          if ($query_string) {
-            expires max;
-          }
-        }
-        location = /favicon.ico {
-            rewrite (.*) /static/favicon.ico;
-        }
-        location = /robots.txt {
-            rewrite (.*) /static/robots.txt;
-        }
-        location = /humans.txt {
-            rewrite (.*) /static/humans.txt;
-        }
-    
-        location / {
-            proxy_pass_header Server;
-            proxy_set_header Host $http_host;
-            proxy_redirect off;
-            proxy_set_header X-Real-IP $remote_addr;
-            proxy_set_header X-Scheme $scheme;
-            proxy_pass http://127.0.0.1:8080;
+```sh
+server {
+    server_name example.com;
+
+    location ^~ /static/ {
+        root /var/www/project;
+        if ($query_string) {
+        expires max;
         }
     }
+    location = /favicon.ico {
+        rewrite (.*) /static/favicon.ico;
+    }
+    location = /robots.txt {
+        rewrite (.*) /static/robots.txt;
+    }
+    location = /humans.txt {
+        rewrite (.*) /static/humans.txt;
+    }
+
+    location / {
+        proxy_pass_header Server;
+        proxy_set_header Host $http_host;
+        proxy_redirect off;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Scheme $scheme;
+        proxy_pass http://127.0.0.1:8080;
+    }
+}
+```
 
 **WebSocket setup for nginx**
 
-    # proxy_http_version 1.1;  // Optional!?!? probably
-    proxy_set_header Upgrade $http_upgrade;
-    proxy_set_header Connection 'upgrade';
-    proxy_set_header Host $host;
-    proxy_cache_bypass $http_upgrade;
+```sh
+# proxy_http_version 1.1;  // Optional!?!? probably
+proxy_set_header Upgrade $http_upgrade;
+proxy_set_header Connection 'upgrade';
+proxy_set_header Host $host;
+proxy_cache_bypass $http_upgrade;
+```
 
 **test config**
 
-    sudo nginx -t
+```sh
+sudo nginx -t
+```
 
 **reload**
 
-    sudo systemctl reload nginx
+```sh
+sudo systemctl reload nginx
+```
 
-**weirdly, I had to disable Apache later…**
+**weirdly, I had to disable Apache later…**  
 *(saw processes using port 80)*
 
-    sudo fuser -k 80/tcp
-    sudo update-rc.d apache2 disable
-    sudo reboot
+```sh
+sudo fuser -k 80/tcp
+sudo update-rc.d apache2 disable
+sudo reboot
+```
 
 **test locally**
 
-    sudo vim /etc/hosts
-    203.0.113.5 example.com www.example.com
-    203.0.113.5 test.com www.test.com
+```sh
+sudo vim /etc/hosts
+203.0.113.5 example.com www.example.com
+203.0.113.5 test.com www.test.com
+```
 
-**setup a swapfile (DigitalOcean** [**article**](https://www.digitalocean.com/community/tutorials/how-to-add-swap-on-ubuntu-14-04)**)**
+**setup a swapfile (DigitalOcean** [**article**](https://www.digitalocean.com/community/tutorials/how-to-add-swap-on-ubuntu-14-04)**)**  
 if you’re using a cheaper hosting solution that doesn’t have much memory it’s a good idea to have a swapfile
 
-    sudo fallocate -l 4G /swapfile
-    sudo chmod 600 /swapfile
-    sudo mkswap /swapfile
-    sudo swapon /swapfile
-    sudo swapon -s # or `free -m` to verify
-    
-    # to make permanent on reboot of server
-    sudo nano /etc/fstab
-    # and add:
-    /swapfile   none    swap    sw    0   0
-    
-    # to improve caching and speed more on a low-memory machine
-    sudo sysctl vm.swappiness=10
-    sudo sysctl vm.vfs_cache_pressure=50
-    sudo nano /etc/sysctl.conf
-    # and add:
-    vm.swappiness=10
-    vm.vfs_cache_pressure=50
+```sh
+sudo fallocate -l 4G /swapfile
+sudo chmod 600 /swapfile
+sudo mkswap /swapfile
+sudo swapon /swapfile
+sudo swapon -s # or `free -m` to verify
+
+# to make permanent on reboot of server
+sudo nano /etc/fstab
+# and add:
+/swapfile   none    swap    sw    0   0
+
+# to improve caching and speed more on a low-memory machine
+sudo sysctl vm.swappiness=10
+sudo sysctl vm.vfs_cache_pressure=50
+sudo nano /etc/sysctl.conf
+# and add:
+vm.swappiness=10
+vm.vfs_cache_pressure=50
+```
 
 
 ----------
@@ -230,17 +264,23 @@ this is how to add `https` to your website. many ❤’s to [Let’s Encrypt](ht
 
 **setup**
 
-    sudo certbot --nginx -d example.com -d www.example.com
+```sh
+sudo certbot --nginx -d example.com -d www.example.com
+```
 
 **verify renewals work**
 
-    sudo certbot renew --dry-run
+```sh
+sudo certbot renew --dry-run
+```
 
-**adding HTTP/2**
+**adding HTTP/2**  
 after that, let’s go modern and support the latest version of HTTP. in your nginx.conf file:
 
-    listen [::]:443 ssl http2; 
-    listen 443 ssl http2;
+```sh
+listen [::]:443 ssl http2; 
+listen 443 ssl http2;
+```
 
 in theory, you could also do this at your server-level (e.g. in Node using the [HTTP/2](https://nodejs.org/api/http2.html) module) but a.) i’ve found it tricky to setup with things like the [Express](https://expressjs.com/) server. (which doesn’t support it quite yet, see [this bug](https://github.com/expressjs/express/pull/3730).), b.) it’s probably [not a good idea](https://stackoverflow.com/a/41647983) since it would make things worse on your backend and c.) developing on SSL on your localhost is annoying because of the self-signed certs having to be approved by your browser — to make this work you can use the tool called `[mkcert](https://github.com/FiloSottile/mkcert)`.
 
@@ -254,17 +294,19 @@ in theory, you could also do this at your server-level (e.g. in Node using the [
 
 some sane defaults for the above stated headers for nginx:
 
-    add_header Strict-Transport-Security "max-age=31536000; includeSubDomains; preload" always;
-    add_header X-XSS-Protection "1; mode=block" always;
-    add_header X-Content-Type-Options "nosniff" always;
-    add_header Referrer-Policy "no-referrer-when-downgrade" always;
-    add_header Content-Security-Policy "upgrade-insecure-requests; default-src 'none'; script-src 'self'; style-src 'self' https://*; font-src 'self' https://*; connect-src 'self'; manifest-src: 'self'; frame-ancestors 'self'; frame-src 'self' https://*; media-src 'self' blob:; img-src https: http: data:; object-src 'self';" always;
+```sh
+add_header Strict-Transport-Security "max-age=31536000; includeSubDomains; preload" always;
+add_header X-XSS-Protection "1; mode=block" always;
+add_header X-Content-Type-Options "nosniff" always;
+add_header Referrer-Policy "no-referrer-when-downgrade" always;
+add_header Content-Security-Policy "upgrade-insecure-requests; default-src 'none'; script-src 'self'; style-src 'self' https://*; font-src 'self' https://*; connect-src 'self'; manifest-src: 'self'; frame-ancestors 'self'; frame-src 'self' https://*; media-src 'self' blob:; img-src https: http: data:; object-src 'self';" always;
+```
 
 if you really must have inline scripts in your site (which you should absolutely avoid doing for security reasons), you can add the `nonce` attributes to your `<script>` and `<style>` tags. this is especially true if you’re dealing with older sites that have legacy code including inline scripts. if you can’t manage that, then the fallback to this method, then you can add `'unsafe-inline'` (quotes included) to the `script-src` and/or your `style-src` sections of the CSP policy. really though, try to get the nonce’s in there before doing the `unsafe-inline` hack.
 
 if you don’t want to use nginx and want to set these at the Express level you can use [Helmet.js](https://helmetjs.github.io/). (different than react-helmet btw)
 
-**cookies**
+**cookies**  
 when implementing cookies, adding the `[HttpOnly](https://blog.mozilla.org/security/2018/04/24/same-site-cookies-in-firefox-60/)`, `[Secure](https://blog.mozilla.org/security/2018/04/24/same-site-cookies-in-firefox-60/)`, and `[SameSite](https://blog.mozilla.org/security/2018/04/24/same-site-cookies-in-firefox-60/)` will make sure cookies aren’t modified in transit.
 
 **gotchas**
@@ -272,24 +314,26 @@ when implementing cookies, adding the `[HttpOnly](https://blog.mozilla.org/secur
 - there was trouble with IPv6 — had to remove the AAAA records 😕
 - tried updating `sudo vim /etc/netplan/50-cloud-init.yaml` but didn’t work
     - make sure ipv4 and ipv6 are there and both gateways and nameserver addresses:
-    network:
-        version: 2
-        ethernets:
-            eth0:
+```yaml
+network:
+    version: 2
+    ethernets:
+        eth0:
+            addresses:
+            - 104.248.234.227/20
+            - 2604:a880:400:d1::967:2001/64
+            - 10.10.0.6/16
+            gateway4: 104.248.224.1
+            gateway6: 2604:a880:0400:00d1:0000:0000:0000:0001
+            match:
+                macaddress: 2a:ff:92:44:c1:70
+            nameservers:
                 addresses:
-                - 104.248.234.227/20
-                - 2604:a880:400:d1::967:2001/64
-                - 10.10.0.6/16
-                gateway4: 104.248.224.1
-                gateway6: 2604:a880:0400:00d1:0000:0000:0000:0001
-                match:
-                    macaddress: 2a:ff:92:44:c1:70
-                nameservers:
-                    addresses:
-                    - 67.207.67.3
-                    - 67.207.67.2
-                    search: []
-                set-name: eth0
+                - 67.207.67.3
+                - 67.207.67.2
+                search: []
+            set-name: eth0
+```
 
 
 ----------
@@ -302,44 +346,57 @@ this will be your web server.
 
 - easy: DigitalOcean [one-click node.js](https://www.digitalocean.com/docs/one-clicks/nodejs/) setup
 - or, via command-line:
-    cd ~
-    curl -fsSL https://deb.nodesource.com/setup_14.x | sudo -E bash -
-    sudo apt-get install -y nodejs
+```sh
+cd ~
+curl -fsSL https://deb.nodesource.com/setup_14.x | sudo -E bash -
+sudo apt-get install -y nodejs
+```
 
 
 ## PM2
 
 pm2 keeps your server up and running in addition to starting it up upon system reboot.
 
-    sudo npm install pm2@latest -g
-    pm2 startup systemd
-    <Run the command from the output>
-    pm2 save  (to save current running processes)
+```sh
+sudo npm install pm2@latest -g
+pm2 startup systemd
+<Run the command from the output>
+pm2 save  (to save current running processes)
+```
 
 **config**
 
-    # generates an ecosystem.config.js file in your project
-    pm2 init [simple]
+```sh
+# generates an ecosystem.config.js file in your project
+pm2 init [simple]
+```
 
 **test PM2**
 
-    pm2 startOrReload index.js
-    # or for an npm script
-    pm2 startOrReload npm -- start
-    pm2 startOrReload npm -- run [scriptname]
-    # or, if you have an ecosystem.config.js file you can do
-    pm2 startOrReload ecosystem.config.js
+```sh
+pm2 startOrReload index.js
+# or for an npm script
+pm2 startOrReload npm -- start
+pm2 startOrReload npm -- run [scriptname]
+# or, if you have an ecosystem.config.js file you can do
+pm2 startOrReload ecosystem.config.js
+```
 
 **start the process**
 
-    sudo systemctl start pm2-[user]
-    systemctl status pm2-[user]
+```sh
+sudo systemctl start pm2-[user]
+systemctl status pm2-[user]
+```
 
 **controlling the service**
 
-    pm2 \[start|stop|restart|list|info|monit\] [process_name]
+```sh
+pm2 \[start|stop|restart|list|info|monit\] [process_name]
+```
 
 **looking forward**
+
 [deno](https://deno.land/) is looking like a promising project to rebuild nodejs from the ground up (from the original creator of node)
 
 ----------
@@ -350,57 +407,67 @@ in case you’re not using pm2 + node.js you can use sv + runit to make sure you
 
 **setup runit**
 
-    sudo apt install runit
-    mkdir /etc/sv/project
-    (might have todo chown afterwards? may/may not be necessary)
-    sudo ln -s /etc/sv/project /etc/service/project
+```sh
+sudo apt install runit
+mkdir /etc/sv/project
+(might have todo chown afterwards? may/may not be necessary)
+sudo ln -s /etc/sv/project /etc/service/project
+```
 
+```sh
+vim /etc/sv/project/down
+#!/bin/sh
+pkill -f "<project process name>"
 
-    vim /etc/sv/project/down
-    #!/bin/sh
-    pkill -f "<project process name>"
-
-
-    vim /etc/sv/project/run
-    #!/bin/sh
-    <run project command>
+```sh
+vim /etc/sv/project/run
+#!/bin/sh
+<run project command>
+```
 
 **test it**
 
-    runsv /etc/service/project &
-    sv up project
-    sv down project
+```sh
+runsv /etc/service/project &
+sv up project
+sv down project
+```
 
 **add runit to system startup**
 
-    sudo vim /etc/init.d/project
+```sh
+sudo vim /etc/init.d/project
+```
+
+```sh
+#!/bin/sh
+
+### BEGIN INIT INFO
+# Provides:       project
+# Required-Start:    $local_fs $remote_fs $network $syslog $named
+# Required-Stop:     $local_fs $remote_fs $network $syslog $named
+# Default-Start:     2 3 4 5
+# Default-Stop:      0 1 6
+# Short-Description: starts the project web server
+# Description:       starts project using start-stop-daemon
+### END INIT INFO
+
+exec > /var/log/project.log 2>&1
+runsv /etc/service/project &
+sleep 1s
+sv up project
 
 
-    #!/bin/sh
-    
-    ### BEGIN INIT INFO
-    # Provides:       project
-    # Required-Start:    $local_fs $remote_fs $network $syslog $named
-    # Required-Stop:     $local_fs $remote_fs $network $syslog $named
-    # Default-Start:     2 3 4 5
-    # Default-Stop:      0 1 6
-    # Short-Description: starts the project web server
-    # Description:       starts project using start-stop-daemon
-    ### END INIT INFO
-    
-    exec > /var/log/project.log 2>&1
-    runsv /etc/service/project &
-    sleep 1s
-    sv up project
-
-
-    chmod 755 project
-    sudo update-rc.d project defaults
-    sudo update-rc.d project enable
+chmod 755 project
+sudo update-rc.d project defaults
+sudo update-rc.d project enable
+```
 
 **test it**
 
-    sudo reboot
+```sh
+sudo reboot
+```
 
 
 ----------
