@@ -4,11 +4,11 @@ import { RenderOptions, render } from '@testing-library/react';
 
 import { IntlProvider } from 'i18n';
 import { ThemeProvider } from '@mui/material/styles';
-import { muiTheme } from 'styles';
+import { createTheme } from 'styles';
 
 const AllTheProviders: FC<PropsWithChildren> = ({ children }) => {
   return (
-    <ThemeProvider theme={muiTheme}>
+    <ThemeProvider theme={createTheme('light')}>
       {/* @ts-ignore looks like IntlProvider still needs updated types after React 18 transition. */}
       <IntlProvider defaultLocale="en" locale="en" messages={{}}>
         {/* @ts-ignore looks like IntlProvider still needs updated types after React 18 transition. */}
