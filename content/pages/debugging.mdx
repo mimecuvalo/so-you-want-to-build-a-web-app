@@ -1,0 +1,100 @@
+---
+title: '🐛 debugging'
+---
+
+or, *the “rinse, lather, (hopefully don’t) repeat” part.*
+
+# tl;dr
+- [**Chrome DevTools**](https://developers.google.com/web/tools/chrome-devtools/): `**$0**`, `**$r**`, breakpoints, logpoints, device toolbar, network throttling, user agent spoofing, workspaces
+- [**React DevTools**](https://chrome.google.com/webstore/detail/react-developer-tools/fmkadmapgofadopljbjfkapdkoienihi)
+- **node**: `--inspect`
+- **tracking errors**: exception handling, [error boundaries](https://reactjs.org/docs/error-boundaries.html), logging, [Sentry](https://sentry.io/welcome/), “kernel panic”, kill switch
+- **post-mortems**
+- **resources**: [Chrome DevTools](https://developers.google.com/web/tools/chrome-devtools/)
+
+
+----------
+# [Chrome DevTools](https://developers.google.com/web/tools/chrome-devtools/)
+
+the tools built into your browser are *incredibly* powerful these days. there’s a lot to say on how to use these tools. you should start by just taking any random website you like and mess around with it using the tools. once you’ve played with it a little bit, go read the [reference docs](https://developers.google.com/web/tools/chrome-devtools/). make sure you’ve [enabled sourcemaps](https://webpack.js.org/configuration/devtool/) with your bundling tool. create-next-app’s bundler config should have these on by default.
+
+i won’t go over every feature in this guide, but i’d like to point out some highlights and tricks/tips that i’ve found commonly ignored by engineers:
+
+- `**$0**`: select an element via the Elements panel and it will be available via the Console as the `$0` variable.
+- **breakpoints**: i have found over the years to be rather surprised that a lot engineers don’t know this is available. click on any source line to pause execution there.
+    - **conditional breakpoints**: related to the above you can right-click on a line to add a line that only executes given a certain set of circumstances.
+    - **add logpoint**: Chrome 73+ has a new feature that lets you add `console.log` statements on the fly to your code, without having to pause execution (which can throw off timing and prevent reproducing certain classes of bugs.)
+- **device toolbar**: in the top left, next to the Inspect element icon is a button that lets you see how your site is responsive to different mobile device widths.
+- **network throttling**: let’s you simulate a slower network to see how your site responds under slower conditions. not everyone has your app running locally 🙂. (under Show Console Drawer→Network conditions).
+- **user agent spoofing**: lets you see how your site responds under different browsers or bot user agents. in general, it shouldn’t! don’t change your site depending on the highly unreliable user agent whenever possible! (under Show Console Drawer→Network conditions).
+- [**workspaces**](https://developers.google.com/web/tools/chrome-devtools/workspaces/): DevTools has the ability to save the changes you make in the browser back to the source files on disk.
+
+your bundler, by the way, will create [source maps](https://webpack.js.org/configuration/devtool/) so that your files that are bundled for your app can be mapped backed to the original code in development mode for easier debugging within Chrome’s DevTools.
+
+on the topic of your bundler, another mention here in your workflow is that webpack allows for [hot module replacement (HMR)](https://webpack.js.org/concepts/hot-module-replacement/). this allows for a much faster iteration cycle, especially when debugging a particular section of code.
+
+
+----------
+# [React DevTools](https://chrome.google.com/webstore/detail/react-developer-tools/fmkadmapgofadopljbjfkapdkoienihi)
+
+a must-have tool to debug React components, changing their state and props on demand.
+
+some highlights and tricks/tips for React DevTools:
+
+- `**$r**`: i’ll mention here that related to the `$0` variable is the sister variable `$r` that gives you the last selected React component from React DevTools.
+
+
+----------
+# node
+
+to be able to debug node.js, you must launch it with the `--inspect` flag. from there, you can use your favorite editor/IDE and attach the debugger to the process. you usually have to specify the port (defaults to 9229) and then you’re off to the races! it should work more or less like Chrome’s DevTools debugger.
+
+other configuration options:
+
+- `--inspect-brk` will allow you to wait until debugger attaches, then break on the first line of JS.
+- `--inspect=0.0.0.0:9229` will allow remote connections (useful if your process is on another machine; though may be safer to SSH tunnel instead).
+
+if you visit `chrome://inspect` in your browser, this will allow you to connect your editor to the V8 debugger protocol.
+
+
+----------
+# tracking errors
+## exception handling
+
+at the very least, you need to gather exceptions from your clients and send them up to your server so you know what errors are happening to your users out in the wild. if you’re lucky you will have passionate users that will mercifully report to you bugs they are experiencing. (thank your lucky stars!) but a lot of bugs will go unnoticed and unreported manually by users. and, they might only happen in certain special cases or in certain browsers/countries/days of the week/what have you.
+
+some other notes:
+
+- in addition to your own custom error reporting, make sure you listen to the `[onerror](https://developer.mozilla.org/en-US/docs/Web/API/GlobalEventHandlers/onerror)` event since you might have errors that occur *before* your client even initializes.
+- a new listener is `[onunhandledrejection](https://developer.mozilla.org/en-US/docs/Web/API/WindowEventHandlers/onunhandledrejection)` which listens to Promises that had unhandled rejections. could be useful, depending on your app.
+- `[ReportingObserver](https://developers.google.com/web/updates/2018/07/reportingobserver)`: not widely supported, but provides a way to see if your users are getting deprecation or browser interventions that are shutting down features in your app.
+- `[securitypolicyviolation](https://developer.mozilla.org/en-US/docs/Web/API/SecurityPolicyViolationEvent)`: an event fired if CSP is violated.
+- [error boundaries](https://reactjs.org/docs/error-boundaries.html): in React, you have the option to isolate components from one another.
+
+
+## logging
+
+related to the above is logging on your backend. you should be logging not only exceptions but everything you can on your backend. this will prove to be *vital* when you inevitably come across a problem and, like a detective, try to piece together the series of events that led to a failure.
+
+a paid option that is useful in production is [Sentry](https://sentry.io/welcome/). i wish Sentry was better: it feels heavy-handed, the dashboard UI can be clunky, and there’s a lot of background noise from random browser bugs that are false positives…but there’s nothing else contending with it. i’m exploring the tool [Highlight](https://www.highlight.io/) these days as an alternative.
+
+
+## “kernel panic”/”freakout”
+
+at my previous company we called errors “freakouts” when something went so horribly wrong, that all safety checks had failed and a user’s data was at risk of being lost. the right thing to do here, albeit annoying for your users, is to notify them of this fact and freeze your app from further interaction. see the related section below about a “kill switch”.
+
+
+## client health check or “kill switch”
+
+related to the “kernel panic” above, another safety check that can be implemented is having your clients “phone home” every once in a while to see if they are healthy and not causing problems for your server. especially as your apps become more cached offline and don’t refresh from page-to-page navigation your clients in the wild can become stale and, unfortunately, potentially dangerous. with clients checking with the server if they are still valid, you can send them a signal that they need to reboot (either a “hard”/immediate or “soft”/when-you-can) so that the clients don’t become problems. you should obviously try to do this as unobtrusively for your users as much as possible. only in the case where your clients are DDOSing your server or something grave of that nature should you send a hard reboot.
+
+
+----------
+# post-mortems
+
+one thing to mention here is documenting via a process called a “post-mortem” *especially* if they happen in production taking your website down. by writing down what went wrong and how you solved it, you start to build the to help notice patterns of failure, learn from your mistakes and cohesively learn how to solve it going forward. TODO see workflow / collaboration.
+
+
+----------
+# resources
+- [**Chrome DevTools**](https://developers.google.com/web/tools/chrome-devtools/): reference docs for the browser tool.

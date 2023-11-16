@@ -1,13 +1,12 @@
 import Document, { DocumentContext, DocumentInitialProps, Head, Html, Main, NextScript } from 'next/document';
 import { ReactNode, StrictMode } from 'react';
-import { createEmotionCache, muiTheme } from 'styles';
+import { createEmotionCache } from 'styles';
 
 import createEmotionServer from '@emotion/server/create-instance';
 import crypto from 'crypto';
 import { v4 } from 'uuid';
-
-const HOSTNAME = 'www.example.com';
-const TITLE = 'Next.js Example';
+import { SITE_NAME } from '@/app/constants';
+import { storybook } from 'styles/palette';
 
 const generateCsp = (nonce: string) => {
   const isDevelopment = process.env.NODE_ENV === 'development';
@@ -101,73 +100,21 @@ export default class MyDocument extends Document {
     const { nonce } = this.props;
     const csp = generateCsp(nonce);
 
-    // TODO(mime): combine with url_factory code.
-    const url = `https://${HOSTNAME}`;
-
     return (
       <StrictMode>
         <Html lang={locale}>
           <Head>
             <meta charSet="utf-8" />
-            <meta name="theme-color" content={muiTheme.palette.primary.main} />
+            <meta name="theme-color" content={storybook.primary.main} />
             <meta property="csp-nonce" content={nonce} />
             <meta httpEquiv="Content-Security-Policy" content={csp} />
             <link rel="icon" href="/favicon.jpg" sizes="32x32" />
             <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
             <link rel="apple-touch-icon" href="/favicon.jpg" />
             <link rel="author" href={`/humans.txt`} />
-            <link rel="search" href="/api/opensearch" type="application/opensearchdescription+xml" title={TITLE} />
+            <link rel="search" href="/api/opensearch" type="application/opensearchdescription+xml" title={SITE_NAME} />
             <meta name="description" content="website created using all-the-things." />
             <meta name="generator" content="all-the-things. https://github.com/mimecuvalo/all-the-things" />
-
-            {/* This needs to be filled out by the developer to provide content for the site. Learn more here: http://ogp.me/ */}
-            <meta property="og:title" content={TITLE} />
-            <meta property="og:description" content="page description" />
-            <meta property="og:type" content="website" />
-            <meta property="og:url" content={url} />
-            <meta property="og:site_name" content={TITLE} />
-            <meta property="og:image" content={`${url}/favicon.jpg`} />
-
-            {/*
-              This needs to be filled out by the developer to provide content for the site.
-              Learn more here: https://developers.google.com/search/docs/guides/intro-structured-data
-            */}
-
-            <script
-              nonce={nonce}
-              type="application/ld+json"
-              dangerouslySetInnerHTML={{
-                __html: `
-                {
-                  "@context": "http://schema.org",
-                  "@type": "NewsArticle",
-                  "mainEntityOfPage": {
-                    "@type": "WebPage",
-                    "@id": "${url}"
-                  },
-                  "headline": "page title",
-                  "image": [
-                    "https://example.com/photos/16x9/photo.jpg"
-                  ],
-                  "datePublished": "2015-02-05T08:00:00+08:00",
-                  "dateModified": "2015-02-05T09:20:00+08:00",
-                  "author": {
-                    "@type": "Person",
-                    "name": "John Doe"
-                  },
-                  "publisher": {
-                    "@type": "Organization",
-                    "name": "${TITLE}",
-                    "logo": {
-                      "@type": "ImageObject",
-                      "url": "${url}favicon.jpg"
-                    }
-                  },
-                  "description": "page description"
-                }
-                `,
-              }}
-            />
 
             {/*
               manifest.json provides metadata used when your web app is added to the

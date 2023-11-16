@@ -1,10 +1,10 @@
 import type { Collection } from 'tinacms';
-import { contentBlockSchema } from '../../components/blocks/content';
 
 const Page: Collection = {
   label: 'Pages',
   name: 'page',
   path: 'content/pages',
+  format: 'mdx',
   ui: {
     router: ({ document }) => {
       return `/${document._sys.filename}`;
@@ -20,14 +20,34 @@ const Page: Collection = {
       required: true,
     },
     {
-      type: 'object',
-      list: true,
-      name: 'blocks',
-      label: 'Sections',
-      ui: {
-        visualSelector: true,
-      },
-      templates: [contentBlockSchema],
+      type: "rich-text",
+      label: "Body",
+      name: "_body",
+      templates: [
+        {
+          name: "TableOfContents",
+          label: "TOC",
+          fields: [
+            {
+              name: "children",
+              label: "children",
+              type: "rich-text",
+            },
+          ],
+        },
+        {
+          name: "TLDR",
+          label: "TLDR",
+          fields: [
+            {
+              name: "children",
+              label: "children",
+              type: "rich-text",
+            },
+          ],
+        },
+      ],
+      isBody: true,
     },
   ],
 };

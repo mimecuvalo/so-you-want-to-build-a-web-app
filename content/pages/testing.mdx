@@ -1,0 +1,103 @@
+---
+title: '🃏 testing'
+---
+
+or, *the “we’re not kidding, this is not in* jest, *you really should be testing” part.*
+
+# tl;dr
+- **intro**: write your damn tests.
+- **testing framework**: [Jest](https://jestjs.io/), [Testing Library,](https://testing-library.com/) [coveralls](https://coveralls.io/) ([codecov](https://about.codecov.io/)), `about:inspect`
+- **canary server**
+- **browser automation**: [Puppeteer](https://github.com/GoogleChrome/puppeteer), [cypress](https://www.cypress.io/), [Playwright](https://playwright.dev/)
+- **screenshot testing: the white whale**: just don’t do it.
+- **others**: [jest-dom](https://github.com/gnapse/jest-dom), [Sikuli Script](http://www.sikuli.org/), [Appium](http://appium.io/), [Sauce Labs](https://saucelabs.com/)
+- **resources**: [Jest reference](https://jestjs.io/docs/getting-started) ([Jest matchers](https://jestjs.io/docs/en/expect.html)), [Overview of testing in 2018](https://medium.com/welldone-software/an-overview-of-javascript-testing-in-2018-f68950900bc3)
+
+
+----------
+# intro
+
+after several cycles of scrubbing out bugs and fine-tuning your spectacular app, you’re going to start realizing that you’re running into the same class of bugs and problems. or, maybe you know all the pitfalls of your code, but the other members of the your team don’t and inadvertently create bugs. regardless of the reason, a robust testing methodology baked into your coding will help provide a safety net for all the things that could go wrong as you add more and more code to the app. (if the act of debugging your code is removing problems, then the act of programming must be the act of adding them in, eh? 😛)
+
+
+----------
+# testing framework
+
+[Jest](https://jestjs.io/) is built on top of the mature [Jasmine](https://jasmine.github.io/) project to be zero-configuration and *much faster* than its predecessor. it’s built at Facebook so it also works really well with React which is the main recommendation of this guide as well.
+
+
+## getting setup
+
+to create tests, you create `.js` files within folders named `__tests__`. alternatively, you can create files with a `.test.js` or `.spec.js` suffix. it comes bundled with create-next-app by default. if it isn’t installed you can do so via:
+
+    npm install --save-dev jest
+
+
+## how to write basic tests
+
+the basic form of a test involves just asserting that something is true or not. for example:
+
+    it('sums numbers', () => {
+      expect(sum(1, 2)).toEqual(3);
+      expect(sum(2, 2)).toEqual(4);
+    });
+
+
+## testing components
+
+to give you the ability to test React components, the [Testing Library](https://testing-library.com/) helps put simplify test writing.
+
+
+## coverage
+
+to get a measurement on your code to see much your tests are actually examining your code, you can do the following:
+
+    npm test -- --coverage  # (note extra -- in the middle)
+
+a widely-used product in this space that you can utilize is [coveralls](https://coveralls.io/). i hear good things about [codecov](https://about.codecov.io/) too but haven’t tested it yet.
+
+
+## debugging tests in Chrome
+
+you can debug your tests via `about:inspect` URL in your Chrome browser. learn more on this technique [here](https://facebook.github.io/create-react-app/docs/debugging-tests).
+
+
+## playground
+
+here’s a [handy playground](https://testing-playground.com/) for creating and testing UI.
+
+
+----------
+# canary server
+
+mentioned in [CI section](https://paper.dropbox.com/doc/workflow-collaboration--AVRUDQTcBGFH~wPUW9f8pO~oAg-WTOB9n0gS6r3wmilD85Go#:uid=485397698271622042933226&h2=continuous-integration-(CI)) is the fact that you can setup a server so that you can “dogfood” your app before it goes out to the public. testing can catch a lot of things but sometimes new classes of errors can only crop up with real-world use.
+
+
+----------
+# browser automation and end-to-end (e2e) testing
+
+the latest hotness here is [Puppeteer](https://github.com/GoogleChrome/puppeteer). this lets you automate your browser to navigate through your app by simulating clicking and typing into the browser. save this kind of testing for the very end — it’s thoroughly involved and expensive to maintain — only very mature projects should consider this route. if you do start browser automation, you should also consider sticking to just one browser (either Chrome or Firefox). automating multiple browsers will only compound your headaches with this work! (historically, there was a project called PhantomJS and in the Firefox realm you have [Selenium](https://www.seleniumhq.org/) testing.)
+
+[cypress](https://www.cypress.io/) ****has also been making splashes here — haven’t tested it yet but looks great.
+same goes for [Playwright](https://playwright.dev/) — i’m looking to evaluate that as well soon.
+
+
+----------
+# screenshot testing: the white whale
+
+i’ve personally tried over the years to maintain several tests suites involving screenshot testing and they usually all go to hell. if there’s one thing i would try to steer you away from it would be this. save yourself tears and from tearing out your hair — it’s not worth it. if you’re really bent on doing this you can check out [Huxley](https://github.com/facebookarchive/huxley) although i haven’t personally tried this library *and* even Facebook has archived this project, which tells you something. as an alternative, another [article](https://medium.com/bleeding-edge/screenshot-testing-with-react-and-storybook-19ab7e49ec92) recommends using [Storybook](https://storybook.js.org/) but, again, i’m going to stress that you shouldn’t go this route — there be dragons!
+
+
+----------
+# others
+- [**jest-dom**](https://github.com/gnapse/jest-dom): provides some custom jest matchers to help reducing repetition in tests.
+- [**Sikuli Script**](http://www.sikuli.org/): something to mention — this is actually hard to test with but it helps create automated scripts for your OS which can help for complex tasks that span across applications. in addition, it creates native OS-level inputs vs. simulated ones that Selenium does.
+- [**Appium**](http://appium.io/): for native, mobile device testing.
+- [**Sauce Labs**](https://saucelabs.com/): a third-party service and great way to test your product across different browsers.
+
+
+----------
+# resources
+- [**Jest reference**](https://jestjs.io/docs/getting-started): docs on the test suite.
+    - [**Jest matchers**](https://jestjs.io/docs/en/expect.html): a handy overview of matchers available to you.
+- [**Overview of testing in 2018**](https://medium.com/welldone-software/an-overview-of-javascript-testing-in-2018-f68950900bc3): good run-through of all the different options out there these days.

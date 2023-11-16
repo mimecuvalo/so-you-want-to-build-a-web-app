@@ -1,0 +1,66 @@
+---
+title: '💿 db'
+---
+
+or, *the “JOIN me for some fun” part*.
+
+# tl;dr
+- **recommendations**: [PostgreSQL](https://www.postgresql.org/), [Supabase](https://supabase.com/), [Postico](https://eggerapps.at/postico2/)
+- **ORM**: [prisma](https://www.prisma.io/)
+- **migrations**: schema upgrades in your source code, [gh-ost](https://github.com/github/gh-ost)
+- **quick note on NoSQL**: [MongoDB](https://www.mongodb.com/), [CouchDB](http://couchdb.apache.org/), [OrbitDB](https://github.com/orbitdb)
+- **useful commands**: a quick cheat sheet of commands
+
+
+----------
+https://xkcd.com/327/
+
+----------
+
+i don’t have too many things to comment on as far as databases go. they’re probably my weakest area. (i’m open to suggestions!)
+
+# recommendations
+- [PostgreSQL](https://www.postgresql.org/): Recommendation used to be MySQL but PostgreSQL has definitely taken off community-wise.
+    - a great service that provides Postgres as a service is [Supabase](https://supabase.com/).
+- [Postico](https://eggerapps.at/postico2/): you might have grown up on phpMyAdmin 🤮. this is better.
+
+
+----------
+# ORM
+
+[**prisma**](https://www.prisma.io/) ****is a simple layer to have your code interface with your db.
+
+on the other hand, [there are arguments](https://blog.logrocket.com/why-you-should-avoid-orms-with-examples-in-node-js-e0baab73fa5) against using ORM’s since they can add cruft to your queries. as mentioned in the JS section about using frameworks, in general, using a higher-level wrapper doesn’t excuse you from learning how the underlying technologies works!
+
+
+----------
+# migrations
+- in your source code, a folder containing the scripts for updating schema from version 1 to your current version is recommended. (a tool for this would be great here!)
+- [gh-ost](https://github.com/github/gh-ost). for more complicated db migrations.
+
+
+----------
+# quick note on NoSQL
+
+again, i’m ill-equipped to talk about db’s. but here are some options on NoSQL to explore if you’re into that kind of thing:
+
+- [MongoDB](https://www.mongodb.com/)
+- [CouchDB](http://couchdb.apache.org/)
+- [OrbitDB](https://github.com/orbitdb) (well, this isn’t NoSQL actually — see: [decentralization](https://paper.dropbox.com/doc/the-future-and-decentralization--AORbOAkLt6CrHT66ydl3HMCDAg-5qqElFBI527QsUUdeeiwE))
+
+
+----------
+# useful commands
+
+(further reference on commands [here](https://www.digitalocean.com/community/tutorials/how-to-manage-sql-database-cheat-sheet).)
+
+for when you can’t use the GUI and have to use the command line.
+
+`show databases` — like it says.
+`use [database]` — enter the context of a particular database.
+`describe [table]` — show the structure of a table.
+`show create table [table]` — show how a table is created. useful to get foreign key info.
+`select * from [table] where [conditions]` — select columns in a table.
+`insert into [table] (``'``[column1]``'``,` `'``[column2]``'``) values ('[value1]', '[value2]``'``)` — insert data into a table.
+`delete from [table] where [conditions]` — to remove rows in a table.
+`exit` — leave the program.

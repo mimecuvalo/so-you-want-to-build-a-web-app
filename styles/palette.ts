@@ -67,11 +67,11 @@ const palette: PaletteOptions = {
   info,
   success,
   grey,
-  text: {
-    primary: basics.black,
-    secondary: grey['700'],
-    disabled: grey['500'],
-  },
+  // text: {
+  //   primary: basics.black,
+  //   secondary: grey['700'],
+  //   disabled: grey['500'],
+  // },
 };
 export default palette;
 

@@ -1,13 +1,15 @@
 import { spacing } from './constants';
 
 const SYSTEM_FONTS =
-  'system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji"';
+  'var(--font-noto-color-emoji), system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"';
+const MONOSPACE_FONTS =
+  'var(--font-noto-color-emoji), Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"';
+
 
 const constants = {
-  fontFamily: `${SYSTEM_FONTS}`,
-  fontFamilyHeader: `var(--font-oswald), ${SYSTEM_FONTS}`,
-  fontMonospace:
-    'Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji"',
+  fontFamily: `var(--font-inter), ${SYSTEM_FONTS}`,
+  fontFamilyHeader: `var(--font-press-start-2p), ${MONOSPACE_FONTS}`,
+  fontMonospace: MONOSPACE_FONTS,
 
   fontWeightRegular: 400,
   fontWeightMedium: 500,
@@ -19,12 +21,12 @@ const constants = {
   lineHeightBase: '1.5',
   lineHeightMD: '1.2',
   lineHeightLG: '1.2',
-  lineHeightXL: '1.1',
+  lineHeightXL: '1.5',
 
   // Font sizes (in rems)
   fontSizeXS: '0.75rem',
   fontSizeSM: '0.875rem',
-  fontSizeBase: '1rem',
+  fontSizeBase: '0.875rem',
   fontSizeMD: '1.25rem',
   fontSizeLG: '1.5rem',
   fontSizeXL: '2rem',
@@ -50,8 +52,8 @@ export const muiTypography = {
     fontWeight: typography.fontWeightBold,
     fontSize: typography.fontSizeLG,
     lineHeight: typography.lineHeightLG,
-    marginTop: spacing(1),
-    marginBottom: spacing(1),
+    marginTop: spacing(2),
+    marginBottom: spacing(2),
   },
   h3: {
     fontFamily: typography.fontFamilyHeader,

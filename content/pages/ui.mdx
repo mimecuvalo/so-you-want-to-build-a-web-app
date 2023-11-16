@@ -1,0 +1,219 @@
+---
+title: '⚛️ ui'
+---
+
+or, *the "how to think like a designer" part.*
+
+# tl;dr
+- **patterns of consistency and simplicity**: KISS and sweat the details
+- **styleguide**: [Storybook](https://storybook.js.org/) ([Chromatic](https://www.chromatic.com/)), [React Styleguidist](https://react-styleguidist.js.org/)
+- **accessibility (a11y)**: [Google’s guide](https://developers.google.com/web/fundamentals/accessibility/), [Chrome DevTools reference](https://developers.google.com/web/tools/chrome-devtools/accessibility/reference), [aXe](https://www.deque.com/axe/), [Google’s Accessibility Developer Tools](https://github.com/GoogleChrome/accessibility-developer-tools), [VoiceOver Utility](https://www.apple.com/accessibility/mac/vision/)
+- **internationalization (i18n)**: [react-intl](https://github.com/yahoo/react-intl/wiki)
+- **responsiveness**: avoid fixed widths, fluid layouts, font sizes, image/icon responsiveness, device toolbar
+- **web components**: [Custom Elements](https://developers.google.com/web/fundamentals/web-components/customelements), `[<template>](https://www.html5rocks.com/en/tutorials/webcomponents/template/)`, [Shadow DOM](https://developers.google.com/web/fundamentals/web-components/shadowdom), [ES modules](https://www.html5rocks.com/en/tutorials/webcomponents/imports/)
+- **toolkits and widgets**: [MUI](https://material-ui.com/), [Mantine](https://mantine.dev/)
+- **typography**: [Google Fonts](https://fonts.google.com/), system font stack
+- **iconography**: [MUI Icons](https://material.io/tools/icons/?style=baseline), [Nerd Fonts](https://nerdfonts.com/), [Doodle Ipsum](https://doodleipsum.com/), [unDraw](https://undraw.co/)
+- **animation/visualization:** [react-spring](https://www.react-spring.io/), [Animate.css](https://daneden.github.io/animate.css/), [Framer Motion](https://www.framer.com/motion/), [flipping](https://www.npmjs.com/package/flipping), [react-scroll-parallax](https://react-scroll-parallax.damnthat.tv/docs/intro), [bsmnt](https://scrollytelling.basement.studio/), [visx](https://airbnb.io/visx)
+- **tools for designers**: [Figma](https://www.figma.com/), [Sketch](https://www.sketchapp.com/) ([Airbnb’s React Sketch](http://airbnb.io/react-sketchapp/)), [Framer](https://framer.com/), [Adobe Creative Cloud](https://www.adobe.com/creativecloud.html), [InVision](https://www.invisionapp.com/), [VisBug](https://chrome.google.com/webstore/detail/visbug/cdockenadnadldjbbgcallicgledbeoc), [colorbox.io](https://colorbox.io/), [Laws of UX](https://lawsofux.com/)
+- **ux research**: [UX Collective](https://uxdesign.cc/how-to-conduct-user-interviews-fe4b8c34b0b7?gi=c90ec591ef9)
+- **resources**: [Apple’s Human Interface Guidelines](https://developer.apple.com/design/human-interface-guidelines/), [Basics of UX](https://developers.google.com/web/fundamentals/design-and-ux/ux-basics/), [Responsive Web Design Basics](https://developers.google.com/web/fundamentals/design-and-ux/responsive/), [UI Movement](https://uimovement.com/), [JS & CSS Widget of the Week](https://levelup.gitconnected.com/wotw/home), [WebComponents.org](https://www.webcomponents.org/) ([Polymer Project](https://www.polymer-project.org/))
+
+
+----------
+# patterns of consistency and simplicity
+
+designers and developers have a lot in common when you think about it: they’re both lazy at heart 😜. they both want to “Keep It Simple, Stupid” (KISS) and are obsessed about details like tabs vs. spaces (or, for designers, `px` vs `em`, hah). knowing this, you will make your designers infinitely happy if you not only pay attention to the general guidelines they are giving you but also the minute details that make your app come alive.
+
+
+----------
+# styleguide
+
+to do the aforementioned collaboration effectively, start with a styleguide, which is effectively a contract between design and development. it includes things like: color palettes, fonts, widgets (buttons, menus, etc.), and iconography.
+
+here are some recommended tools:
+
+- [**Storybook**](https://storybook.js.org/) ([Chromatic](https://www.chromatic.com/) is a side-car tool that can help gather feedback)
+- [**React Styleguidist**](https://react-styleguidist.js.org/)
+
+
+----------
+# accessibility (a11y)
+
+this is an important, yet *so-overlooked-it’s-not-even-funny* area in web development. at the very least, you shouldn’t be doing silly things like using `<span>` tags where you should be using `<button>` or `<a>` tags. but there’s *so much more* to a11y than just using the correct HTML elements, like: adding ARIA attributes to your tags, making sure color contrast is correct, placing elements in a certain tab order, and the list goes on and on.
+
+there’s so much to cover in this area such that it wouldn’t all fit in this guide. it is my hope that eventually at least UI toolkits (mentioned in a section below) will become robust enough for the average developer so that at least the widgets are adherent to the guidelines — we’re almost there in that regard. here are some must-read guides on learning the in’s and out’s:
+
+- [**Google’s guide**](https://developers.google.com/web/fundamentals/accessibility/)
+- [**Chrome DevTools reference**](https://developers.google.com/web/tools/chrome-devtools/accessibility/reference)
+
+programmatically, there are a couple libraries that you can use to get an automated assessment of your website:
+
+- [**aXe**](https://www.deque.com/axe/)
+- [**Google’s Accessibility Developer Tools**](https://github.com/GoogleChrome/accessibility-developer-tools)
+
+anecdotally, at my previous company, a tool was designed internally to display a11y information on every webpage (so that it wasn’t just hidden in the DevTools). that’s how important this is!
+
+finally, if you’re on a Mac be sure to check out the [VoiceOver Utility](https://www.apple.com/accessibility/mac/vision/) to get a real-world sense of how your app is feeling when navigating via keyboard (although i think it only works on Safari, sadly).
+
+
+----------
+# internationalization (i18n)
+
+somewhat in the same vein as a11y is providing access to your site to the people around the world that don’t necessarily speak the same language that you do. there’s a lot that goes into i18n, not just translating words, but also the way numbers are formatted, dates, relative dates and pluralization.
+
+the recommended library here is [**react-intl**](https://github.com/yahoo/react-intl/wiki).
+
+
+----------
+# responsiveness
+
+today’s devices are part of a Cambrian explosion of which the variety is astounding. as such, you need to make your UI’s adaptable if you are to survive in this new world. most of this involves using CSS media queries (example: `@media (min-width: 600px) {`) to gate certain CSS to only apply when a smaller device is being used. learn more [here](https://developers.google.com/web/fundamentals/design-and-ux/responsive/).
+
+
+## avoid fixed widths
+
+in your CSS you should tend to avoid boxes that have a set size (with `px`) and use percentages or `em` values. the newer `vw` or `vh` properties which are relative to screen size can also be helpful here.
+
+
+## fluid layouts
+
+your layouts should have the capability to flow vertically when the width is constrained. in effect, the columns of your website should stack on top of each other instead of next to each other.
+
+
+## font sizes
+
+take into consideration that your users are on handheld devices and they will have to strain their eyes more.
+
+
+## image/icon responsiveness
+
+in addition to making it easier to click around your app, you’ll also hopefully save some bandwidth which is more constrained when the user is on the go.
+
+
+## device toolbar
+
+in the top left of Chrome DevTools, next to the Inspect element icon is a button that lets you see how your site is responsive to different mobile device widths. learn it. love it.
+
+
+----------
+# web components
+
+oof, there is a lot going on here that it can make the head spin. you’ll hear related technologies under the umbrella term of web components, including: [Custom Elements](https://developers.google.com/web/fundamentals/web-components/customelements), `[<template>](https://www.html5rocks.com/en/tutorials/webcomponents/template/)`, [Shadow DOM](https://developers.google.com/web/fundamentals/web-components/shadowdom), and [ES modules](https://www.html5rocks.com/en/tutorials/webcomponents/imports/).
+
+web components are a way to create reusable components that are encapsulated in the DOM. cross-browser support is almost here but not quite yet so this technology is still a bit bleeding edge. because of all the ups and downs in this area historically, i’m *almost* ready to recommend going this route vs. more vanilla widgets.
+
+i think i’m in love with the *idea* of web components. but for some reason they keep failing to gain traction in the community. i would take the “assess” stance on Web Components: they might be poised to still be the dominant way to write components in the future but we’re still not there yet.
+
+## resources
+- [Stencil](https://stenciljs.com/)
+- [Shoelace](https://shoelace.style/)
+
+
+----------
+# toolkits and widgets
+
+[**MUI**](https://material-ui.com/) is a great React library to get you going with a UI toolkit straight out of the box. an alternative library that has good traction is [**Mantine**](https://mantine.dev/). 
+
+
+----------
+# typography
+
+a good custom font (i.e. from Google Fonts) can add a lot of flavor to your site. that being said, system fonts are still a great choice, too, and much faster! the choice is yours. that being said though, you should use still probably use the system font stack regardless to avoid invisible text while the custom fonts are loading.
+
+
+## custom fonts
+
+[**Google Fonts**](https://fonts.google.com/). a wonderful set of great fonts that are free to use! here are some [inspirational font choices](https://femmebot.github.io/google-type/) via Google Fonts to get you thinking about how to choose one.
+
+
+## system font stack
+
+by defaulting to a system font you gain speed and a look for your site that matches the user’s operating system. here’s how to implement it:
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+          "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+    }
+    code {
+      font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
+    }
+
+
+## readability
+
+for the human eye, reading a wide swath of text is tricky. an ideal width of 45–75 characters can be achieved thusly:
+
+    p {
+      width: clamp(45ch, 50%, 75ch);
+    }
+    /* or */
+    p {
+      font-size: clamp(1.5rem, 5vw, 3rem);
+    }
+----------
+# iconography
+
+[**MUI**](https://material.io/tools/icons/?style=baseline) has a great set of icons that are easily included into your app. you can find a meta search of *all* icon sets across the web [here](https://icones.js.org/) and [here](https://iconbuddy.app/).
+
+alternatively, [**Nerd Fonts**](https://nerdfonts.com/) is a great one-stop font combining Font Awesome, Octicons, Material Design, and many more. however, it can be more difficult to include into your app — it’s not as simple as an `import` statement.
+
+[**Doodle Ipsum**](https://doodleipsum.com/) is a fun set of illustrations you can use as well. [**unDraw**](https://undraw.co/) can also be used for some quick illustrations.
+
+
+----------
+# animation/visualization
+
+[**react-spring**](https://www.react-spring.io/) is a great little library that gets you a smooth spring-like animation effect. (i used to use Rebound JS to good effect on [Dropbox Paper](https://paper.dropbox.com/) for its menus and toolbars — react-spring is its spiritual successor.)
+
+[**Animate.css**](https://daneden.github.io/animate.css/) is another great library that will get you a lot of animations for free out of the box. (by the way, as recommended for most third-party libraries i mention in this guide, it’s good to grab what you need not the whole library wholesale since that can increase your app’s bundle size by a thousand little cuts. but, of course, be sure to leave the code’s original license in!)
+
+**more libraries of interest:**
+
+- [**Framer Motion**](https://www.framer.com/motion/)
+- [**flipping**](https://www.npmjs.com/package/flipping) (some great demos)
+- [**react-scroll-parallax**](https://react-scroll-parallax.damnthat.tv/docs/intro): parallax/”scrollytelling”
+- [**bsmnt**](https://scrollytelling.basement.studio/): more scrollytelling
+- [**visx**](https://airbnb.io/visx): visualization primatives from Airbnb
+- [**gradient generator**](https://www.joshwcomeau.com/gradient-generator/): really nice gradients via josh comeau.
+- [**shadow generator**](https://www.joshwcomeau.com/shadow-palette/): really nice shadow generator (also from comeau).
+- [**Victory**](https://formidable.com/open-source/victory/): great charting tool from Formidable.
+
+
+----------
+# tools for designers
+
+it’s worth familiarizing yourself with how designers work these days and the tools they have at their disposal. this will help you collaborate more effectively and make sure details don’t get lost in translation when coded-up.
+
+
+- [**Figma**](https://www.figma.com/): collaborative interface design tool to let teams of designers and devs work together more easily.
+- [**Sketch**](https://www.sketchapp.com/): a digital design toolkit.
+    - [**Airbnb’s React Sketch**](http://airbnb.io/react-sketchapp/): an extension that allows you to write React components that render to Sketch documents.
+- [**Framer**](https://framer.com/): design tool that lets you create interaction prototypes. has more coding capabilities than the others on this list.
+- [**Adobe Creative Cloud**](https://www.adobe.com/creativecloud.html): the classic suite that provides Photoshop, Illustrator, and more.
+- [**InVision**](https://www.invisionapp.com/): digital product design app.
+- [**VisBug**](https://chrome.google.com/webstore/detail/visbug/cdockenadnadldjbbgcallicgledbeoc): a new tool from Google that lets you edit websites directly.
+- [**colorbox.io**](https://colorbox.io/): quickly get a nice color set.
+- [**Law of UX**](https://lawsofux.com/): great set of principles to follow.
+
+
+----------
+# ux research, or getting to know your users
+
+building a product in a vacuum won’t really work — you need to try it out in the real world!
+check out the UX Collective to understand how to approach this process holistically and unbiased.
+
+- [**How to Conduct User Interviews**](https://uxdesign.cc/how-to-conduct-user-interviews-fe4b8c34b0b7?gi=c90ec591ef9)
+- [**Asking the right questions during user research, interviews and testing**](https://uxdesign.cc/asking-the-right-questions-on-user-research-interviews-and-testing-427261742a67?gi=bf7047cd42eb)
+- [**10 cognitive biases to avoid in User Research (and how to avoid them)**](https://uxdesign.cc/10-cognitive-biases-to-avoid-in-user-research-and-how-to-avoid-them-993aa397c8c6?gi=5982e4f403d0)
+
+
+----------
+# resources
+- [**Apple’s Human Interface Guidelines**](https://developer.apple.com/design/human-interface-guidelines/): from the titans of design, a great look into how to think about design.
+- [**Basics of UX**](https://developers.google.com/web/fundamentals/design-and-ux/ux-basics/): Google’s guide on UX.
+- [**Responsive Web Design Basics**](https://developers.google.com/web/fundamentals/design-and-ux/responsive/): Google’s guide on responsive web sites.
+- [**UI Movement**](https://uimovement.com/): fun, inspirational site showing off different UI animations.
+- [**JavaScript & CSS Widget of the Week**](https://levelup.gitconnected.com/wotw/home): another inspirational site of UI awesomeness.
+- [**WebComponents.org**](https://www.webcomponents.org/): a site dedicated to the Custom Elements/Shadow DOM specs and toolkits around them.
+    - [**Polymer Project**](https://www.polymer-project.org/): libraries, tools, and standards built off of Custom Elements.

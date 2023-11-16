@@ -1,0 +1,135 @@
+---
+title: '🖼️ the website'
+---
+
+or, *the "putting it all together" part.*
+
+![Periodic Table of HTML5Elements (via Smashing Magazine)](https://d2mxuefqeaa7sj.cloudfront.net/s_3C1EB5AB7D3F0FF008C3AED2D1EF037B76C79C6E746CB33AE289B834958CABEA_1542145802663_wallhaven-218342.png)
+
+# tl;dr
+- **HTML**: [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML) ([HTML reference](https://developer.mozilla.org/en-US/docs/Web/HTML/Element)), semantic, [HTML5](http://diveinto.html5doctor.com/), (no) validation
+- **metadata**: icons ([favicon](https://developer.apple.com/library/archive/documentation/AppleApplications/Reference/SafariWebContent/ConfiguringWebApplications/ConfiguringWebApplications.html), [apple-touch-icon](https://developer.apple.com/library/archive/documentation/AppleApplications/Reference/SafariWebContent/ConfiguringWebApplications/ConfiguringWebApplications.html)), [JSON-LD](https://developers.google.com/search/docs/guides/intro-structured-data), rich previews ([Open Graph](http://ogp.me/), [Twitter Cards](https://developer.twitter.com/en/docs/tweets/optimize-with-cards/guides/getting-started.html), [oEmbed](https://oembed.com/)), [mobile](https://developer.mozilla.org/en-US/docs/Mozilla/Mobile/Viewport_meta_tag), [OpenSearch](http://www.opensearch.org/Home)
+- **error pages and fallbacks**: `<noscript>`, [404](https://developer.mozilla.org/ko/docs/Web/HTTP/Status/404), [401](https://developer.mozilla.org/ko/docs/Web/HTTP/Status/401), [500](https://developer.mozilla.org/ko/docs/Web/HTTP/Status/500)
+- **humans and bots**: [humans.txt](http://humanstxt.org/), [robots.txt](http://www.robotstxt.org/)
+- **auth layer**: [Auth0](https://auth0.com/), [SuperTokens](https://supertokens.com/), [AuthJS](https://authjs.dev/) ([Clerk](https://clerk.com/)), [Passport](http://www.passportjs.org/), [expressjs-session](https://github.com/expressjs/session), [jwt](https://jwt.io/)
+- **experiments framework**
+- **admin mode**
+- **data liberation**
+- **resources**: [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML) ([HTML reference](https://developer.mozilla.org/en-US/docs/Web/HTML/Element)), [HTML5](http://diveinto.html5doctor.com/)
+
+
+----------
+# HTML
+
+you’d think a guide on building a web app would have this way in the front, eh? it’s funny because HTML forms the core of what enables the web but it’s become secondary as a technology these days when compared to JS. i won’t spend too much time on explaining the ins and outs of HTMLin this guide but here’s a couple of things to keep in mind.
+
+## general guidelines:
+- [**the absolute basics**](https://developer.mozilla.org/en-US/docs/Web/HTML): if you’re absolutely new, check out the link for MDN’s guide.
+    - [**MDN’s HTML reference**](https://developer.mozilla.org/en-US/docs/Web/HTML/Element): an overview of all the elements.
+- **Keep it semantic**: learn the tags that are available to you as you code. not everything should be wrapped in `<div>`/`<span>`! this is especially important for robots crawling your site (i.e. SEO) to extract meaning from your document. it’s also especially important for accessibility so that users that have visual handicaps are able to still use your website through a screen reader.
+- [**HTML5**](http://diveinto.html5doctor.com/): the current version of HTML has more semantic tags than its previous iteration. (the link is a bit outdated but still a great primer.)
+- **no need to validate these days**: i know, this sounds like heresy. but things like React will give you built-in validation, so-to-speak, for your HTML. i can’t remember the last time i tried to validate my HTML — it’s just not necessary anymore. the much larger problem here is validating HTML for accessibility (a11y) purposes which i mention in the [UI](https://paper.dropbox.com/doc/ui--ARmOxiFgK77GAYPzDjHvXfQjAg-xH3LtH0Lwy33CvtoUhr6V) section of this guide. it is a woefully overlooked area in many an app and you’re much better off focusing your efforts in that area.
+
+
+----------
+# metadata
+
+there’s a lot that goes into the `<head>` tag these days. some of it’s standardized and some of it’s not. you should definitely look into all of these though since they increase the shareability of your app and its virality.
+
+a list of technologies to look into adding to your `<head>`  section:
+
+- **icons**: it’s frustrating because there are several icons to provide depending on the device.
+    - [*favicon*](https://developer.apple.com/library/archive/documentation/AppleApplications/Reference/SafariWebContent/ConfiguringWebApplications/ConfiguringWebApplications.html): gives the browser an image to use as the tab’s image (doesn’t have to be an .ico file btw.)
+    - [*apple-touch-icon*](https://developer.apple.com/library/archive/documentation/AppleApplications/Reference/SafariWebContent/ConfiguringWebApplications/ConfiguringWebApplications.html): for Apple devices.
+    - surprisingly, the rabbit hole on favicons goes even deeper if you wanna do it right: [read more here](https://evilmartians.com/chronicles/how-to-favicon-in-2021-six-files-that-fit-most-needs) on *fully* supporting favicon-ography.
+- [**JSON-LD**](https://developers.google.com/search/docs/guides/intro-structured-data): provides structured metadata around your site so that various nicities can appear within search results. this has a long history of predecessors and competitors including [Microdata](https://schema.org), [RDFa](https://rdfa.info), [Microformats](http://microformats.org). Google recommends JSON-LD though so just go with that. a playground is available [here](https://json-ld.org/playground/).
+- **rich previews**: this is metadata that other sites use when user’s paste links to your app and you want to provide a rich preview showing the content (e.g. a thumbnail, video, etc.). the fragmentation here is so frustrating, ugh:
+    - [*Open Graph*](http://ogp.me/): from Facebook, allows you to give title, description, thumbnails, etc.
+    - [*Twitter Cards*](https://developer.twitter.com/en/docs/tweets/optimize-with-cards/guides/getting-started.html): from Twitter, allows you to give title, description, thumbnails, etc.
+    - [*oEmbed*](https://oembed.com/): an open standard to provide an endpoint giving title, description, thumbnails, etc. (not widely used, sadly.)
+- [**mobile behavior**](https://developer.mozilla.org/en-US/docs/Mozilla/Mobile/Viewport_meta_tag): informs mobile browsers of how you would want your app to behave on mobile. for web apps you probably want to something like:
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+- [**OpenSearch**](http://www.opensearch.org/Home): allows you to define your search engine for your site. this lets your users hit `<tab>` when typing in the URL to be able to search from their browser’s address field. historically developed by Amazon. (*author’s note*: for such a common tool on the web, this has a such a crappy website?)
+
+
+----------
+# error pages and fallbacks
+## `<noscript>`
+
+not everyone likes running JS on their websites. this is probably for good reason! it can be such a weight when navigating to random websites. don’t forget to include this tag somewhere on your page to inform your users in case JS is needed for things to function.
+
+## error pages
+
+as much as you try, things *will* go wrong. it’s best to go easy on your users when these frustrating experiences happen. those of you around for when Twitter first came out will be familiar with the infamous [Fail Whale](http://www.whatisfailwhale.info/). Twitter probably bought itself a lot of social credit by being cute about how it went down *all the time* back in the day. you can at least take the time to create a single error page that at least conveys something for the following errors:
+
+- [**404**](https://developer.mozilla.org/ko/docs/Web/HTTP/Status/404): when a page isn’t found.
+- [**401**](https://developer.mozilla.org/ko/docs/Web/HTTP/Status/401): when a user doesn’t have access to an area (usually, hasn’t logged in.)
+    - this is similar to the [403](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403) error but 403 conveys that there isn’t an option to login.
+- [**500**](https://developer.mozilla.org/ko/docs/Web/HTTP/Status/500): when your server fails and you’ve woken up a developer in the middle of the night 😜
+- and [many more](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status).
+
+
+----------
+# humans and bots
+- [**humans.txt**](http://humanstxt.org/): lets you convey the people behind the app that’s been created. show the humanity behind the curtain of 0’s and 1’s!
+- [**robots.txt**](http://www.robotstxt.org/): lets you convey to search engines what is indexable and what isn’t on your website.
+
+
+----------
+# auth layer
+
+your app, probably, needs to provide a way for a user to login and create a presence on your website. given the security implications here, this is such an *easy way to shoot yourself in the foot.* my recommendation here is: *don’t roll your own whenever possible*.
+
+the two options here are to use cookies, which is traditionally the way people save logins or to store local tokens in the client only. the latter option of storing tokens solely in the client eliminates a class of potential security holes in your server (namely, XSRF) and can help eliminate complexity on the server. however, it will make server-side rendering (SSR) difficult. thus, if you’re going the SSR route, it’s best to go cookies; otherwise, choose tokens.
+
+some products in this space:
+
+- [**Auth0**](https://auth0.com/): they have a great starter free plan (7,000 users) with built-in support for logging in via Google and Facebook. [**SuperTokens**](https://supertokens.com/) is another alternative that looks promising. Yet another alternative is [AuthJS](https://authjs.dev/) ([Clerk](https://clerk.com/)),.
+- [**expressjs-session**](https://github.com/expressjs/session): lets you create/store sessions in your server. this is if you decide to go the cookie route. use in tandem with [**connect-redis**](https://www.npmjs.com/package/connect-redis).
+- [**jwt**](https://jwt.io/): if you decide to go the token route, JSON web tokens are your best bet. you’ll probably also need [**jwks-rsa**](https://github.com/auth0/node-jwks-rsa) and [**express-jwt**](https://github.com/auth0/express-jwt).
+- [**Passport**](http://www.passportjs.org/): haven’t tried it myself but i hear good things. it’s a middleware package that will check authentication for your various routes.
+
+
+----------
+# feedback
+
+a minor detail but an important one. make sure you provide a feedback button/form so that your users to get in touch with you. it’s *vital* as you grow your app to give your users a way to give you feedback and let you know if things go wrong (or, go right!)
+
+
+----------
+# experiments framework
+
+a great way to iterate quickly and try out new features with your users is to create an experiments framework. this is a must have for modern development!
+
+- gives you early feedback on a feature before it’s completely finished.
+- allows slow rollouts of new features to make sure only a small set of users are affected in case something is broken.
+- enables A/B testing to see if different versions of features perform better than others
+- as a bonus, can allow for internal-only features and debugging tools to be gated to admin or canary users of your product.
+
+
+----------
+# admin mode
+
+one thing to consider in your app is building a separate, sister application that allows one to perform administrative tasks for your website. on top of that, if it makes sense a “super-admin” mode could be recommended for more sensitive operations that can be irreversible and dangerous. exercise caution and prudence here and *always* obfuscate any private data that your user is providing your website. your users deserve the utmost respect and have a more than reasonable expectation that their data will never be viewed, even if a developer is in admin/”god” mode.
+
+
+----------
+# data liberation
+
+just as important as how users enter into your app is how they are able to “exit” it. to be a worthy citizen of today’s web, you *must* provide a way for users to be able to export their data. this can be as simple as a JSON dump or an HTML bundle of their data. as an added bonus to creating this functionality is the fact that you can better justify creating an importer so that users bring their data to your app from other sites!
+
+
+----------
+# onboarding
+
+if your app is sufficiently large, you can provide users some helpful nudges to guide them along into how your app works. you are effectively “gamefying” your app here a bit. if done successfully, it can also be a great opportunity for you to offer to get users to invite their friends to your app. [Slack](https://slack.com/) whose onboarding is best-in-class here.
+
+
+- library of interest: [driver.js](https://driverjs.com/)
+
+
+----------
+# resources
+- [**Mozilla Developer Network**](https://developer.mozilla.org/en-US/docs/Web/HTML): the best reference for web technologies.
+    - [**MDN’s HTML reference**](https://developer.mozilla.org/en-US/docs/Web/HTML/Element): an overview of all the elements.
+- [**Dive Into HTML5**](http://diveinto.html5doctor.com/): a great walkthrough of HTML5’s features. (a bit outdated btw but still a great primer.)
