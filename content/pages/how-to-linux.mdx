@@ -7,10 +7,10 @@ or, *the “the wisdom of the tee” part.*
 # tl;dr
 - **absolute basics**: `cd`, `ls`, `rm`, `mv`, `vim`
 - **shortcuts**: [ctrl] + [a|e|c|k|z]
-- **intermediate**: `|`, `history`, `grep` (`[ripgrep](https://github.com/BurntSushi/ripgrep)`), `cat`, `less`, `man`, `find` (`[fd](https://github.com/sharkdp/fd)`), `df`, `du` (`[dust](https://github.com/bootandy/dust)`), `sudo`, `tail`, `touch`, `alias`, `sh`, `exit`
+- **intermediate**: `|`, `history`, `grep` ([`ripgrep`](https://github.com/BurntSushi/ripgrep)), `cat`, `less`, `man`, `find` ([`fd`](https://github.com/sharkdp/fd)), `df`, `du` ([`dust`](https://github.com/bootandy/dust)), `sudo`, `tail`, `touch`, `alias`, `sh`, `exit`
 - **processes**: `&`, `>`, `top`, `ps`, `kill`, `killall`, `which`, `locate`, `fg`
 - **network**: `curl`, `whois`, `traceroute`, `ping`, `lsof`, `scp`
-- **handy commands**: SSH key generation, handling archives, replacing en masse, permissions, JSON parsing, shell script checks, `[zx](https://google.github.io/zx/)`
+- **handy commands**: SSH key generation, handling archives, replacing en masse, permissions, JSON parsing, shell script checks, [`zx`](https://google.github.io/zx/)
 
 
 ----------
@@ -61,22 +61,22 @@ this is a pet peeve of mine that no one ever taught me these *super* handy short
 - `|` — the “pipe”. pass the output from one process to another, e.g. `history | grep cd`
 - `history` — see the list of commands you’ve tried in the past
 - `grep [pattern] *` — search the files in the current directory for the pattern
-    - *tip*: easier, faster alternative is `[ripgrep](https://github.com/BurntSushi/ripgrep)`, you can install via `brew install ripgrep`
+    - *tip*: easier, faster alternative is [`ripgrep`](https://github.com/BurntSushi/ripgrep), you can install via `brew install ripgrep`
 - `grep [pattern] * -rsiI` — search recursively, case-insensitive, ignoring binary files
 - `history | grep [pattern]` — find relevant commands in your history you’ve used before
 - `cat [file]` — output the contents of a file
 - `less [file]` — scroll through the contents of a file (`space`  to page through, `q` to quit)
 - `man [command]` — show help file for a command, `[cmd] -h` or `[cmd]` `--``help` also can work
-- `find . -name '[file]``'` — find a file by a specific name
-    - *tip*: easier alternative is `[fd](https://github.com/sharkdp/fd)`, you can install via `brew install f`d
+- `find . -name '[file]'` — find a file by a specific name
+    - *tip*: easier alternative is [`fd`](https://github.com/sharkdp/fd), you can install via `brew install f`d
 - `df -h` — show local hard disk space
 - `du -sch * |sort -hr` — show the biggest files under a particular subdirectory
-    - *tip*: easier alternative is `[dust](https://github.com/bootandy/dust)`, you can install via `brew install dust`
+    - *tip*: easier alternative is [`dust`](https://github.com/bootandy/dust), you can install via `brew install dust`
 - `sudo [command]` — run command with [elevated privileges](https://xkcd.com/149/)
 - `tail -f [file]` — see real-time updates to a file, used especially with a log file on a server
 - `touch [file]` — creates file if doesn’t exist, or updates its timestamp
     - useful to kick off a process that might be waiting for a file to change before running
-- `alias [shortcut]=``'``[command to run]``'` — take a long command that’s hard to remember and create a shortcut for it, e.g. `alias v=``'``ls -lah``'`
+- `alias [shortcut]='[command to run]'` — take a long command that’s hard to remember and create a shortcut for it, e.g. `alias v='ls -lah'`
 - `sh` — open up another shell (`zsh` if you’re using that)
     - `exit` — to exit the shell
 
@@ -112,7 +112,7 @@ this is a pet peeve of mine that no one ever taught me these *super* handy short
 ----------
 # handy commands
 
-- `ssh-keygen -t rsa -b 4096 -C "[example@email.com]``"` — generate SSH key
+- `ssh-keygen -t rsa -b 4096 -C "[example@email.com]"` — generate SSH key
 - `ssh-add -K ~/.ssh/id_rsa` — add password to your keychain to save time
 - `tar -czvf \[name\] [file]` — compress a file/directory into an archive
 - `tar -xzvf [file]` — uncompress an archive
@@ -122,6 +122,6 @@ this is a pet peeve of mine that no one ever taught me these *super* handy short
 - `jq '[selector]' < example.json` — if your server logs are in JSON format you can query them using the `jq` command
 - `fc` — fix command. open up the last command you tried to run in an editor.
 - `<( somecommand )` — treat a command output as a file. e.g. try `diff <(ls) <(ls -a)`
-- `[cmatrix](https://github.com/abishekvashok/cmatrix)` — make it look like you’re doing something important 😉
-- `[shellcheck](https://github.com/koalaman/shellcheck)` — check your shell script for errors before running it.
-- `[zx](https://google.github.io/zx/)` — a handy JS tool *around* shell scripting that makes running multiple commands a little more intuitive for those of us that don’t live on the command line day-to-day (i.e. most of us).
+- [`cmatrix`](https://github.com/abishekvashok/cmatrix) — make it look like you’re doing something important 😉
+- [`shellcheck`](https://github.com/koalaman/shellcheck) — check your shell script for errors before running it.
+- [`zx`](https://google.github.io/zx/) — a handy JS tool *around* shell scripting that makes running multiple commands a little more intuitive for those of us that don’t live on the command line day-to-day (i.e. most of us).
