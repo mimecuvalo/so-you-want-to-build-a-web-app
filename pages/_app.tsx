@@ -1,7 +1,7 @@
 import 'styles/globals.css';
 
 import { CacheProvider, EmotionCache } from '@emotion/react';
-import { Container, DebugWrapper, Header } from 'components';
+import { Container, Header } from 'components';
 import { IntlProvider, setupCreateIntl } from 'i18n';
 import { createEmotionCache, createTheme } from 'styles';
 import { disposeAnalytics, setupAnalytics } from 'app/analytics';
@@ -112,7 +112,6 @@ function MyApp({ Component, emotionCache = clientSideEmotionCache, pageProps }: 
                 <Component {...pageProps} />
               </Container>
               <Analytics />
-              <DebugWrapper />
             </div>
 
             <noscript>
