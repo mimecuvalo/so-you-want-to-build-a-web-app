@@ -349,7 +349,10 @@ export default function Page(props: InferGetStaticPropsType<typeof getStaticProp
     <>
       <ContentHead title={title} url={url} />
       <MarkdownStyling>
-        <Typography variant="h1" sx={{ marginInlineStart: '-4.25rem', paddingLeft: '4.25rem', textIndent: '-4.75rem' }}>
+        <Typography
+          variant="h1"
+          sx={{ marginInlineStart: { sm: '-4.25rem' }, paddingLeft: { sm: '4.25rem' }, textIndent: { sm: '-4.75rem' } }}
+        >
           {title}
         </Typography>
         <TinaMarkdown

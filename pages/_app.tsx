@@ -108,7 +108,7 @@ function MyApp({ Component, emotionCache = clientSideEmotionCache, pageProps }: 
               <Head>
                 <meta name="viewport" content="minimum-scale=1, initial-scale=1, width=device-width" />
               </Head>
-              <Container sx={{ my: 8, width: 'clamp(45ch, 80%, 75ch)' }}>
+              <Container sx={{ my: 8, width: { xs: '100%', sm: 'clamp(45ch, 80%, 75ch)' } }}>
                 <Component {...pageProps} />
               </Container>
               <Analytics />

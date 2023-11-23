@@ -16,7 +16,7 @@ export default function Header() {
   return (
     <header>
       <AppBar position="fixed" sx={{ background: 'none', boxShadow: 'none' }}>
-        <Toolbar sx={{ justifyContent: 'space-between' }}>
+        <Toolbar sx={{ justifyContent: 'space-between', pr: 0 }}>
           <IconButton
             aria-label="open drawer"
             onClick={() => setIsDrawerOpen(true)}
@@ -56,6 +56,7 @@ export default function Header() {
               <Link
                 href={`/${page.slug}`}
                 sx={{ display: 'block', fontWeight: router.asPath.slice(1) === page.slug ? 'bold' : 'normal' }}
+                onClick={() => setIsDrawerOpen(false)}
               >
                 {page.title}
               </Link>
