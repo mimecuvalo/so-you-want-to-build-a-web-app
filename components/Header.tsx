@@ -16,7 +16,13 @@ export default function Header() {
   return (
     <header>
       <AppBar position="fixed" sx={{ background: 'none', boxShadow: 'none' }}>
-        <Toolbar sx={{ justifyContent: 'space-between', pr: 0 }}>
+        <Toolbar
+          sx={{
+            justifyContent: 'space-between',
+            pr: 0,
+            background: theme.palette.mode === 'dark' ? theme.palette.background.paper : '#fff',
+          }}
+        >
           <IconButton
             aria-label="open drawer"
             onClick={() => setIsDrawerOpen(true)}
