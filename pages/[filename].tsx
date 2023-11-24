@@ -351,7 +351,12 @@ export default function Page(props: InferGetStaticPropsType<typeof getStaticProp
       <MarkdownStyling>
         <Typography
           variant="h1"
-          sx={{ marginInlineStart: { sm: '-4.25rem' }, paddingLeft: { sm: '4.25rem' }, textIndent: { sm: '-4.75rem' } }}
+          sx={{
+            textWrap: 'balance',
+            marginInlineStart: { sm: '-4.25rem' },
+            paddingLeft: { sm: '4.25rem' },
+            textIndent: { sm: '-4.75rem' },
+          }}
         >
           {title}
         </Typography>
