@@ -1,4 +1,4 @@
-import { IconButton, Menu, MenuItem, SwipeableDrawer, Typography } from '@mui/material';
+import { IconButton, Menu, MenuItem, Drawer, Typography } from '@mui/material';
 import { F, defineMessages, useIntl } from 'i18n';
 import { MouseEvent, useState } from 'react';
 import { styled, useTheme } from '@mui/material/styles';
@@ -97,7 +97,7 @@ export default function Help() {
         </MenuItem>
       </Menu>
 
-      <SwipeableDrawer
+      <Drawer
         anchor="right"
         open={isExperimentsOpen}
         onClose={() => setIsExperimentsOpen(false)}
@@ -106,7 +106,7 @@ export default function Help() {
         <Typography variant="h1" style={{ padding: `0 ${theme.spacing(1)}` }}>
           Experiments
         </Typography>
-      </SwipeableDrawer>
+      </Drawer>
     </HelpContainer>
   );
 }

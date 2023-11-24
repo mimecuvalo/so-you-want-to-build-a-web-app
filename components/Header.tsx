@@ -1,4 +1,4 @@
-import { AppBar, Toolbar, IconButton, SwipeableDrawer, useTheme, Grid } from '@mui/material';
+import { AppBar, Toolbar, IconButton, Drawer, useTheme, Grid } from '@mui/material';
 import { GitHub, Lightbulb, Menu } from '@mui/icons-material';
 import { useContext, useState } from 'react';
 import { PAGES } from 'app/constants';
@@ -43,11 +43,10 @@ export default function Header() {
         </Toolbar>
       </AppBar>
 
-      <SwipeableDrawer
+      <Drawer
         anchor="left"
         open={isDrawerOpen}
         onClose={() => setIsDrawerOpen(false)}
-        onOpen={() => setIsDrawerOpen(true)}
         PaperProps={{ sx: { py: 4, background: theme.palette.mode === 'dark' ? '#000' : '#fff' } }}
       >
         <ol>
@@ -78,7 +77,7 @@ export default function Header() {
             <Image alt="nightlight" src="/favicon.svg" width={29.5} height={29.5} style={{ borderRadius: '50%' }} />
           </Link>
         </Grid>
-      </SwipeableDrawer>
+      </Drawer>
     </header>
   );
 }
