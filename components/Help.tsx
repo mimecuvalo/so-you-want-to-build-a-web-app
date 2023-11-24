@@ -97,12 +97,7 @@ export default function Help() {
         </MenuItem>
       </Menu>
 
-      <Drawer
-        anchor="right"
-        open={isExperimentsOpen}
-        onClose={() => setIsExperimentsOpen(false)}
-        onOpen={() => setIsExperimentsOpen(true)}
-      >
+      <Drawer anchor="right" open={isExperimentsOpen} onClose={() => setIsExperimentsOpen(false)}>
         <Typography variant="h1" style={{ padding: `0 ${theme.spacing(1)}` }}>
           Experiments
         </Typography>
