@@ -66,7 +66,7 @@
     "react-spring": "9.7.3",
     "sanitize.css": "13.0.0",
     "sharp": "0.32.6",
-    "tinacms": "1.5.21",
+    "tinacms": "2.7.9",
     "uuid": "9.0.1",
     "web-vitals": "3.5.0",
     "workbox-background-sync": "7.0.0",
@@ -91,7 +91,7 @@
     "@testing-library/jest-dom": "6.1.4",
     "@testing-library/react": "14.0.0",
     "@testing-library/user-event": "14.5.1",
-    "@tinacms/cli": "1.5.30",
+    "@tinacms/cli": "1.9.9",
     "@types/jest": "29.5.7",
     "@types/js-cookie": "3.0.5",
     "@types/lodash": "4.14.200",
@@ -142,5 +142,6 @@
     }
   },
   "browserslist": "last 2 versions",
-  "sideEffects": false
+  "sideEffects": false,
+  "packageManager": "yarn@1.22.21+sha1.1959a18351b811cdeedbd484a8f86c3cc3bbaf72"
 }
