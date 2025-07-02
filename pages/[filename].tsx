@@ -8,7 +8,7 @@ import Head from 'next/head';
 import { PAGES, SITE_NAME, SITE_URL } from 'app/constants';
 import { pageUrl } from 'util/url-factory';
 import { ArrowBack, ArrowForward } from '@mui/icons-material';
-import { Page } from '@/tina/__generated__/types';
+import { Page as TinaPage } from '@/tina/__generated__/types';
 import { Box, Divider, PaletteMode, useTheme } from '@mui/material';
 import { Prism } from 'tinacms/dist/rich-text/prism';
 
@@ -158,7 +158,7 @@ const getId = (children: any) => {
   return text?.replace(/\W/g, '-');
 };
 
-const customRenderers = (allPages: Page[], themeMode: PaletteMode) => ({
+const customRenderers = (allPages: TinaPage[], themeMode: PaletteMode) => ({
   a: (props: any) => (
     <Link href={props.url} target={props.url.startsWith('/') ? '' : '_blank'}>
       {props.children}
@@ -362,7 +362,7 @@ export default function Page(props: InferGetStaticPropsType<typeof getStaticProp
         </Typography>
         <TinaMarkdown
           key={theme.palette.mode}
-          components={customRenderers(props.allPages as Page[], theme.palette.mode)}
+          components={customRenderers(props.allPages as TinaPage[], theme.palette.mode)}
           content={slug === 'tldr' ? _body.children.slice(0, -1) : _body}
         />
       </MarkdownStyling>
