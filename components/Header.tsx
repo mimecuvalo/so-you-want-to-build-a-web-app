@@ -1,11 +1,11 @@
 import { AppBar, Toolbar, IconButton, Drawer, useTheme, Grid } from '@mui/material';
 import { GitHub, Lightbulb, Menu } from '@mui/icons-material';
 import { useContext, useState } from 'react';
-import { PAGES } from 'app/constants';
+import { PAGES } from '@/application/constants';
 import Link from './Link';
 import { useRouter } from 'next/router';
 import Image from 'next/image';
-import ThemeModeContext from '@/app/ThemeModeContext';
+import ThemeModeContext from '@/application/ThemeModeContext';
 
 export default function Header() {
   const { setIsDarkModeExplicitlyOn } = useContext(ThemeModeContext);

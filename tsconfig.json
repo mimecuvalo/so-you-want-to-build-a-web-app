@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "target": "es5",
+    "target": "esnext",
     "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
     "skipLibCheck": true,
@@ -20,7 +20,7 @@
     ],
     "paths": {
       "@/*": ["./*"],
-      "app/*": ["./app/*"],
+      "app/*": ["application/*"],
       "components": ["./components"],
       "components/*": ["./components/*"],
       "data": ["./data"],

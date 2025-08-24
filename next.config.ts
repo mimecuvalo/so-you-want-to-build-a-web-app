@@ -1,9 +1,10 @@
+import { NextConfig } from 'next';
+
 /* eslint-disable */
 const CircularDependencyPlugin = require('circular-dependency-plugin');
 const webpack = require('webpack');
 
-/** @type {import('next').NextConfig} */
-const nextConfig = {
+const nextConfig: NextConfig = {
   reactStrictMode: true,
 
   compiler: {
@@ -11,13 +12,7 @@ const nextConfig = {
   },
 
   experimental: {
-    useDeploymentId: true, // skew protection
     scrollRestoration: true,
-  },
-
-  i18n: {
-    locales: ['en', 'fr'],
-    defaultLocale: 'en',
   },
 
   webpack: (config, { dev, buildId, ...other }) => {
@@ -44,12 +39,6 @@ const nextConfig = {
       })
     );
 
-    if (!dev) {
-      // TODO(mime): try to re-enable this but with SWC it was breaking, was only working with Babel.
-      // https://formatjs.io/docs/guides/advanced-usage#react-intl-without-parser-40-smaller
-      // config.resolve.alias['@formatjs/icu-messageformat-parser'] = '@formatjs/icu-messageformat-parser/no-parser';
-    }
-
     return config;
   },
 
@@ -60,7 +49,7 @@ const nextConfig = {
         headers: [
           {
             key: 'Strict-Transport-Security',
-            value: 'max-age=31536000; includeSubDomains; preload',
+            value: 'max-age=63072000; includeSubDomains; preload',
           },
           {
             key: 'X-XSS-Protection',

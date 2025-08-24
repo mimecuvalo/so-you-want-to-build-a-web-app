@@ -60,6 +60,9 @@ logs/*.log.gz
 # Apollo/Graphql
 graphql-generated.ts
 
+# Prisma
+prisma/client/
+
 # Content markdown
 *.mdx
 tina/tina-lock.json

@@ -6,7 +6,7 @@ export async function getServerSideProps() {
   return {
     redirect: {
       destination: '/so-you-want-to-build-a-web-app',
-      permanent: true,
+      permanent: false,
     },
   };
 }

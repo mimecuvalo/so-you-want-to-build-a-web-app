@@ -5,7 +5,7 @@ import { client } from '../tina/__generated__/client';
 import { TinaMarkdown } from 'tinacms/dist/rich-text';
 import { Grid, Link, Typography, styled } from 'components';
 import Head from 'next/head';
-import { PAGES, SITE_NAME, SITE_URL } from 'app/constants';
+import { PAGES, SITE_NAME, SITE_URL } from '@/application/constants';
 import { pageUrl } from 'util/url-factory';
 import { ArrowBack, ArrowForward } from '@mui/icons-material';
 import { Page as TinaPage } from '@/tina/__generated__/types';

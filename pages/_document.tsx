@@ -5,7 +5,7 @@ import { createEmotionCache } from 'styles';
 import createEmotionServer from '@emotion/server/create-instance';
 import crypto from 'crypto';
 import { v4 } from 'uuid';
-import { SITE_NAME } from '@/app/constants';
+import { SITE_NAME } from '@/application/constants';
 import { storybook } from 'styles/palette';
 
 const generateCsp = (nonce: string) => {
@@ -28,10 +28,9 @@ const generateCsp = (nonce: string) => {
     //'report-uri': ['/api/report-csp-violation'],
     'script-src': [
       "'self'",
-      'https://cdn.auth0.com',
       'https://cdn.vercel-insights.com',
       'https://va.vercel-scripts.com',
-      'https://platform.twitter.com',
+      'https://unpkg.com/react-scan/dist/auto.global.js',
     ].concat(isDevelopment ? ["'unsafe-inline'", "'unsafe-eval'"] : [`'nonce-${nonce}'`]),
 
     // XXX(mime): we have inline styles around - can we pass nonce around the app properly?
@@ -83,7 +82,6 @@ export default class MyDocument extends Document {
       <style
         data-emotion={`${style.key} ${style.ids.join(' ')}`}
         key={style.key}
-        // eslint-disable-next-line react/no-danger
         dangerouslySetInnerHTML={{ __html: style.css }}
       />
     ));
@@ -95,7 +93,7 @@ export default class MyDocument extends Document {
     };
   }
 
-  render(): JSX.Element {
+  render() {
     const { locale } = this.props;
     // @ts-ignore not sure how to fix this yet
     const { nonce } = this.props;
