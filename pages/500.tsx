@@ -12,9 +12,9 @@ export default function InternalServerError() {
         <span className="notranslate">500:</span> Internal server error
       </Typography>
       <div>
-        It's not you, it's us. Our server is monkeying around.
+        It’s not you, it’s us. Our server is monkeying around.
         <br />
-        We've logged this error and we'll fix it soon.
+        We’ve logged this error and we’ll fix it soon.
       </div>
     </Message>
   );

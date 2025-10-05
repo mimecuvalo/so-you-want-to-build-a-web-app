@@ -11,7 +11,7 @@ export default function NotFound() {
         <span className="notranslate">404:</span> Not found
       </Typography>
       <div>
-        I'm sorry, dave. I'm afraid I can't do that.
+        I’m sorry, dave. I’m afraid I can’t do that.
         <br />
         Try going back to the <Link href="/">beginning</Link>.
       </div>

@@ -6,7 +6,6 @@ import createEmotionServer from '@emotion/server/create-instance';
 import crypto from 'crypto';
 import { v4 } from 'uuid';
 import { SITE_NAME } from '@/application/constants';
-import { storybook } from 'styles/palette';
 
 const generateCsp = (nonce: string) => {
   const isDevelopment = process.env.NODE_ENV === 'development';
@@ -104,7 +103,6 @@ export default class MyDocument extends Document {
         <Html lang={locale}>
           <Head>
             <meta charSet="utf-8" />
-            <meta name="theme-color" content={storybook.primary.main} />
             <meta property="csp-nonce" content={nonce} />
             <meta httpEquiv="Content-Security-Policy" content={csp} />
             <link rel="icon" href="/favicon.jpg" sizes="32x32" />

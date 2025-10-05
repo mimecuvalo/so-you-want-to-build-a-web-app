@@ -15,6 +15,7 @@ import { Prism } from 'tinacms/dist/rich-text/prism';
 // ugh, complicado. see: https://github.com/FormidableLabs/prism-react-renderer
 import { Prism as OriginalPrism } from 'prism-react-renderer';
 (typeof global !== 'undefined' ? global : window).Prism = OriginalPrism;
+// eslint-disable-next-line
 require('prismjs/components/prism-bash');
 
 const MarkdownStyling = styled('div')`
@@ -200,7 +201,6 @@ const customRenderers = (allPages: TinaPage[], themeMode: PaletteMode) => ({
   code_block: (props: any) => <Prism {...props} theme={themeMode === 'dark' ? 'nightOwl' : 'nightOwlLight'} />,
 
   // N.B. This div/span wrapper matches the structure, more or less, of the Outline editor's img wrapper.
-  // eslint-disable-next-line
   img: (props: any) => (
     <Figure $float={props.caption}>
       {/* eslint-disable-next-line */}

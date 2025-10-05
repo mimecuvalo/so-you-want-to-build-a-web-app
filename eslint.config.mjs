@@ -1,7 +1,5 @@
 import { defineConfig } from 'eslint/config';
 import typescriptEslint from '@typescript-eslint/eslint-plugin';
-import testingLibrary from 'eslint-plugin-testing-library';
-import formatjs from 'eslint-plugin-formatjs';
 import tsParser from '@typescript-eslint/parser';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -29,19 +27,17 @@ export default defineConfig([
       '**/.turbo/**',
       '**/graphql-generated.ts',
       '**/prisma/client/**',
+      '**/tina/__generated__/**',
     ],
     extends: compat.extends(
       'next/core-web-vitals',
       'next/typescript',
       'eslint:recommended',
       'plugin:@typescript-eslint/recommended',
-      'plugin:storybook/recommended'
     ),
 
     plugins: {
       '@typescript-eslint': typescriptEslint,
-      'testing-library': testingLibrary,
-      formatjs,
     },
 
     languageOptions: {
@@ -59,12 +55,9 @@ export default defineConfig([
           allow: ['warn', 'error', 'debug'],
         },
       ],
-
-      'formatjs/enforce-default-message': ['error', 'literal'],
     },
   },
   {
     files: ['**/__tests__/**/*.[jt]s?(x)', '**/?(*.)+(spec|test).[jt]s?(x)'],
-    extends: compat.extends('plugin:testing-library/react'),
   },
 ]);

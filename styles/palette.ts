@@ -44,20 +44,20 @@ const info = {
   dark: '#002cb4',
 };
 
-const basics = {
-  white: '#ffffff',
-  faintTransparentGrey: 'rgba(0, 0, 0, 0.04)',
-  transparentGrey: 'rgba(0, 0, 0, 0.1)',
-  transparentBlack: 'rgba(0, 0, 0, 0.75)',
-  black: '#000',
-};
+// const basics = {
+//   white: '#ffffff',
+//   faintTransparentGrey: 'rgba(0, 0, 0, 0.04)',
+//   transparentGrey: 'rgba(0, 0, 0, 0.1)',
+//   transparentBlack: 'rgba(0, 0, 0, 0.75)',
+//   black: '#000',
+// };
 
-const accents = {};
+// const accents = {};
 
-const thirdParty = {
-  facebookBlue: '#3b5998',
-  googleBlue: '#4285f4',
-};
+// const thirdParty = {
+//   facebookBlue: '#3b5998',
+//   googleBlue: '#4285f4',
+// };
 
 const palette: PaletteOptions = {
   primary,
@@ -87,15 +87,3 @@ export default palette;
 //   ...accents,
 //   ...thirdParty,
 // };
-
-export const storybook = {
-  primary,
-  grey,
-  error,
-  warning,
-  info,
-  success,
-  basics,
-  accents,
-  thirdParty,
-};
