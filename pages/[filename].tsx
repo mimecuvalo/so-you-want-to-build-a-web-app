@@ -49,7 +49,17 @@ const MarkdownStyling = styled('div')`
     margin-inline-start: 1.5rem;
   }
 
-  p {
+  p,
+  code,
+  pre,
+  ul,
+  ol,
+  blockquote {
+    margin-bottom: 1rem;
+  }
+
+  ul ul,
+  ol ol {
     margin-bottom: 0;
   }
 
@@ -63,6 +73,11 @@ const MarkdownStyling = styled('div')`
     padding-inline-start: 1.5rem;
     margin-inline-start: 0rem;
     font-style: italic;
+  }
+
+  pre {
+    padding: 0.5rem;
+    font-size: ${(props) => props.theme.typography.body2.fontSize};
   }
 
   code {
@@ -237,15 +252,6 @@ const customRenderers = (allPages: TinaPage[], themeMode: PaletteMode) => ({
         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
         allowFullScreen
       ></iframe>
-    </Grid>
-  ),
-
-  Twitter: (props: any) => (
-    <Grid container justifyContent="center">
-      <blockquote className="twitter-tweet">
-        <a href={props.href}>August 8, 2018</a>
-      </blockquote>
-      <script async src="https://platform.twitter.com/widgets.js" />
     </Grid>
   ),
 });

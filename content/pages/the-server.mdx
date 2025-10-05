@@ -1,14 +1,16 @@
 ---
-title: '📟 the server'
+title: "\U0001F4DF the server"
 ---
 
 *or, what* used *to be the hard part*
 
 # tl;dr
-- [Vercel](https://vercel.com/) has won.
 
+* [Vercel](https://vercel.com/) has won...for now.
+* [Vite](https://vitejs.dev/) special mention to Vite which is also great.
 
-----------
+***
+
 # Vercel
 
 sometimes in our trade it can be difficult to avoid the “[not invented here](https://en.wikipedia.org/wiki/Not_invented_here)” feeling. you want to start things fresh, build everything in-house and have control over the whole stack. indeed, 5 years ago, i was of this mindset when i wrote this part of the guide: [+📟 appendix: setting up a self-hosted server](/appendix-setting-up-a-self-hosted-server) (now moved to an appendix if it’s interesting to anyone).
@@ -16,3 +18,25 @@ sometimes in our trade it can be difficult to avoid the “[not invented here](h
 but much like the [OSI model of layering](https://en.wikipedia.org/wiki/OSI_model) i think a new abstraction has arisen in the form of tech like Vercel. it abstracts away some of the complexity of hosting servers, running APIs, scaling, etc. this of course takes away some of your control as a developer but significantly reduces the cognitive load to help you just work on building a great product.
 
 when i worked on my open source project [`all-the-things`](https://github.com/mimecuvalo/all-the-things) it was originally a fork of [`create-react-app`](https://create-react-app.dev/) and the missing piece, to me, was that it was purely client-side and lacked server-side rendering (or server anything, for that matter). so my own tinkering was to attempting to build a shadow of what Vercel has become. indeed, i’ve now switched the `all-the-things` app to be [Next.js](https://nextjs.org/) based and i enthusiastically and emphatically recommend Vercel for most basic needs when starting a new project!
+
+i swear i'm not just a paid hack for Vercel. and to temper my enthusiasm, i will say that they've started to lose the plot over there in recent years. the react-on-the-server debate has started to develop into a weird, unhealthy codependent relationship for React/Vercel forcing Next.js to make some design choices that are starting to become too opinioniated for it's own good. for a constructive critique and great read on this debate [check out this article](https://www.epicweb.dev/why-i-wont-use-nextjs) by Kent C. Dodds.
+
+also, here's an even _more_ brutal critique of Next.js and it's also worth a read to stay clear-headed on this all: there's no silver bullet to this all and to be wary of buying into a framework that might lock you in! [The Market for Lemons](https://infrequently.org/2023/02/the-market-for-lemons/)
+
+so, to be balanced here i will say [Digital Ocean](https://www.digitalocean.com/) is a great way to self-host and run things the old-fashioned way.
+
+***
+
+# Vite + bundlers
+
+if you're trying to create a bundle yourself there's a couple options here.
+
+- [**Vite**](https://vitejs.dev/): special mention to this development tool that, like, it's name suggests is _fast_ without all the bloat.
+- [**esbuild**](https://esbuild.github.io/)
+- [**Snowpack**](https://www.snowpack.dev/)
+- [**FAB**](https://fab.dev/)
+- [**WMR**](https://wmr.dev/)
+
+if you’re shipping libraries/packages:
+- [**rollup**](https://rollupjs.org/)
+- [**parcel**](https://parceljs.org/) 

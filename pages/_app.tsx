@@ -50,9 +50,15 @@ function MyApp({ Component, emotionCache = clientSideEmotionCache, pageProps }: 
     [prefersDarkMode, isDarkModeExplicitlyOn]
   );
 
+  const setThemeModeExplicitlyOn = (mode: boolean | undefined) => {
+    setIsDarkModeExplicitlyOn(mode);
+    document.body.classList.add(mode ? 'dark-mode' : 'light-mode');
+    document.body.classList.remove(mode ? 'light-mode' : 'dark-mode');
+  };
+
   return (
     <CacheProvider value={emotionCache}>
-      <ThemeModeContext.Provider value={{ setIsDarkModeExplicitlyOn }}>
+      <ThemeModeContext.Provider value={{ setIsDarkModeExplicitlyOn: setThemeModeExplicitlyOn }}>
         <ThemeProvider theme={muiTheme}>
           {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
           <CssBaseline />

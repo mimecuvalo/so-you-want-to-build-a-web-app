@@ -1,19 +1,18 @@
 ---
-title: '🛠️ tools of the trade'
+title: "\U0001F6E0️ tools of the trade"
 ---
 
 or, *the “it’s parentheses all the way down” part.*
 
 # tl;dr
-- **hardware**: [Mac](https://www.apple.com/mac/)
-- **security**: [2fa](https://www.google.com/landing/2step/), [1Password](https://1password.com/), [Signal](https://signal.org/), [uBlock Origin](https://ublockorigin.com/), [Arc](https://arc.net/), [YubiKey](https://www.yubico.com/), encrypt your hard drive
-- **software**: [chrome](https://www.google.com/chrome/) (maybe [Arc](https://arc.net/)), [VirtualBox](https://www.virtualbox.org/) + [VMs](https://developer.microsoft.com/en-us/microsoft-edge/tools/vms/), [iTerm2](https://www.iterm2.com/) ([Fig](https://fig.io/), [Warp](https://www.warp.dev/)), [Homebrew](https://brew.sh/), [zsh + oh-my-zsh](https://github.com/robbyrussell/oh-my-zsh/wiki/Installing-ZSH), [Night Shift](https://support.apple.com/en-gb/102191), [Dropbox](https://www.dropbox.com), [Postico](https://eggerapps.at/postico/) / [Sequel Pro](https://sequelpro.com/), [⌘-Shift-[3|4|5]](https://support.apple.com/en-us/HT201361), [Kap](https://getkap.co/)
-    - **etc**: [Color Note](https://itunes.apple.com/us/app/color-note/id1099028591?mt=12), [LibreOffice](https://www.libreoffice.org/), [Disk Inventory X](http://www.derlien.com/)
-- **editors**: [VSCode](https://code.visualstudio.com/), [Sublime](https://www.sublimetext.com/), [vim](https://www.vim.org/)
 
+* **hardware**: [Mac](https://www.apple.com/mac/)
+* **security**: [2fa](https://www.google.com/landing/2step/), [1Password](https://1password.com/), [Signal](https://signal.org/), [uBlock Origin](https://ublockorigin.com/), [Arc](https://arc.net/), [YubiKey](https://www.yubico.com/), encrypt your hard drive
+* **software**: [chrome](https://www.google.com/chrome/) (maybe [Arc](https://arc.net/)), [VirtualBox](https://www.virtualbox.org/) + [VMs](https://developer.microsoft.com/en-us/microsoft-edge/tools/vms/), [iTerm2](https://www.iterm2.com/) ([Fig](https://fig.io/), [Warp](https://www.warp.dev/)), [Homebrew](https://brew.sh/), [zsh + oh-my-zsh](https://github.com/robbyrussell/oh-my-zsh/wiki/Installing-ZSH), [Night Shift](https://support.apple.com/en-gb/102191), [Dropbox](https://www.dropbox.com), [Postico](https://eggerapps.at/postico/) / [Sequel Pro](https://sequelpro.com/), [⌘-Shift-\[3|4|5\]](https://support.apple.com/en-us/HT201361), [Kap](https://getkap.co/)
+  * **etc**: [Color Note](https://itunes.apple.com/us/app/color-note/id1099028591?mt=12), [LibreOffice](https://www.libreoffice.org/), [Disk Inventory X](http://www.derlien.com/)
+* **editors**: [Cursor](https://cursor.com/), [VSCode](https://code.visualstudio.com/), [Sublime](https://www.sublimetext.com/), [vim](https://www.vim.org/)
 
-----------
-
+***
 
 [![xkcd: Lisp Cycles](/img/tools.png)](https://xkcd.com/297/)
 
@@ -23,41 +22,44 @@ remember this guide is opinionated, right? ok so: [Mac](https://www.apple.com/ma
 
 all that being said, not everyone is privileged to shell out that kind of moola, so a Linux laptop is an absolutely fine choice as well!
 
+***
 
-----------
 # security
 
 internalize this now: every engineer is a security engineer. you need to know security just as much as security “specialist” does. you must adapt the mindset of the paranoid because the Internet is not a nice place and is constantly [trying to kill you](https://medium.com/hackernoon/im-harvesting-credit-card-numbers-and-passwords-from-your-site-here-s-how-9a8cb347c5b5).
 
+* **[Gmail](https://www.google.com/gmail/)**: I know you have email already. I’m listing this here as a PSA to turn on [2-factor authentication](https://www.google.com/landing/2step/). **Now**.
+* **encrypt your hard drive.**  → System Preferences → Security & Privacy → FileVault → Turn on
+* **[1Password](https://1password.com/)**: generates secure passwords for you. because you suck at it, trust me.
+* **[Signal](https://signal.org/)**: secure your mobile communications.
+* **[uBlock Origin](https://ublockorigin.com/)**.
+* **[Arc](https://arc.net/)**. i’m on the verge of recommending this browser over others for just a better experience in general. (**[Brave](https://brave.com)** was my previous alt. recommendation)
+* **[YubiKey](https://www.yubico.com/)**. more secure option when setting up Two-Factor Authentication. not strictly necessary but as you progress in your career (and paranoia 🕵️‍♂️) definitely take a look.
 
-- [**Gmail**](https://www.google.com/gmail/): I know you have email already. I’m listing this here as a PSA to turn on [2-factor authentication](https://www.google.com/landing/2step/). **Now**.
-- **encrypt your hard drive.**  → System Preferences → Security & Privacy → FileVault → Turn on
-- [**1Password**](https://1password.com/): generates secure passwords for you. because you suck at it, trust me.
-- [**Signal**](https://signal.org/): secure your mobile communications.
-- [**uBlock Origin**](https://ublockorigin.com/).
-- [**Arc**](https://arc.net/). i’m on the verge of recommending this browser over others for just a better experience in general. ([**Brave**](https://brave.com) was my previous alt. recommendation)
-- [**YubiKey**](https://www.yubico.com/). more secure option when setting up Two-Factor Authentication. not strictly necessary but as you progress in your career (and paranoia 🕵️‍♂️) definitely take a look.
+***
 
-
-----------
 # software
-- **browser**: [Chrome](https://www.google.com/chrome/). quite simply, it has better tooling for debugging. believe me, i used to be a hardcore firefox guy (with my name on the [monument](https://wiki.mozilla.org/Monument) to prove it). so it *pains* me to say it, but your life coding websites will be easier on Chrome these days.
-    - **chrome extensions**: [React DevTools](https://chrome.google.com/webstore/detail/react-developer-tools/fmkadmapgofadopljbjfkapdkoienihi)
-    - **a word on** [**Arc**](https://arc.net/). i’m on the verge of recommending this browser over others for just a better experience in general. ([**Brave**](https://brave.com) was my previous alt. recommendation)
-- **a way to test Microsoft Edge**: [VirtualBox](https://www.virtualbox.org/) + [free, legal VMs](https://developer.microsoft.com/en-us/microsoft-edge/tools/vms/). alternatively, you can look at BootCamp for Mac to install Windows, or you could also use Parallels or VMWare but those aren’t free. my update in 2023 as i write this is, hesistantly and with humbleness, that browser skews have gotten *so* much better in the past decade that you might not need to check anymore. :ducks in fear of somebody throwing something at me:
-- **terminal**: [iTerm2](https://www.iterm2.com/). killer feature, you can create a shortcut key to have a gamelike visor-like experience.
-    - Preferences → Profiles → Window → Style → Full-Width Top of Screen
-    - Preferences → Keys → Hotkey → Show/hide all windows with a system-wide hotkey.
-    - also, turn on iTerm2 → Secure Keyboard Entry
-    - **quick note**: god, terminals are so unintuitive. and nobody teaches you how to use them, at least nobody certainly taught me. they have hidden characters that you’re just supposed to know about, their manuals are hidden, and you have to just know ahead of time what you are looking for. i’ll discuss some useful commands in [the next section](/how-to-linux).
-    - **watch this space**: there are some even more modern contenders in this space: [Fig](https://fig.io/), [Warp](https://www.warp.dev/)
-        - who would think command lines could get even better but they are!
-- **package manager**: [Homebrew](https://brew.sh/). let’s you install all the geeky things that you’re going to need later on. MacPorts used to be the recommendation here, but god, what a mess.
+
+* **browser**: [Chrome](https://www.google.com/chrome/). quite simply, it has better tooling for debugging. believe me, i used to be a hardcore firefox guy (with my name on the [monument](https://wiki.mozilla.org/Monument) to prove it). so it *pains* me to say it, but your life coding websites will be easier on Chrome these days.
+  * **chrome extensions**: [React DevTools](https://chrome.google.com/webstore/detail/react-developer-tools/fmkadmapgofadopljbjfkapdkoienihi)
+  * **a word on** **[Arc](https://arc.net/)**. i *was* on the verge of recommending this browser over others for just a better experience in general but they’re not developing it anymore? ugh. (**[Brave](https://brave.com)** was my previous alt. recommendation)
+* **a way to test Microsoft Edge**: [VirtualBox](https://www.virtualbox.org/) + [free, legal VMs](https://developer.microsoft.com/en-us/microsoft-edge/tools/vms/). alternatively, you can look at BootCamp for Mac to install Windows, or you could also use Parallels or VMWare but those aren’t free. my update in 2023 as i write this is, hesitantly and with humbleness, that browser skews have gotten *so* much better in the past decade that you might not need to check anymore. \:ducks in fear of somebody throwing something at me:
+* **terminal**: [iTerm2](https://www.iterm2.com/). killer feature, you can create a shortcut key to have a gamelike visor-like experience.
+  * Preferences → Profiles → Window → Style → Full-Width Top of Screen
+  * Preferences → Keys → Hotkey → Show/hide all windows with a system-wide hotkey.
+  * also, turn on iTerm2 → Secure Keyboard Entry
+  * **quick note**: god, terminals are so unintuitive. and nobody teaches you how to use them, at least nobody certainly taught me. they have hidden characters that you’re just supposed to know about, their manuals are hidden, and you have to just know ahead of time what you are looking for. i’ll discuss some useful commands in [the next section](/how-to-linux).
+  * **watch this space**: another modern contenders in this space: [Warp](https://www.warp.dev/)
+    * who would think command lines could get even better but they are!
+    * should i mention [Claude Code](https://www.claude.com/product/claude-code) here? i should mention Claude Code.
+* **package manager**: [Homebrew](https://brew.sh/). let’s you install all the geeky things that you’re going to need later on. MacPorts used to be the recommendation here, but god, what a mess.
+
 ```bash
 /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 ```
 
-- **shell**. [zsh + oh-my-zsh](https://github.com/robbyrussell/oh-my-zsh/wiki/Installing-ZSH). a better way for your terminal to work.
+* **shell**. [zsh + oh-my-zsh](https://github.com/robbyrussell/oh-my-zsh/wiki/Installing-ZSH). a better way for your terminal to work.
+
 ```bash
 # install zsh
 brew install zsh zsh-completions
@@ -67,13 +69,17 @@ sh -c "$(curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/i
 
 # you can set a custom theme for your terminal or try out the random ones to get ideas
 vim ~/.oh-my-zsh/themes/mycustomtheme.zsh-theme
-# try out Powerline9k:
-git clone https://github.com/bhilburn/powerlevel9k.git ~/.oh-my-zsh/custom/themes/powerlevel9k
+# try out Powerline10k:
+git clone --depth=1 https://github.com/romkatv/powerlevel10k.git "${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k"
 # edit your ~/.zshrc file
 vim ~/.zshrc
 
 # a great theme to start with is Powerline9k:
-ZSH_THEME="powerlevel9k/powerlevel9k"
+if [[ -n $CURSOR_TRACE_ID ]]; then
+  ZSH_THEME="robbyrussell"  # Use a simpler theme in Cursor
+else
+  ZSH_THEME="powerlevel9k/powerlevel9k"
+fi
 
 # install necessary fonts for the theme:
 brew tap caskroom/fonts
@@ -127,31 +133,38 @@ alias lc='colorls -lA --sd --gs'
 alias lct='colorls --tree -A --sd --gs'
 ```
 
-- **ergonomics**:
-    - for your eyes: [Night Shift](https://support.apple.com/en-gb/102191) (macOS). you’re gonna be looking at your computer a lot.
-    - for your hands: [Dvorak + QWERTY ⌘](http://www.dvzine.org/).  → System Preferences → Input Sources → + → Dvorak + QWERTY ⌘
-        - Ok, this one isn’t necessary obviously, but if you have the time and plan on typing for your lifetime, you can start thinking ahead to avoid [carpal tunnel syndrome](https://en.wikipedia.org/wiki/Carpal_tunnel_syndrome).
-- **music**: nothing in particular to recommend here. just to have some tunes handy for those long coding sessions to get you in the zone 🎶 (basically, i wish [WinAmp](http://www.winamp.com/) worked on my Mac)
-- **backup**: [Dropbox](https://www.dropbox.com). i’m biased obviously since i used to work there. but backup your shit somehow.
-- **database gui**: [Sequel Pro](https://sequelpro.com/) for mySQL and [Postico](https://eggerapps.at/postico/) for PostgreSQL.
-- **gif/video recording**: [⌘-Shift-5](https://support.apple.com/en-us/HT201361). new feature in macOS Mojave — makes it easy to show off your new feature or help show how to reproduce a bug with a video of what’s going on. if you need gif’s try out [Kap](https://getkap.co/).
-- **screenshot**: [⌘-Shift-3](https://support.apple.com/en-us/HT201361) for the whole screen. [⌘-Shift-4](https://support.apple.com/en-us/HT201361) for a partial section of the screen. hot tip! use dropbox to auto-save those screenshots to a special folder (Preferences→Import→Share screenshots using Dropbox).
-- **ruler and screen zoom**. stealth trick! you can use ⌘-Shift-4 to begin a screenshot but before letting go of your mouse you can hit escape to not finish the screenshot. it’s a super handy ruler on the fly! combine this with Mac’s Ctrl+Scroll to zoom for more accurate measurements. ( → System Preferences → Accessibility → Zoom → Use scroll gesture with modifier keys to zoom). all this is super useful in measuring the many pixels you’ll need to verify on your website. your designer will thank you.
-- **et cetera**:
-    - **color picker.** [Color Note](https://itunes.apple.com/us/app/color-note/id1099028591?mt=12). just something simple to grab colors from time to time.
-    - **office suite**: [LibreOffice](https://www.libreoffice.org/). for those times you need a doc/presentation/spreadsheet.
-    - **disk usage**: [Disk Inventory X](http://www.derlien.com/). to check your hard disk space visually.
-----------
+* **ergonomics**:
+  * for your eyes: [Night Shift](https://support.apple.com/en-gb/102191) (macOS). you’re gonna be looking at your computer a lot.
+  * for your hands: [Dvorak + QWERTY ⌘](http://www.dvzine.org/).  → System Preferences → Input Sources → + → Dvorak + QWERTY ⌘
+    * Ok, this one isn’t necessary obviously, but if you have the time and plan on typing for your lifetime, you can start thinking ahead to avoid [carpal tunnel syndrome](https://en.wikipedia.org/wiki/Carpal_tunnel_syndrome).
+* **music**: nothing in particular to recommend here. just to have some tunes handy for those long coding sessions to get you in the zone 🎶 (basically, i wish [WinAmp](http://www.winamp.com/) worked on my Mac)
+* **backup**: [Dropbox](https://www.dropbox.com). i’m biased obviously since i used to work there. but backup your shit somehow.
+* **database gui**: [Sequel Pro](https://sequelpro.com/) for mySQL and [Postico](https://eggerapps.at/postico/) for PostgreSQL.
+* **gif/video recording**: [⌘-Shift-5](https://support.apple.com/en-us/HT201361). new feature in macOS Mojave — makes it easy to show off your new feature or help show how to reproduce a bug with a video of what’s going on. if you need gif’s try out [Kap](https://getkap.co/).
+* **screenshot**: [⌘-Shift-3](https://support.apple.com/en-us/HT201361) for the whole screen. [⌘-Shift-4](https://support.apple.com/en-us/HT201361) for a partial section of the screen. hot tip! use dropbox to auto-save those screenshots to a special folder (Preferences→Import→Share screenshots using Dropbox).
+* **ruler and screen zoom**. stealth trick! you can use ⌘-Shift-4 to begin a screenshot but before letting go of your mouse you can hit escape to not finish the screenshot. it’s a super handy ruler on the fly! combine this with Mac’s Ctrl+Scroll to zoom for more accurate measurements. ( → System Preferences → Accessibility → Zoom → Use scroll gesture with modifier keys to zoom). all this is super useful in measuring the many pixels you’ll need to verify on your website. your designer will thank you.
+* **et cetera**:
+  * **color picker.** [Color Note](https://itunes.apple.com/us/app/color-note/id1099028591?mt=12). just something simple to grab colors from time to time.
+  * **office suite**: [LibreOffice](https://www.libreoffice.org/). for those times you need a doc/presentation/spreadsheet.
+  * **disk usage**: [Disk Inventory X](http://www.derlien.com/). to check your hard disk space visually.
+
+***
+
 # editors
 
-*a.k.a. The Holiest of Wars*  
-whereas the above choices might have some contention, i’m sure the Internet will have a conniption with anything i choose below. so…i won’t choose anything in particular 🙂 
+*a.k.a. The Holiest of Wars*\
+whereas the above choices might have some contention, i’m sure the Internet will have a conniption with anything i choose below. so…i won’t choose anything in particular 🙂
 
-**Options**  
-- [VSCode](https://code.visualstudio.com/): great type checking, refactoring. obviously, great TypeScript support.
-    - be sure to read their docs on [code navigation](https://code.visualstudio.com/docs/editor/editingevolved). super useful.
-    - [LiveShare](https://code.visualstudio.com/learn/collaboration/live-share) is a really useful way to do pair programming.
-    - [FiraCode](https://github.com/tonsky/FiraCode) is a great coding font that has fancy programming ligatures.
-    - you only need to know about the [`vscode-pets`](https://marketplace.visualstudio.com/items?itemName=tonybaloney.vscode-pets) extension. 😸 
-- [Sublime](https://www.sublimetext.com/): speedy and small. great packages.
-- [vim](http://macvim-dev.github.io/macvim/): a necessary standby for command line. learning curve is steep. i’m a huge fan (i.e. masochist).
+**Options**
+
+* [Cursor](https://cursor.com/): the new hotness.
+* [VSCode](https://code.visualstudio.com/): great type checking, refactoring. obviously, great TypeScript support.
+  * [Copilot](https://github.com/features/copilot) is the killer feature, but then again...Cursor.
+  * be sure to read their docs on [code navigation](https://code.visualstudio.com/docs/editor/editingevolved). super useful.
+  * [LiveShare](https://code.visualstudio.com/learn/collaboration/live-share) is a really useful way to do pair programming.
+  * [GitLens](https://marketplace.visualstudio.com/items?itemName=eamodio.gitlens) especially for the Git blame tooling.
+  * [Monaspace](https://monaspace.githubnext.com/) is a lovely coding font from GitHub.
+  * [FiraCode](https://github.com/tonsky/FiraCode) is another great coding font that has fancy programming ligatures.
+  * you only need to know about the [`vscode-pets`](https://marketplace.visualstudio.com/items?itemName=tonybaloney.vscode-pets) extension. 😸
+* [vim](http://macvim-dev.github.io/macvim/): a necessary standby for command line. learning curve is steep. i’m a huge fan (i.e. masochist).
+* keep on eye on [zed](https://zed.dev/): might be a new competitor in the space soon.

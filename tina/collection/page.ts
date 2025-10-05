@@ -9,6 +9,18 @@ const Page: Collection = {
     router: ({ document }) => {
       return `/${document._sys.filename}`;
     },
+    // Configure the admin interface for filename generation
+    filename: {
+      slugify: (values) => {
+        // Generate filename from title, removing emojis and special chars
+        const title = values?.title || '';
+        return title
+          .trim()
+          .toLowerCase()
+          .replace(/[^a-z0-9\s-]/g, '') // Remove special chars except spaces and hyphens
+          .replace(/\s+/g, '-');
+      },
+    },
   },
   fields: [
     {
@@ -16,7 +28,6 @@ const Page: Collection = {
       label: 'Title',
       name: 'title',
       description: 'The title of the page. This is used to display the title in the CMS',
-      isTitle: true,
       required: true,
     },
     {
@@ -49,18 +60,6 @@ const Page: Collection = {
         {
           name: 'YouTube',
           label: 'YouTube',
-          fields: [
-            {
-              type: 'string',
-              label: 'href',
-              name: 'href',
-              required: true,
-            },
-          ],
-        },
-        {
-          name: 'Twitter',
-          label: 'Twitter',
           fields: [
             {
               type: 'string',

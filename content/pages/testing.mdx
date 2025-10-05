@@ -8,7 +8,7 @@ or, *the “we’re not kidding, this is not in* jest, *you really should be tes
 - **intro**: write your damn tests.
 - **testing framework**: [Jest](https://jestjs.io/), [Testing Library,](https://testing-library.com/) [coveralls](https://coveralls.io/) ([codecov](https://about.codecov.io/)), `about:inspect`
 - **canary server**
-- **browser automation**: [Puppeteer](https://github.com/GoogleChrome/puppeteer), [cypress](https://www.cypress.io/), [Playwright](https://playwright.dev/)
+- **browser automation**: [Playwright](https://playwright.dev/), [cypress](https://www.cypress.io/)
 - **screenshot testing: the white whale**: just don’t do it.
 - **others**: [jest-dom](https://github.com/gnapse/jest-dom), [Sikuli Script](http://www.sikuli.org/), [Appium](http://appium.io/), [Sauce Labs](https://saucelabs.com/)
 - **resources**: [Jest reference](https://jestjs.io/docs/getting-started) ([Jest matchers](https://jestjs.io/docs/en/expect.html)), [Overview of testing in 2018](https://medium.com/welldone-software/an-overview-of-javascript-testing-in-2018-f68950900bc3)
@@ -24,6 +24,8 @@ after several cycles of scrubbing out bugs and fine-tuning your spectacular app,
 # testing framework
 
 [Jest](https://jestjs.io/) is built on top of the mature [Jasmine](https://jasmine.github.io/) project to be zero-configuration and *much faster* than its predecessor. it’s built at Facebook so it also works really well with React which is the main recommendation of this guide as well.
+
+keep on eye in this space: [Vitest](https://vitest.dev/)
 
 
 ## getting setup
@@ -82,10 +84,9 @@ mentioned in [CI section](/workflow-and-collaboration#continuous-integration---c
 ----------
 # browser automation and end-to-end (e2e) testing
 
-the latest hotness here is [Puppeteer](https://github.com/GoogleChrome/puppeteer). this lets you automate your browser to navigate through your app by simulating clicking and typing into the browser. save this kind of testing for the very end — it’s thoroughly involved and expensive to maintain — only very mature projects should consider this route. if you do start browser automation, you should also consider sticking to just one browser (either Chrome or Firefox). automating multiple browsers will only compound your headaches with this work! (historically, there was a project called PhantomJS and in the Firefox realm you have [Selenium](https://www.seleniumhq.org/) testing.)
+the latest hotness here is [Playwright](https://playwright.dev/). this lets you automate your browser to navigate through your app by simulating clicking and typing into the browser. save this kind of testing for the very end — it’s thoroughly involved and expensive to maintain — only very mature projects should consider this route. if you do start browser automation, you should also consider sticking to just one browser (either Chrome or Firefox). automating multiple browsers will only compound your headaches with this work! (historically, there was a project called PhantomJS and in the Firefox realm you have [Selenium](https://www.seleniumhq.org/) testing.)
 
-[cypress](https://www.cypress.io/) has also been making splashes here — haven’t tested it yet but looks great.
-same goes for [Playwright](https://playwright.dev/) — i’m looking to evaluate that as well soon.
+[cypress](https://www.cypress.io/) is an alternative here that is also well-regarded.
 
 
 ----------
@@ -105,5 +106,5 @@ i’ve personally tried over the years to maintain several tests suites involvin
 ----------
 # resources
 - [**Jest reference**](https://jestjs.io/docs/getting-started): docs on the test suite.
-    - [**Jest matchers**](https://jestjs.io/docs/en/expect.html): a handy overview of matchers available to you.
+  - [**Jest matchers**](https://jestjs.io/docs/en/expect.html): a handy overview of matchers available to you.
 - [**Overview of testing in 2018**](https://medium.com/welldone-software/an-overview-of-javascript-testing-in-2018-f68950900bc3): good run-through of all the different options out there these days.

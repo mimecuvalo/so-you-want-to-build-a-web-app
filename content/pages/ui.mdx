@@ -8,16 +8,16 @@ or, *the "how to think like a designer" part.*
 - **patterns of consistency and simplicity**: KISS and sweat the details
 - **styleguide**: [Storybook](https://storybook.js.org/) ([Chromatic](https://www.chromatic.com/)), [React Styleguidist](https://react-styleguidist.js.org/)
 - **accessibility (a11y)**: [Google’s guide](https://developers.google.com/web/fundamentals/accessibility/), [Chrome DevTools reference](https://developers.google.com/web/tools/chrome-devtools/accessibility/reference), [aXe](https://www.deque.com/axe/), [Google’s Accessibility Developer Tools](https://github.com/GoogleChrome/accessibility-developer-tools), [VoiceOver Utility](https://www.apple.com/accessibility/mac/vision/)
-- **internationalization (i18n)**: [react-intl](https://github.com/yahoo/react-intl/wiki)
+- **internationalization (i18n)**: [react-intl](https://github.com/yahoo/react-intl/wiki), [logical properties](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_logical_properties_and_values/Basic_concepts_of_logical_properties_and_values)
 - **responsiveness**: avoid fixed widths, fluid layouts, font sizes, image/icon responsiveness, device toolbar
 - **web components**: [Custom Elements](https://developers.google.com/web/fundamentals/web-components/customelements), [`<template>`](https://www.html5rocks.com/en/tutorials/webcomponents/template/), [Shadow DOM](https://developers.google.com/web/fundamentals/web-components/shadowdom), [ES modules](https://www.html5rocks.com/en/tutorials/webcomponents/imports/)
-- **toolkits and widgets**: [MUI](https://material-ui.com/), [Mantine](https://mantine.dev/)
+- **toolkits and widgets**: [MUI](https://material-ui.com/), [Radix](https://www.radix-ui.com/), [Magic UI](https://magicui.design/)
 - **typography**: [Google Fonts](https://fonts.google.com/), system font stack
-- **iconography**: [MUI Icons](https://material.io/tools/icons/?style=baseline), [Nerd Fonts](https://nerdfonts.com/), [Doodle Ipsum](https://doodleipsum.com/), [unDraw](https://undraw.co/)
-- **animation/visualization:** [react-spring](https://www.react-spring.io/), [Animate.css](https://daneden.github.io/animate.css/), [Framer Motion](https://www.framer.com/motion/), [flipping](https://www.npmjs.com/package/flipping), [react-scroll-parallax](https://react-scroll-parallax.damnthat.tv/docs/intro), [bsmnt](https://scrollytelling.basement.studio/), [visx](https://airbnb.io/visx)
+- **iconography**: [MUI Icons](https://material.io/tools/icons/?style=baseline), [Radix Icons](https://www.radix-ui.com/icons), [Nerd Fonts](https://nerdfonts.com/), [Doodle Ipsum](https://doodleipsum.com/), [unDraw](https://undraw.co/)
+- **animation/visualization:** [react-spring](https://www.react-spring.io/), [Animate.css](https://daneden.github.io/animate.css/), [Framer Motion](https://www.framer.com/motion/), [flipping](https://www.npmjs.com/package/flipping), [react-scroll-parallax](https://react-scroll-parallax.damnthat.tv/docs/intro), [bsmnt](https://scrollytelling.basement.studio/), [visx](https://airbnb.io/visx), [gradient generator](https://www.joshwcomeau.com/gradient-generator/), [shadow generator](https://www.joshwcomeau.com/shadow-palette/), [**Easing Wizard**](https://easingwizard.com/), [Victory](https://formidable.com/open-source/victory/), [React Graph Gallery](https://www.react-graph-gallery.com/)
 - **tools for designers**: [Figma](https://www.figma.com/), [Sketch](https://www.sketchapp.com/) ([Airbnb’s React Sketch](http://airbnb.io/react-sketchapp/)), [Framer](https://framer.com/), [Adobe Creative Cloud](https://www.adobe.com/creativecloud.html), [InVision](https://www.invisionapp.com/), [VisBug](https://chrome.google.com/webstore/detail/visbug/cdockenadnadldjbbgcallicgledbeoc), [colorbox.io](https://colorbox.io/), [Laws of UX](https://lawsofux.com/)
 - **ux research**: [UX Collective](https://uxdesign.cc/how-to-conduct-user-interviews-fe4b8c34b0b7?gi=c90ec591ef9)
-- **resources**: [Apple’s Human Interface Guidelines](https://developer.apple.com/design/human-interface-guidelines/), [Basics of UX](https://developers.google.com/web/fundamentals/design-and-ux/ux-basics/), [Responsive Web Design Basics](https://developers.google.com/web/fundamentals/design-and-ux/responsive/), [UI Movement](https://uimovement.com/), [JS & CSS Widget of the Week](https://levelup.gitconnected.com/wotw/home), [WebComponents.org](https://www.webcomponents.org/) ([Polymer Project](https://www.polymer-project.org/))
+- **resources**: [Apple’s Human Interface Guidelines](https://developer.apple.com/design/human-interface-guidelines/), [Basics of UX](https://developers.google.com/web/fundamentals/design-and-ux/ux-basics/), [Responsive Web Design Basics](https://developers.google.com/web/fundamentals/design-and-ux/responsive/), [UI Movement](https://uimovement.com/), [JS & CSS Widget of the Week](https://levelup.gitconnected.com/wotw/home), [WebComponents.org](https://www.webcomponents.org/) ([Polymer Project](https://www.polymer-project.org/)), [Laws of UX](https://lawsofux.com/)
 
 
 ----------
@@ -56,6 +56,10 @@ anecdotally, at my previous company, a tool was designed internally to display a
 
 finally, if you’re on a Mac be sure to check out the [VoiceOver Utility](https://www.apple.com/accessibility/mac/vision/) to get a real-world sense of how your app is feeling when navigating via keyboard (although i think it only works on Safari, sadly).
 
+## resources
+
+- [**WCAG in Plain English**](https://aaardvarkaccessibility.com/wcag-plain-english/)
+
 
 ----------
 # internationalization (i18n)
@@ -63,6 +67,9 @@ finally, if you’re on a Mac be sure to check out the [VoiceOver Utility](https
 somewhat in the same vein as a11y is providing access to your site to the people around the world that don’t necessarily speak the same language that you do. there’s a lot that goes into i18n, not just translating words, but also the way numbers are formatted, dates, relative dates and pluralization.
 
 the recommended library here is [**react-intl**](https://github.com/yahoo/react-intl/wiki).
+
+related in this space is considering using [logical properties](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_logical_properties_and_values/Basic_concepts_of_logical_properties_and_values) in your CSS.
+this is about writing your CSS using properties like `start` and `end` instead of `left` and `right` and it makes adapting your website for RTL languages much more straightforward.
 
 
 ----------
@@ -113,8 +120,11 @@ i think i’m in love with the *idea* of web components. but for some reason the
 ----------
 # toolkits and widgets
 
-[**MUI**](https://material-ui.com/) is a great React library to get you going with a UI toolkit straight out of the box. an alternative library that has good traction is [**Mantine**](https://mantine.dev/). 
-
+[**MUI**](https://material-ui.com/) is a great React library to get you going with a UI toolkit straight out of the box.
+[**Radix**](https://www.radix-ui.com/) is also wonderful, especially because it lets you customize it heavily.
+[**Magic UI**](https://magicui.design/): has a lot of fun components like: confetti, orbiting circles, beams, and lots of playful things.
+[**Primer**](https://primer.style/): GitHub's UI kit. kinda neat.
+[**Base UI**](https://base-ui.com/): an alternative to Radix, haven't tried it yet though.
 
 ----------
 # typography
@@ -161,6 +171,8 @@ p {
 
 [**MUI**](https://material.io/tools/icons/?style=baseline) has a great set of icons that are easily included into your app. you can find a meta search of *all* icon sets across the web [here](https://icones.js.org/) and [here](https://iconbuddy.app/).
 
+[**Radix icons**](https://www.radix-ui.com/icons) has a great set to go along with their UI library.
+
 alternatively, [**Nerd Fonts**](https://nerdfonts.com/) is a great one-stop font combining Font Awesome, Octicons, Material Design, and many more. however, it can be more difficult to include into your app — it’s not as simple as an `import` statement.
 
 [**Doodle Ipsum**](https://doodleipsum.com/) is a fun set of illustrations you can use as well. [**unDraw**](https://undraw.co/) can also be used for some quick illustrations.
@@ -182,7 +194,9 @@ alternatively, [**Nerd Fonts**](https://nerdfonts.com/) is a great one-stop font
 - [**visx**](https://airbnb.io/visx): visualization primatives from Airbnb
 - [**gradient generator**](https://www.joshwcomeau.com/gradient-generator/): really nice gradients via josh comeau.
 - [**shadow generator**](https://www.joshwcomeau.com/shadow-palette/): really nice shadow generator (also from comeau).
+- [**Easing Wizard**](https://easingwizard.com/)
 - [**Victory**](https://formidable.com/open-source/victory/): great charting tool from Formidable.
+- [**React Graph Gallery**](https://www.react-graph-gallery.com/): even more charting.
 
 
 ----------
@@ -222,3 +236,4 @@ check out the UX Collective to understand how to approach this process holistica
 - [**JavaScript & CSS Widget of the Week**](https://levelup.gitconnected.com/wotw/home): another inspirational site of UI awesomeness.
 - [**WebComponents.org**](https://www.webcomponents.org/): a site dedicated to the Custom Elements/Shadow DOM specs and toolkits around them.
     - [**Polymer Project**](https://www.polymer-project.org/): libraries, tools, and standards built off of Custom Elements.
+- [**Laws of UX**](https://lawsofux.com/): a list of principals to follow when designing a UI.
