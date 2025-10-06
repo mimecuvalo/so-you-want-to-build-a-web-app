@@ -29,6 +29,6 @@ jobs:
       - name: Run ESLint
         run: yarn lint
       - name: Generate Tina types
-        run: yarn build-local
+        run: yarn tina-generate-types
       - name: Run type-check
         run: yarn type-check
