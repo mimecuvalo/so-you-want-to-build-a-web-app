@@ -17,13 +17,17 @@ sometimes in our trade it can be difficult to avoid the “[not invented here](h
 
 but much like the [OSI model of layering](https://en.wikipedia.org/wiki/OSI_model) i think a new abstraction has arisen in the form of tech like Vercel. it abstracts away some of the complexity of hosting servers, running APIs, scaling, etc. this of course takes away some of your control as a developer but significantly reduces the cognitive load to help you just work on building a great product.
 
-when i worked on my open source project [`all-the-things`](https://github.com/mimecuvalo/all-the-things) it was originally a fork of [`create-react-app`](https://create-react-app.dev/) and the missing piece, to me, was that it was purely client-side and lacked server-side rendering (or server anything, for that matter). so my own tinkering was to attempting to build a shadow of what Vercel has become. indeed, i’ve now switched the `all-the-things` app to be [Next.js](https://nextjs.org/) based and i enthusiastically and emphatically recommend Vercel for most basic needs when starting a new project!
+to be balanced here i will say [Digital Ocean](https://www.digitalocean.com/) is a great way to self-host and run things the old-fashioned way.
 
-i swear i'm not just a paid hack for Vercel. and to temper my enthusiasm, i will say that they've started to lose the plot over there in recent years. the react-on-the-server debate has started to develop into a weird, unhealthy codependent relationship for React/Vercel forcing Next.js to make some design choices that are starting to become too opinioniated for it's own good. for a constructive critique and great read on this debate [check out this article](https://www.epicweb.dev/why-i-wont-use-nextjs) by Kent C. Dodds.
+## falling out of love with Next.js
 
-also, here's an even _more_ brutal critique of Next.js and it's also worth a read to stay clear-headed on this all: there's no silver bullet to this all and to be wary of buying into a framework that might lock you in! [The Market for Lemons](https://infrequently.org/2023/02/the-market-for-lemons/)
+when i worked on my open source project [`all-the-things`](https://github.com/mimecuvalo/all-the-things) it was originally a fork of [`create-react-app`](https://create-react-app.dev/) and the missing piece, to me, was that it was purely client-side and lacked server-side rendering (or server anything, for that matter). so my own tinkering was to attempting to build a shadow of what Vercel has become. so i switched the `all-the-things` app to be [Next.js](https://nextjs.org/) since Vercel really worked well with it.
 
-so, to be balanced here i will say [Digital Ocean](https://www.digitalocean.com/) is a great way to self-host and run things the old-fashioned way.
+however, i will say that they've started to lose the plot over there in recent years. the react-on-the-server debate has started to develop into a weird, unhealthy codependent relationship for React/Vercel forcing Next.js to make some design choices that are starting to become too opinioniated for it's own good. for a constructive critique and great read on this debate [check out this article](https://www.epicweb.dev/why-i-wont-use-nextjs) by Kent C. Dodds. also, here's an even _more_ brutal critique of Next.js and it's also worth a read to stay clear-headed on this all: there's no silver bullet to this all and to be wary of buying into a framework that might lock you in! [The Market for Lemons](https://infrequently.org/2023/02/the-market-for-lemons/)
+
+## the current stack
+
+so, i migrated the base `all-the-things` app away from Next.js and at the moment it's a TanStack Start (Bun + Hono + Vite + React) app. oh the places (migrations) you'll go: this template has gone from a python Tornado app → Create React App → Next.js app → Tanstack Start (Bun+Hono+Vite+React) app.
 
 ***
 

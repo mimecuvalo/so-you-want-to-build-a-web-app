@@ -1,5 +1,5 @@
 ---
-title: '🎨 cascading stylesheets'
+title: "\U0001F3A8 cascading stylesheets"
 ---
 
 or, *the "and you thought JS was bad" part.*
@@ -7,17 +7,18 @@ or, *the "and you thought JS was bad" part.*
 ![ie6, or, “how i think kids have it too easy these days”. (source unknown :-/)](/img/css.jpg)
 
 # tl;dr
-- **CSS for newbies**: [MDN guide](https://developer.mozilla.org/en-US/docs/Learn/Getting_started_with_the_web), [CodeSandbox](https://codesandbox.io/s/new), [CodePen](https://codepen.io/), [CSS Zen Garden](http://csszengarden.com/)
-- **defining colors, a minor note**: [`oklch`](https://chriscoyier.net/2023/01/22/ok-oklch-%F0%9F%91%91/)
-- **beyond CSS: CSS Modules and CSS-in-JS**: [CSS Modules](https://github.com/css-modules/css-modules) ([guide](https://glenmaddern.com/articles/css-modules)), [Farewell CSS](https://moox.io/blog/farewell-css/), [CSS in JS](https://speakerdeck.com/vjeux/react-css-in-js), [A Unified Styling Language](https://medium.com/seek-blog/a-unified-styling-language-d0c208de2660), [emotion](https://emotion.sh/), [vanilla-extract](https://vanilla-extract.style/), [StyleX](https://stylexjs.com/), and more CSS-in-JS packages
-- **anti-Tailwind**: an opinionated takedown.
-- **create-next-app**: [PostCSS](https://postcss.org/), [Sass](https://sass-lang.com/guide), [webpack](https://webpack.js.org/)
-- **preprocessors**: [Sass](https://sass-lang.com/)
-- **looking ahead**: [CSS-Tricks](https://css-tricks.com/), [cssdb](https://preset-env.cssdb.org/features), [New features for 2025](https://frontendmasters.com/blog/what-you-need-to-know-about-modern-css-2025-edition/)
-- **resources**: [CSS-Tricks](https://css-tricks.com/), [Can I use…?](https://caniuse.com/), [**Can I email…?**](https://www.caniemail.com/), [MDN reference](https://developer.mozilla.org/docs/Web/CSS), [Stack Overflow](https://stackoverflow.com/), [Google Developers](https://developers.google.com/web/updates/), [State of CSS](https://stateofcss.com/), [CSS Zen Garden](http://csszengarden.com/), [Learn CSS](https://web.dev/learn/css/)
 
+* **CSS for newbies**: [MDN guide](https://developer.mozilla.org/en-US/docs/Learn/Getting_started_with_the_web), [CodeSandbox](https://codesandbox.io/s/new), [CodePen](https://codepen.io/), [CSS Zen Garden](http://csszengarden.com/)
+* **defining colors, a minor note**: [`oklch`](https://chriscoyier.net/2023/01/22/ok-oklch-%F0%9F%91%91/)
+* **beyond CSS: CSS Modules and CSS-in-JS**: [CSS Modules](https://github.com/css-modules/css-modules) ([guide](https://glenmaddern.com/articles/css-modules)), [Farewell CSS](https://moox.io/blog/farewell-css/), [CSS in JS](https://speakerdeck.com/vjeux/react-css-in-js), [A Unified Styling Language](https://medium.com/seek-blog/a-unified-styling-language-d0c208de2660), [emotion](https://emotion.sh/), [vanilla-extract](https://vanilla-extract.style/), [StyleX](https://stylexjs.com/), and more CSS-in-JS packages
+* **anti-Tailwind**: an opinionated takedown.
+* **setup**: [PostCSS](https://postcss.org/), browserslist, [sanitize.css](https://csstools.github.io/sanitize.css/)
+* **preprocessors**: [Sass](https://sass-lang.com/)
+* **looking ahead**: [CSS-Tricks](https://css-tricks.com/), [cssdb](https://preset-env.cssdb.org/features), [New features for 2025](https://frontendmasters.com/blog/what-you-need-to-know-about-modern-css-2025-edition/)
+* **resources**: [CSS-Tricks](https://css-tricks.com/), [Can I use…?](https://caniuse.com/), [Can I email…?](https://www.caniemail.com/), [MDN reference](https://developer.mozilla.org/docs/Web/CSS), [Stack Overflow](https://stackoverflow.com/), [Google Developers](https://developers.google.com/web/updates/), [State of CSS](https://stateofcss.com/), [CSS Zen Garden](http://csszengarden.com/), [Learn CSS](https://web.dev/learn/css/)
 
-----------
+***
+
 # CSS for newbies
 
 if you’re absolutely new to CSS, start [here](https://developer.mozilla.org/en-US/docs/Learn/Getting_started_with_the_web) at the Mozilla Developer Network (or MDN). they’re the people that make Firefox and have the best reference guides for CSS. in general though this guide assumes you’ve got a base understanding of CSS so go forth and mess around with the language as much as you can before moving on to the rest of the more complicated stuff.
@@ -26,17 +27,16 @@ if you’re absolutely new to CSS, start [here](https://developer.mozilla.org/en
 
 an easy way to get started is by checking out some of these tools that let you play around with the language:
 
-- [**CodeSandbox**](https://codesandbox.io/s/new): lets you mess around with a React app in real-time.
-- [**CodePen**](https://codepen.io/): a social development environment for front-end designers and developers.
-- [**CSS Zen Garden**](http://csszengarden.com/): shows you how a single HTML page can look a *1,000* different ways. this site goes way back and was inspiration to many a designer/developer. (you can mess around with the CSS via the Developer Tools in your browser.)
-
+* **[CodeSandbox](https://codesandbox.io/s/new)**: lets you mess around with a React app in real-time.
+* **[CodePen](https://codepen.io/)**: a social development environment for front-end designers and developers.
+* **[CSS Zen Garden](http://csszengarden.com/)**: shows you how a single HTML page can look a *1,000* different ways. this site goes way back and was inspiration to many a designer/developer. (you can mess around with the CSS via the Developer Tools in your browser.)
 
 ## defining colors, a minor note
 
 there’s been a *lot* of standards around color, beginning with `rgb` and including other fancier things like `hsl`. the new “king” of color definition is [`oklch`](https://chriscoyier.net/2023/01/22/ok-oklch-%F0%9F%91%91/).
 
+***
 
-----------
 # beyond CSS: CSS Modules and CSS-in-JS
 
 this guide is about writing an *application* not a regular webpage. to that end, you shouldn’t be using regular CSS with `<style>` tags anymore — as your application grows and more contributors add to it, you will drown in a sea of madness and salty tears. yes, your mother taught you to wash behind your ears, brush your teeth, and never, *EVER* use inline styles in your HTML. but those days are over and a new era has come.
@@ -45,11 +45,9 @@ the truth is that this space is still rapidly in development and the dust isn’
 
 finally, there's also truth in this: [whatever you pick may never be enough](https://denodell.com/blog/we-keep-reinventing-css)
 
-
 ## CSS Modules: a happy middle ground
 
 [CSS Modules](https://github.com/css-modules/css-modules) are a great way to get a lot of the benefits of CSS-in-JS without leaving the CSS world altogether. here’s a [helpful primer](https://glenmaddern.com/articles/css-modules) on getting started.
-
 
 ## CSS-in-JS: some compelling arguments
 
@@ -57,66 +55,65 @@ CSS-in-JS forgoes CSS files altogether and says we should have our styling where
 
 **great reads on the topic**
 
-- [**Farewell CSS**](https://moox.io/blog/farewell-css/): a great take on why you should probably be doing CSS-in-JS.
-- [**CSS in JS**](https://speakerdeck.com/vjeux/react-css-in-js)[:](https://speakerdeck.com/vjeux/react-css-in-js) a watershed moment of a slideshow arguing for you to forget everything you now about how inline styles are bad.
-- [**A Unified Styling Language**](https://medium.com/seek-blog/a-unified-styling-language-d0c208de2660): from the co-creator of CSS modules, an argument for CSS-in-JS and to leave behind things like BEM which are only conventions/opt-in vs. something that’s baked-in to a methodology.
+* **[Farewell CSS](https://moox.io/blog/farewell-css/)**: a great take on why you should probably be doing CSS-in-JS.
+* **[CSS in JS](https://speakerdeck.com/vjeux/react-css-in-js)**[:](https://speakerdeck.com/vjeux/react-css-in-js) a watershed moment of a slideshow arguing for you to forget everything you now about how inline styles are bad.
+* **[A Unified Styling Language](https://medium.com/seek-blog/a-unified-styling-language-d0c208de2660)**: from the co-creator of CSS modules, an argument for CSS-in-JS and to leave behind things like BEM which are only conventions/opt-in vs. something that’s baked-in to a methodology.
 
-**package options**  
+**package options**\
 again, there’s so much action going on in this space that it’s still to be decided what paradigm will win here. for now though, my tentative recommendation is [emotion](https://emotion.sh/).
 
-- [**emotion**](https://emotion.sh/): rapidly in development, new to the party. “next-gen”.
-- [**vanilla-extract**](https://vanilla-extract.style/)
-- [**StyleX**](https://stylexjs.com/)
-- [**Pigment CSS**](https://github.com/mui/pigment-css): MUI's companion CSS kit that may(?) end up being a thing one day?
-- [**glamorous**](https://glamorous.rocks/): uses objects in JS to declare CSS for a particular module.
-- [**Aphrodite**](https://github.com/Khan/aphrodite): uses objects and lets you do server-side rendering, too.
-- [**polished**](https://polished.js.org/): lets you write CSS rules in a more semantic way. the “lodash” of CSS-in-JS.
-- [**Linaria**](https://github.com/callstack/linaria): zero-runtime CSS in JS.
-- [**styletron**](http://styletron.js.org/): has some smart optimizations around CSS generation.
-- [**JSS**](http://cssinjs.org): one of the original packages — uses a dynamic stylesheet to add rules. (you’ll need [react-jss](http://cssinjs.org/react-jss/?v=v8.6.1) as well.)
-- [**Radium**](https://formidable.com/open-source/radium/): one of the original packages in this space.
-- [**Atomic CSS**](https://acss.io/): bleh. unreadable.
-- [**styled-components**](https://www.styled-components.com/): is dead ☠️.
-- to help you decide: [an article](https://hackernoon.com/all-you-need-to-know-about-css-in-js-984a72d48ebc) going over (some of) the various libraries.
+* **[emotion](https://emotion.sh/)**: rapidly in development, new to the party. “next-gen”.
+* **[vanilla-extract](https://vanilla-extract.style/)**
+* **[StyleX](https://stylexjs.com/)**
+* **[Pigment CSS](https://github.com/mui/pigment-css)**: MUI's companion CSS kit that may(?) end up being a thing one day?
+* **[glamorous](https://glamorous.rocks/)**: uses objects in JS to declare CSS for a particular module.
+* **[Aphrodite](https://github.com/Khan/aphrodite)**: uses objects and lets you do server-side rendering, too.
+* **[polished](https://polished.js.org/)**: lets you write CSS rules in a more semantic way. the “lodash” of CSS-in-JS.
+* **[Linaria](https://github.com/callstack/linaria)**: zero-runtime CSS in JS.
+* **[styletron](http://styletron.js.org/)**: has some smart optimizations around CSS generation.
+* **[JSS](http://cssinjs.org)**: one of the original packages — uses a dynamic stylesheet to add rules. (you’ll need [react-jss](http://cssinjs.org/react-jss/?v=v8.6.1) as well.)
+* **[Radium](https://formidable.com/open-source/radium/)**: one of the original packages in this space.
+* **[Atomic CSS](https://acss.io/)**: bleh. unreadable.
+* **[styled-components](https://www.styled-components.com/)**: is dead ☠️.
+* to help you decide: [an article](https://hackernoon.com/all-you-need-to-know-about-css-in-js-984a72d48ebc) going over (some of) the various libraries.
 
-----------
+***
 
 # anti-Tailwind
 
-this is an opinionated guide, remember? everything in my soul tells me to keep Tailwind away with a 10-foot pole. it's vendor lock-in embodied in a library, it has its own bespoke version of CSS that you have to learn, it becomes a garbled, cluttered mess within your HTML/JSX, ugh, ugh, ugh! 
+this is an opinionated guide, remember? everything in my soul tells me to keep Tailwind away with a 10-foot pole. it's vendor lock-in embodied in a library, it has its own bespoke version of CSS that you have to learn, it becomes a garbled, cluttered mess within your HTML/JSX, ugh, ugh, ugh!
 
 yes, it's very conveniently "spoken" by LLMs but trying to maintain it is untenable. Tailwind just ends up being a bloody mess once the codebase has any amount of real complexity or the number of collaborators grows.
-we webdevs went _through_ this experience with CoffeeScript before. yes, it was elegant, neat, enticing — and, in the end, we needed to rewrite it all to stay relevant.
+we webdevs went *through* this experience with CoffeeScript before. yes, it was elegant, neat, enticing — and, in the end, we needed to rewrite it all to stay relevant.
 
 relevant reading:
-- [**Tailwind is the Worst of All Worlds**](https://colton.dev/blog/tailwind-is-the-worst-of-all-worlds/)
-- [**Why I Don’t Like Tailwind CSS**](https://www.aleksandrhovhannisyan.com/blog/why-i-dont-like-tailwind-css/)
+
+* **[Tailwind is the Worst of All Worlds](https://colton.dev/blog/tailwind-is-the-worst-of-all-worlds/)**
+* **[Why I Don’t Like Tailwind CSS](https://www.aleksandrhovhannisyan.com/blog/why-i-dont-like-tailwind-css/)**
 
 there are [so](https://ui.shadcn.com/). [many](https://blocks.tremor.so/). [libraries](https://www.heroui.com/). [coming](https://vercel.com/geist/introduction) out that are built on Tailwind, and, yeah, they look a peach.
 but ugh, mark my words, in 10 years, this madness will (hopefully) be behind us, leaving us to cleanup the strangling [kudzu](https://en.wikipedia.org/wiki/Kudzu)-like vines of unmaintainable code for decades to come.
 
-----------
-# create-next-app
+***
+
+# setup
 
 related to the [previous section on JS](/javascript), i’ll mention again here the technologies included by default related to CSS for you to use out of the box.
 
-
-- [**PostCSS**](https://postcss.org/): enables lots of nice CSS capabilities, including the following:
-    - [**postcss-preset-env**](https://preset-env.cssdb.org/features)**:** lets you use new/experimental (stage 3+) CSS features today. this depends on your `browserslist` field in `package.json`. (historical note: postcss-preset-env was previously known as “cssnext”)
-    - [**autoprefixing**](https://github.com/postcss/autoprefixer#autoprefixer-): adds compatibility support for different browsers.
-    - [**CSS Modules**](https://github.com/css-modules/css-modules): let’s you import CSS into your JS. name your css files `*.module.css` to take advantage.
-- [**Sass**](https://sass-lang.com/guide): provides support for a superset of CSS. (*note*: disabled by default. needs to be turned on by installing the `node-sass` package.)
-
+* **[PostCSS](https://postcss.org/)**: enables lots of nice CSS capabilities, including the following:
+  * **[postcss-preset-env](https://preset-env.cssdb.org/features):** lets you use new/experimental (stage 3+) CSS features today. this depends on your `browserslist` field in `package.json`. (historical note: postcss-preset-env was previously known as “cssnext”)
+  * **[autoprefixing](https://github.com/postcss/autoprefixer#autoprefixer-)**: adds compatibility support for different browsers.
+  * **[CSS Modules](https://github.com/css-modules/css-modules)**: let’s you import CSS into your JS. name your css files `*.module.css` to take advantage.
+* **[Sass](https://sass-lang.com/guide)**: provides support for a superset of CSS. (*note*: disabled by default. needs to be turned on by installing the `node-sass` package.)
 
 ## CSS Reset
 
-[**sanitize.css**](https://csstools.github.io/sanitize.css/) is a CSS Reset that helps normalize things across browsers, a lesser problem these days but still important.
-[**Chris Coyier's "reset"**](https://frontendmasters.com/blog/the-coyier-css-starter/): an opinionated take on a reset.
-
+**[sanitize.css](https://csstools.github.io/sanitize.css/)** is a CSS Reset that helps normalize things across browsers, a lesser problem these days but still important.
+**[Chris Coyier's "reset"](https://frontendmasters.com/blog/the-coyier-css-starter/)**: an opinionated take on a reset.
 
 ## conventions
 
-**CSS Modules**  
+**CSS Modules**\
 when you can, it’s suggested to use CSS Modules which provide great scoping for your CSS to a particular JS module. first, name your CSS file `[name].module.css` and then you can use it in your JS module as such (take note of the `composes` keyword and what it’s doing):
 
 ```css
@@ -146,57 +143,55 @@ class Button extends Component {
 }
 ```
 
+***
 
-----------
 # preprocessors
 
-given the recommendation for CSS Modules/CSS-in-JS i might steer you away from CSS preprocessors (which would add yet another layer top of an already complex stack of technologies). but, if that’s your thing, then take a look at [**Sass**](https://sass-lang.com/).
+given the recommendation for CSS Modules/CSS-in-JS i might steer you away from CSS preprocessors (which would add yet another layer top of an already complex stack of technologies). but, if that’s your thing, then take a look at **[Sass](https://sass-lang.com/)**.
 
 the advantages Sass can give you are things like:
 
-- variables
-- nesting of rules
-- mixins
-- operators
-- and [more](https://sass-lang.com/guide)!
+* variables
+* nesting of rules
+* mixins
+* operators
+* and [more](https://sass-lang.com/guide)!
 
 (*historical note*: other packages in the space are things like [Less](http://lesscss.org/) but the community isn’t as strong there and the support from other vendors isn’t as robust.)
 
+***
 
-----------
 # looking ahead
 
 there’s a bunch of CSS features constantly in the making. i had this section listing things from 2018 that were exciting and the neat thing is that the CSS development flywheel has only continued to produce great stuff!
 
-- [**CSS-Tricks**](https://css-tricks.com/): always has the latest cool stuff in CSS, great place to learn in general.
-- [**cssdb**](https://preset-env.cssdb.org/features): a list of things being developed/discussed.
-- [**New features for 2025**](https://frontendmasters.com/blog/what-you-need-to-know-about-modern-css-2025-edition/)
+* **[CSS-Tricks](https://css-tricks.com/)**: always has the latest cool stuff in CSS, great place to learn in general.
+* **[cssdb](https://preset-env.cssdb.org/features)**: a list of things being developed/discussed.
+* **[New features for 2025](https://frontendmasters.com/blog/what-you-need-to-know-about-modern-css-2025-edition/)**
+* **[custom variables](https://preset-env.cssdb.org/features#custom-properties)**: this is already pretty much out in the wild. let’s you specify variables much like you would in Sass or LESS.
+* **[grid](https://developer.mozilla.org/en-US/docs/Web/CSS/grid)**: simplifies existing layout patterns. here are some sites showing off its capabilities:
+  * [CSS Grid Garden](http://cssgridgarden.com/)
+  * [Intro to CSS grids](https://labs.jensimmons.com#intro-grid)
+  * [MDN documentation](https://developer.mozilla.org/docs/Web/CSS/CSS_Grid_Layout/CSS_Grid_and_Progressive_Enhancement#Starting_to_use_Grid_in_production)
+    * [MDN inspirational examples](https://www.mozilla.org/developer/css-grid/)
+  * [Grid by Example](https://gridbyexample.com/examples/)
+* **[all: initial](https://preset-env.cssdb.org/features#all-property)**: lets you reset the properties of an element.
+* **[contain](https://developers.google.com/web/updates/2016/06/css-containment)**: not widely supported yet but can ostensibly give you some performance gains during rendering.
+* **[will-change](https://developers.google.com/web/fundamentals/design-and-ux/animations/animations-and-performance#using_the_will-change_property)**: gives a performance hint to the browser on how a particular element will change over time.
+* **[scroll-snap-align](https://developers.google.com/web/updates/2018/07/css-scroll-snap)**: a way to give some control over scroll behavior to align with certain anchor points.
 
+***
 
-- [**custom variables**](https://preset-env.cssdb.org/features#custom-properties): this is already pretty much out in the wild. let’s you specify variables much like you would in Sass or LESS.
-- [**grid**](https://developer.mozilla.org/en-US/docs/Web/CSS/grid): simplifies existing layout patterns. here are some sites showing off its capabilities:
-    - [CSS Grid Garden](http://cssgridgarden.com/)
-    - [Intro to CSS grids](https://labs.jensimmons.com/#intro-grid)
-    - [MDN documentation](https://developer.mozilla.org/docs/Web/CSS/CSS_Grid_Layout/CSS_Grid_and_Progressive_Enhancement#Starting_to_use_Grid_in_production)
-        - [MDN inspirational examples](https://www.mozilla.org/developer/css-grid/)
-    - [Grid by Example](https://gridbyexample.com/examples/)
-- [**all: initial**](https://preset-env.cssdb.org/features#all-property): lets you reset the properties of an element.
-- [**contain**](https://developers.google.com/web/updates/2016/06/css-containment): not widely supported yet but can ostensibly give you some performance gains during rendering.
-- [**will-change**](https://developers.google.com/web/fundamentals/design-and-ux/animations/animations-and-performance#using_the_will-change_property): gives a performance hint to the browser on how a particular element will change over time.
-- [**scroll-snap-align**](https://developers.google.com/web/updates/2018/07/css-scroll-snap): a way to give some control over scroll behavior to align with certain anchor points.
-
-
-
-----------
 # resources
-- [**CSS-Tricks**](https://css-tricks.com/): always has the latest cool stuff in CSS, great place to learn in general.
-- [**Can I use…?**](https://caniuse.com/): to check cross-browser support for a particular feature.
-    - “*Hell is other browsers — Sartre”* (from [QuirksMode](https://www.quirksmode.org/), the original support reference)
-- [**Can I email…?**](https://www.caniemail.com/): email is its own hell.
-- [**Mozilla Developer Network**](https://developer.mozilla.org/docs/Web/CSS): the best reference for web technologies.
-- [**Stack Overflow**](https://stackoverflow.com/): *the* go-to place for when you’ve RTFM and still don’t WTF is broken.
-- [**Google Developers**](https://developers.google.com/web/updates/): keep up-to-date on the latest upcoming changes in CSS.
-- [**State of CSS**](https://stateofcss.com/): yearly survey of what’s being used in the wild for CSS.
-- [**CSS Zen Garden**](http://csszengarden.com/): shows you how a single HTML page can look a *1,000* different ways. this site goes way back and was inspiration to many a designer/developer.
-- [**Learn CSS**](https://web.dev/learn/css/): from web.dev, an evergreen beginner’s course.
-- and, **even more resources**: [+🤝 resources and meetups](/resources-and-meetups) 
+
+* **[CSS-Tricks](https://css-tricks.com/)**: always has the latest cool stuff in CSS, great place to learn in general.
+* **[Can I use…?](https://caniuse.com/)**: to check cross-browser support for a particular feature.
+  * “*Hell is other browsers — Sartre”* (from [QuirksMode](https://www.quirksmode.org/), the original support reference)
+* **[Can I email…?](https://www.caniemail.com/)**: email is its own hell.
+* **[Mozilla Developer Network](https://developer.mozilla.org/docs/Web/CSS)**: the best reference for web technologies.
+* **[Stack Overflow](https://stackoverflow.com/)**: *the* go-to place for when you’ve RTFM and still don’t WTF is broken.
+* **[Google Developers](https://developers.google.com/web/updates/)**: keep up-to-date on the latest upcoming changes in CSS.
+* **[State of CSS](https://stateofcss.com/)**: yearly survey of what’s being used in the wild for CSS.
+* **[CSS Zen Garden](http://csszengarden.com/)**: shows you how a single HTML page can look a *1,000* different ways. this site goes way back and was inspiration to many a designer/developer.
+* **[Learn CSS](https://web.dev/learn/css/)**: from web.dev, an evergreen beginner’s course.
+* and, **even more resources**: [+🤝 resources and meetups](/resources-and-meetups)
