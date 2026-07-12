@@ -96,6 +96,9 @@ export default class MyDocument extends Document {
     const { locale } = this.props;
     // @ts-ignore not sure how to fix this yet
     const { nonce } = this.props;
+    if (!nonce) {
+      throw new Error('Nonce is required');
+    }
     const csp = generateCsp(nonce);
 
     return (
