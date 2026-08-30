@@ -8,7 +8,7 @@ or, *the “it’s parentheses all the way down” part.*
 
 * **hardware**: [Mac](https://www.apple.com/mac/)
 * **security**: [2fa](https://www.google.com/landing/2step/), [1Password](https://1password.com/), [Signal](https://signal.org/), [uBlock Origin](https://ublockorigin.com/), [Arc](https://arc.net/), [YubiKey](https://www.yubico.com/), encrypt your hard drive
-* **software**: [chrome](https://www.google.com/chrome/) (maybe [Arc](https://arc.net/), [Ladybird](https://ladybird.org/)), [VirtualBox](https://www.virtualbox.org/) + [VMs](https://developer.microsoft.com/en-us/microsoft-edge/tools/vms/), [iTerm2](https://www.iterm2.com/) ([Fig](https://fig.io/), [Warp](https://www.warp.dev/)), [Homebrew](https://brew.sh/), [zsh + oh-my-zsh](https://github.com/robbyrussell/oh-my-zsh/wiki/Installing-ZSH), [Night Shift](https://support.apple.com/en-gb/102191), [Dropbox](https://www.dropbox.com), [Postico](https://eggerapps.at/postico/) / [Sequel Pro](https://sequelpro.com/), [⌘-Shift-\[3|4|5\]](https://support.apple.com/en-us/HT201361), [Kap](https://getkap.co/)
+* **software**: [chrome](https://www.google.com/chrome/) (maybe [Arc](https://arc.net/), [Ladybird](https://ladybird.org/)), [VirtualBox](https://www.virtualbox.org/) + [VMs](https://developer.microsoft.com/en-us/microsoft-edge/tools/vms/), [iTerm2](https://www.iterm2.com/) ([Fig](https://fig.io/), [Warp](https://www.warp.dev/)), [Homebrew](https://brew.sh/), [zsh + oh-my-zsh](https://github.com/robbyrussell/oh-my-zsh/wiki/Installing-ZSH), [Night Shift](https://support.apple.com/en-gb/102191), [Dropbox](https://www.dropbox.com), [Postico](https://eggerapps.at/postico/) / [Sequel Pro](https://sequelpro.com/), [⌘-Shift-\[3|4|5\]](https://support.apple.com/en-us/HT201361), [NewKap](https://github.com/MuntasirMalek/NewKap)
   * **etc**: [Color Note](https://itunes.apple.com/us/app/color-note/id1099028591?mt=12), [LibreOffice](https://www.libreoffice.org/), [Disk Inventory X](http://www.derlien.com/)
 * **editors**: [Cursor](https://cursor.com/), [VSCode](https://code.visualstudio.com/), [Sublime](https://www.sublimetext.com/), [vim](https://www.vim.org/)
 
@@ -50,9 +50,9 @@ internalize this now: every engineer is a security engineer. you need to know se
   * Preferences → Keys → Hotkey → Show/hide all windows with a system-wide hotkey.
   * also, turn on iTerm2 → Secure Keyboard Entry
   * **quick note**: god, terminals are so unintuitive. and nobody teaches you how to use them, at least nobody certainly taught me. they have hidden characters that you’re just supposed to know about, their manuals are hidden, and you have to just know ahead of time what you are looking for. i’ll discuss some useful commands in [the next section](/how-to-linux).
-  * **watch this space**: another modern contenders in this space: [Warp](https://www.warp.dev/)
+  * **watch this space**: another modern contenders in this space: [Ghostty](https://ghostty.org/) and [Warp](https://www.warp.dev/)
     * who would think command lines could get even better but they are!
-    * should i mention [Claude Code](https://www.claude.com/product/claude-code) here? i should mention Claude Code.
+  * should i mention [Claude Code](https://www.claude.com/product/claude-code) here? i should mention Claude Code.
 * **package manager**: [Homebrew](https://brew.sh/). let’s you install all the geeky things that you’re going to need later on. MacPorts used to be the recommendation here, but god, what a mess.
 
 ```bash
@@ -79,7 +79,7 @@ vim ~/.zshrc
 if [[ -n $CURSOR_TRACE_ID ]]; then
   ZSH_THEME="robbyrussell"  # Use a simpler theme in Cursor
 else
-  ZSH_THEME="powerlevel9k/powerlevel9k"
+  ZSH_THEME="powerlevel10k/powerlevel10k"
 fi
 
 # install necessary fonts for the theme:
@@ -89,9 +89,7 @@ brew cask install font-hack-nerd-font
 
 # further great config options for Powerlevel9k found in this gist. (requires some finessing)
 POWERLEVEL9K_MODE='nerdfont-complete'
-POWERLEVEL9K_PROMPT_ON_NEWLINE=true
 POWERLEVEL9K_PROMPT_ADD_NEWLINE=true
-POWERLEVEL9K_RPROMPT_ON_NEWLINE=true
 POWERLEVEL9K_SHORTEN_DIR_LENGTH=2
 POWERLEVEL9K_SHORTEN_STRATEGY="truncate_beginning"
 POWERLEVEL9K_VCS_CLEAN_FOREGROUND='black'
@@ -105,8 +103,12 @@ POWERLEVEL9K_VCS_UNSTAGED_ICON='\u00b1'
 POWERLEVEL9K_VCS_INCOMING_CHANGES_ICON='\u2193'
 POWERLEVEL9K_VCS_OUTGOING_CHANGES_ICON='\u2191'
 POWERLEVEL9K_VCS_COMMIT_ICON="\uf417"
-POWERLEVEL9K_MULTILINE_FIRST_PROMPT_PREFIX="%F{blue}\u256D\u2500%F{white}"
-POWERLEVEL9K_MULTILINE_LAST_PROMPT_PREFIX="%F{blue}\u2570\uf460%F{white} "
+POWERLEVEL9K_LEFT_SEGMENT_SEPARATOR='%F{yellow}\uf400%F{white}'
+# N.B. these commented-out below messed with Cursor:
+# POWERLEVEL9K_PROMPT_ON_NEWLINE=true
+# POWERLEVEL9K_RPROMPT_ON_NEWLINE=true
+#POWERLEVEL9K_MULTILINE_FIRST_PROMPT_PREFIX="%F{blue}\u256D\u2500%F{white}"
+#POWERLEVEL9K_MULTILINE_LAST_PROMPT_PREFIX="%F{blue}\u2570\uf460%F{white} "
 POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(os_icon ssh root_indicator dir vcs)
 POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(command_execution_time status time)
 POWERLEVEL9K_COMMAND_EXECUTION_TIME_THRESHOLD=1
@@ -126,12 +128,10 @@ plugins=(compleat dircycle dirhistory git git-extras git-flow history history-su
 # - sudo: hit Escape twice to add `sudo` to command.
 # - wd: "warp directory" - creates common directory jump points.
 
-# colorls is great. get that too. make sure ruby is installed first.
-gem install colorls
-source $(dirname $(gem which colorls))/tab_complete.sh
+# lsd (or eza) is great. get that too.
 # add to your .zshrc file:
-alias lc='colorls -lA --sd --gs'
-alias lct='colorls --tree -A --sd --gs'
+alias lc='lsd -lA --group-directories-first'
+alias lct='lsd --tree -A --group-directories-first'
 ```
 
 * **ergonomics**:
@@ -141,7 +141,7 @@ alias lct='colorls --tree -A --sd --gs'
 * **music**: nothing in particular to recommend here. just to have some tunes handy for those long coding sessions to get you in the zone 🎶 (basically, i wish [WinAmp](http://www.winamp.com/) worked on my Mac)
 * **backup**: [Dropbox](https://www.dropbox.com). i’m biased obviously since i used to work there. but backup your shit somehow.
 * **database gui**: [Sequel Pro](https://sequelpro.com/) for mySQL and [Postico](https://eggerapps.at/postico/) for PostgreSQL.
-* **gif/video recording**: [⌘-Shift-5](https://support.apple.com/en-us/HT201361). new feature in macOS Mojave — makes it easy to show off your new feature or help show how to reproduce a bug with a video of what’s going on. if you need gif’s try out [Kap](https://getkap.co/).
+* **gif/video recording**: [⌘-Shift-5](https://support.apple.com/en-us/HT201361). new feature in macOS Mojave — makes it easy to show off your new feature or help show how to reproduce a bug with a video of what’s going on. if you need gif’s try out [NewKap](https://github.com/MuntasirMalek/NewKap).
 * **screenshot**: [⌘-Shift-3](https://support.apple.com/en-us/HT201361) for the whole screen. [⌘-Shift-4](https://support.apple.com/en-us/HT201361) for a partial section of the screen. hot tip! use dropbox to auto-save those screenshots to a special folder (Preferences→Import→Share screenshots using Dropbox).
 * **ruler and screen zoom**. stealth trick! you can use ⌘-Shift-4 to begin a screenshot but before letting go of your mouse you can hit escape to not finish the screenshot. it’s a super handy ruler on the fly! combine this with Mac’s Ctrl+Scroll to zoom for more accurate measurements. ( → System Preferences → Accessibility → Zoom → Use scroll gesture with modifier keys to zoom). all this is super useful in measuring the many pixels you’ll need to verify on your website. your designer will thank you.
 * **et cetera**:

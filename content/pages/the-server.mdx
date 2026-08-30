@@ -7,6 +7,7 @@ title: "\U0001F4DF the server"
 # tl;dr
 
 * [Vercel](https://vercel.com/) has won...for now.
+* [Hono](https://hono.dev) lightweight API backend.
 * [Vite](https://vitejs.dev/) special mention to Vite which is also great.
 
 ***
@@ -28,6 +29,20 @@ however, i will say that they've started to lose the plot over there in recent y
 ## the current stack
 
 so, i migrated the base `all-the-things` app away from Next.js and at the moment it's a TanStack Start (Bun + Hono + Vite + React) app. oh the places (migrations) you'll go: this template has gone from a python Tornado app → Create React App → Next.js app → Tanstack Start (Bun+Hono+Vite+React) app.
+
+***
+
+API + router
+
+this server section is so thin these days. perhaps i lean towards having as thin a server as possible. something that can provide:
+
+* SSR (server-side rendering) for search indexing
+* an API (that accesses a database usually)
+* basic routing
+
+these days i'm recommending [Hono](https://hono.dev/) for a lightweight API/backend (paired with [zod](https://zod.dev/) for schema validation).
+
+adjacent to this space you have [tRPC](https://trpc.io/).
 
 ***
 

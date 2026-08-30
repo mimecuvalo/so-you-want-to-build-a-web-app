@@ -8,10 +8,9 @@ or, *the "[good](http://shop.oreilly.com/product/9780596517748.do)" part. 😜 o
 
 # tl;dr
 
-* **JS for newbies**: [MDN](https://developer.mozilla.org/en-US/docs/Learn/Getting_started_with_the_web), [CodeSandbox](https://codesandbox.io/s/new), [CodePen](https://codepen.io/), `node`’s [REPL](https://nodejs.org/api/repl.html), [RunKit](https://runkit.com/home#notebooks), npm sandboxing
+* **JS for newbies**: [MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide), [Concise TypeScript Book](https://gibbok.github.io/typescript-book/), [CodeSandbox](https://codesandbox.io/s/new), [CodePen](https://codepen.io/), `bun`’s [REPL](https://bun.com/docs/runtime/repl), [RunKit](https://runkit.com/home#notebooks), npm sandboxing
 * **developer tools**: [Chrome DevTools](/debugging#Chrome-DevTools)
-* **react + (meta) friends**: [React](https://react.dev/), [JSX](https://reactjs.org/docs/introducing-jsx.html), [GraphQL](https://graphql.org/), [gRPC](https://grpc.io/), [SWR](https://swr.vercel.app/), [server components](https://reactjs.org/blog/2020/12/21/data-fetching-with-react-server-components.html)
-  * **[Apollo](http://apollographql.com/)**: [Apollo DevTools](https://chrome.google.com/webstore/detail/apollo-client-developer-t/jdkknkkbebbapilgoeccciglkfbmbnfm), Robin Wieruch’s tutorials ([server](https://www.robinwieruch.de/graphql-apollo-server-tutorial/), [client](https://www.robinwieruch.de/react-graphql-apollo-tutorial/))
+* **react + (meta) friends**: [React](https://react.dev/), [JSX](https://reactjs.org/docs/introducing-jsx.html)
   * **[React Native](https://facebook.github.io/react-native/)**: [Expo](https://expo.dev/), [Yoga](https://yogalayout.com/), [Flutter](https://flutter.io/), [Tamagui](https://tamagui.dev/)
 * **[bhvr](https://bhvr.dev/)**: [Bun](https://bun.dev/), [Hono](https://hono.dev/), [Vite](https://vite.dev/), [React](https://react.dev/)
 * **[all-the-things](https://github.com/mimecuvalo/all-the-things):** [axe](https://www.google.com/search?q=axe-core\&oq=axe-core\&aqs=chrome..69i57.1485j0j7\&sourceid=chrome\&ie=UTF-8), [Auth.js](https://authjs.dev/) ([Clerk](https://clerk.com/)), [source-map-explorer](https://www.npmjs.com/package/source-map-explorer), [Base UI](https://base-ui.com/), CSP nonce, [error boundary](https://reactjs.org/docs/error-boundaries.html), error pages, error reporting, [humans.txt](http://humanstxt.org/) / [robots.txt](http://www.robotstxt.org/), [Jest](https://jestjs.io/), [react-intl](https://github.com/yahoo/react-intl/wiki#getting-started), [Open Graph](http://ogp.me/), [OpenSearch](http://www.opensearch.org/Home), [prisma](https://www.prisma.io/), perf, [Oxlint + Oxfmt](https://oxc.rs/), [JSON-LD](https://developers.google.com/search/docs/guides/intro-structured-data)
@@ -26,7 +25,9 @@ or, *the "[good](http://shop.oreilly.com/product/9780596517748.do)" part. 😜 o
 
 despite the image at the top of this section, i ❤ javascript (typescript) so hard (tbh, typescript has taken over!). i’ve been coding in it since the 90’s and it’s only gotten better over the years.
 
-if you’re absolutely new to JS, start [here](https://developer.mozilla.org/en-US/docs/Learn/Getting_started_with_the_web) at the Mozilla Developer Network (or MDN). they’re the people that make Firefox and have the best reference guides for JS. in general though this guide assumes you’ve got a base understanding of JS so go forth and mess around with the language as much as you can before moving on to the rest of the more complicated stuff.
+if you’re absolutely new to JS, start [here](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide) at the Mozilla Developer Network (or MDN). they’re the people that make Firefox and have the best reference guides for JS. in general though this guide assumes you’ve got a base understanding of JS so go forth and mess around with the language as much as you can before moving on to the rest of the more complicated stuff.
+
+to learn the basics of TS i can recommend checking out the [Concise TypeScript Book](https://gibbok.github.io/typescript-book/).
 
 ## playgrounds
 
@@ -34,7 +35,7 @@ an easy way to get started is by checking out some of these tools that let you p
 
 * **[CodeSandbox](https://codesandbox.io/s/new)**: lets you mess around with a React app in real-time.
 * **[CodePen](https://codepen.io/)**: a social development environment for front-end designers and developers.
-* **`node`’s** **[REPL](https://nodejs.org/api/repl.html)**: most coding environments provide something called a REPL which lets you mess around with the code on the command line. just type in `node` on your command line and you should be able to try out some random code.
+* **`bun`’s** **[REPL](https://bun.com/docs/runtime/repl)**: most coding environments provide something called a REPL which lets you mess around with the code on the command line. just type in `bun repl` on your command line and you should be able to try out some random code.
 * **[RunKit](https://runkit.com/home#notebooks)**: much like node’s REPL but online with some fancy UI.
 * **npm sandboxing**: you can take any package from [npm](https://npmjs.com) and play around with it to see what it does:
 
@@ -92,27 +93,6 @@ const element = React.createElement(
 * you don’t need to `import React` anymore directly with version 17+ to get JSX working.
 * adding `React.StrictMode` to your tree can help you with migrations.
 
-## [GraphQL](https://graphql.org/)
-
-GraphQL is a language that lets your client talk to the server to get data it needs in an efficient and forward-compatible way. there’s a lot to learn here and since it can be some of the more mind-bending stuff to learn in the React-verse, i recommend checking out this **[great intro tutorial](https://www.robinwieruch.de/graphql-apollo-server-tutorial/)** to let your brain wraparound how it works.
-
-as an alternative, [SWR](https://swr.vercel.app/) is a lighter weight option, less fully featured but an easier integration.
-
-**[Apollo](http://apollographql.com/)**
-because GraphQL can be complex there are some great frameworks built around it. i recommend using Apollo to get you up and running with GraphQL quickly. to install:
-
-```sh
-npm i graphql graphql-tools graphql-tag apollo-server-express @apollo/client body-parser express
-```
-
-in addition, check out:
-
-* **[Apollo DevTools](https://chrome.google.com/webstore/detail/apollo-client-developer-t/jdkknkkbebbapilgoeccciglkfbmbnfm)**
-* **Robin Wieruch’s** **[server](https://www.robinwieruch.de/graphql-apollo-server-tutorial/)** **and** **[client](https://www.robinwieruch.de/react-graphql-apollo-tutorial/)** **tutorials**: great intro tutorials for GraphQL and Apollo (by the way, i don’t recommend reading Apollo’s default tutorial ([here](https://www.apollographql.com/docs/tutorial/introduction.html), if you’re interested) — that one is overly complex and annoying to follow.)
-
-**[gRPC](https://grpc.io/)**
-in general, i would agree with [this StackOverflow blog post](https://stackoverflow.blog/2022/11/28/when-to-use-grpc-vs-graphql/) about when to use GraphQL and when to use gRPC: “Use GraphQL for client-server communication and gRPC for server-to-server.”
-
 ## `<strike>`React Redux`</strike>`
 
 probably the more cultish side of the React-verse 😛. you’ll find a lot of acolytes and haters here. i actually might not recommend Redux for you, at least not off the bat. it’s another one of those mind-bending parts of the React world that can be a lot to take in. besides, even the creator suggests that sometimes [it can be unnecessary](https://medium.com/@dan_abramov/you-might-not-need-redux-be46360cf367).
@@ -127,15 +107,22 @@ allows you to build native mobile apps using React. i don’t have much experien
 
 there’s a lot that goes into a javascript app these days. *a lot*. to that end, we’re gonna use the [`bhvr`](https://bhvr.dev/) template to quickly get set up. [`bhvr`](https://bhvr.dev/) helps bundle together: [Bun](https://bun.dev/), [Hono](https://hono.dev/), [Vite](https://vite.dev/), [React](https://react.dev/) which gets you going with most of your basic needs in an app.
 
+the `bhvr` acronym stands for:
+
+* **b**un: fast javascript runtime & toolkit
+* **h**ono: web application framework, a lightweight API backend basically.
+* **v**ite: build tool.
+* **r**eact: and the frontend framework.
+
 ## installation
 
-first, make sure you have [`node`](https://nodejs.org), which is a JavaScript runtime:
+first, make sure you have [`bun`](https://bun.com), which is a JavaScript runtime:
 
 ```sh
-brew install node
+curl -fsSL https://bun.com/install | bash
 ```
 
-btw, Node is great but there's definitely competition in the space. **keep on eye on**: [Bun](https://bun.sh/), [Deno](https://deno.com/)
+the previous recommendation here was [`node`](https://nodejs.org) but my favor has gone to Bun these days. **keep on eye on**: [Deno](https://deno.com/)
 
 installing `bhvr`:
 
@@ -147,21 +134,14 @@ bun run dev
 
 as an alternative, for this guide, i have my own opinionated template of `bhvr` combined with TanStack Start called [`all-the-things`](https://github.com/mimecuvalo/all-the-things).
 
-```sh
-gh repo create --template https://github.com/mimecuvalo/all-the-things
-cd <name-of-your-new-project>
-bun install
-bun run dev           # run development server
-```
-
 ***
 
 # [all-the-things](https://github.com/mimecuvalo/all-the-things)
 
-as mentioned above, i’ve created a custom template that gives you ✨ **ALL THE THINGS** ✨ that are mentioned in this entire guide bundled in by default. love it ❤ or leave it 🏃‍♀️.
+the template i use is something that gives you ✨ **ALL THE THINGS** ✨ that are mentioned in this entire guide bundled in by default. love it ❤ or leave it 🏃‍♀️.
 
 ```sh
-gh repo create --template https://github.com/mimecuvalo/all-the-things
+bunx giget mimecuvalo/all-the-things myapp
 cd <name-of-your-new-project>
 bun install
 bun run dev           # run development server
