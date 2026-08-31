@@ -2,6 +2,7 @@ import Document, { DocumentContext, DocumentInitialProps, Head, Html, Main, Next
 import { ReactNode, StrictMode } from 'react';
 import { createEmotionCache } from 'styles';
 
+import InitColorSchemeScript from '@mui/material/InitColorSchemeScript';
 import createEmotionServer from '@emotion/server/create-instance';
 import crypto from 'crypto';
 import { v4 } from 'uuid';
@@ -126,6 +127,11 @@ export default class MyDocument extends Document {
             {this.props.emotionStyleTags}
           </Head>
           <body>
+            {/* Sets the light/dark class on <html> before first paint, from the user's stored
+                choice or prefers-color-scheme. Must run ahead of <Main /> and its `attribute`
+                has to match the theme's cssVariables.colorSchemeSelector. */}
+            <InitColorSchemeScript attribute="class" defaultMode="system" nonce={nonce} />
+
             <Main />
 
             <WindowErrorScript nonce={nonce} />

@@ -8,22 +8,17 @@
   margin: 0;
 }
 
-:root,
-body.light-mode {
+:root {
   --background: #ffffff;
   --foreground: #171717;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root,
-  body.dark-mode {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-
-  html {
-    color-scheme: dark;
-  }
+/* Keyed off the `dark` class InitColorSchemeScript sets on <html> before first paint (rather
+   than prefers-color-scheme alone) so these follow an explicit user choice too. MUI's CSS
+   variables own `color-scheme` and the body colors; these remain for plain-CSS consumers. */
+:root.dark {
+  --background: #0a0a0a;
+  --foreground: #ededed;
 }
 
 html {
@@ -66,6 +61,9 @@ a {
   text-decoration: none;
 }
 
+/* Cross-document only, so this now fires just on hard navigations (a typed URL, an external
+   entry, no JS). In-app links go through next/link and navigate client-side instead - driving
+   a transition around those by hand freezes the page on a snapshot for the whole data fetch. */
 @view-transition {
   navigation: auto;
 }

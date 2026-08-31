@@ -9,7 +9,7 @@ import { PAGES, SITE_NAME, SITE_URL } from '@/application/constants';
 import { pageUrl } from 'util/url-factory';
 import { ArrowBack, ArrowForward } from '@mui/icons-material';
 import { Page as TinaPage } from '@/tina/__generated__/types';
-import { Box, Divider, PaletteMode, useTheme } from '@mui/material';
+import { Box, Divider } from '@mui/material';
 import { Prism } from 'tinacms/dist/rich-text/prism';
 
 // ugh, complicado. see: https://github.com/FormidableLabs/prism-react-renderer
@@ -86,6 +86,9 @@ const MarkdownStyling = styled('div')`
     line-height: 1.6;
     padding: 2px 0 1px;
     border: 1px solid #e6e8eb;
+    color: #1e1919;
+    background-color: #f7f5f2;
+    border-color: hsla(36, 23%, 55%, 0.2);
   }
 
   hr {
@@ -93,21 +96,13 @@ const MarkdownStyling = styled('div')`
   }
 
   ${(props) =>
-    props.theme.palette.mode === 'dark'
-      ? `
-    code {
-      color: #f7f5f2;
-      background-color: #242121;
-      border-color: hsla(34, 3%, 54%, .2);
-    }
-  `
-      : `
-    code {
-      color: #1e1919;
-      background-color: #f7f5f2;
-      border-color: hsla(36, 23%, 55%, .2);
-    }
-  `}
+    props.theme.applyStyles('dark', {
+      code: {
+        color: '#f7f5f2',
+        backgroundColor: '#242121',
+        borderColor: 'hsla(34, 3%, 54%, .2)',
+      },
+    })}
 
   a code {
     color: ${(props) => props.theme.palette.primary.main};
@@ -167,6 +162,16 @@ const Figure = styled('span')<{
   `}
 `;
 
+// Prism picks its theme in JS, so it cannot follow a CSS variable the way everything else does.
+// Render both and let the color-scheme class reveal one; `display: none` also keeps the hidden
+// copy out of the accessibility tree, so screen readers still see each block exactly once.
+const LightSchemeOnly = styled('div')(({ theme }) => theme.applyStyles('dark', { display: 'none' }));
+
+const DarkSchemeOnly = styled('div')(({ theme }) => ({
+  display: 'none',
+  ...theme.applyStyles('dark', { display: 'block' }),
+}));
+
 const getId = (children: any) => {
   const firstContent = children.props.content[0];
   const text = firstContent.text || firstContent.children[0].text;
@@ -174,7 +179,7 @@ const getId = (children: any) => {
   return text?.replace(/\W/g, '-');
 };
 
-const customRenderers = (allPages: TinaPage[], themeMode: PaletteMode) => ({
+const customRenderers = (allPages: TinaPage[]) => ({
   a: (props: any) => (
     <Link href={props.url} target={props.url.startsWith('/') ? '' : '_blank'}>
       {props.children}
@@ -198,7 +203,16 @@ const customRenderers = (allPages: TinaPage[], themeMode: PaletteMode) => ({
   // N.B. We only want one H1 on the page, and that's the title, so we downstep everything else.
   h3: (props: any) => <Typography variant="h4">{props.children}</Typography>,
 
-  code_block: (props: any) => <Prism {...props} theme={themeMode === 'dark' ? 'nightOwl' : 'nightOwlLight'} />,
+  code_block: (props: any) => (
+    <>
+      <LightSchemeOnly>
+        <Prism {...props} theme="nightOwlLight" />
+      </LightSchemeOnly>
+      <DarkSchemeOnly>
+        <Prism {...props} theme="nightOwl" />
+      </DarkSchemeOnly>
+    </>
+  ),
 
   // N.B. This div/span wrapper matches the structure, more or less, of the Outline editor's img wrapper.
   img: (props: any) => (
@@ -227,7 +241,7 @@ const customRenderers = (allPages: TinaPage[], themeMode: PaletteMode) => ({
         {PAGES.map((orderedPage) => (
           <TLDRListItem key={orderedPage.slug}>
             <TLDRPageHeader variant="h2">
-              <Link href={pageUrl(orderedPage.slug)}>{orderedPage.title}</Link>
+              <Link href={`/${orderedPage.slug}`}>{orderedPage.title}</Link>
             </TLDRPageHeader>
             <TLDRBody>
               <TinaMarkdown
@@ -318,12 +332,12 @@ function Pagination({ slug }: { slug: string }) {
       <Divider sx={{ mt: 6 }} />
       <Grid container justifyContent="space-between" sx={{ mt: 4 }}>
         {prev && currentPageIndex < PAGES.length - 1 && (
-          <Link sx={{ fontWeight: 'bold' }} href={pageUrl(prev.slug)}>
+          <Link sx={{ fontWeight: 'bold' }} href={`/${prev.slug}`}>
             <ArrowBack /> {prev.title}
           </Link>
         )}
         {next && currentPageIndex < PAGES.length - 2 && (
-          <Link sx={{ fontWeight: 'bold' }} href={pageUrl(next.slug)}>
+          <Link sx={{ fontWeight: 'bold' }} href={`/${next.slug}`}>
             {next.title} <ArrowForward />
           </Link>
         )}
@@ -341,7 +355,6 @@ export default function Page(props: InferGetStaticPropsType<typeof getStaticProp
   } = useTina(props);
   const slug = props.variables.relativePath.replace('.mdx', '');
   const url = pageUrl(slug);
-  const theme = useTheme();
 
   if (_body.children[0].type === 'invalid_markdown') {
     console.debug(
@@ -367,8 +380,7 @@ export default function Page(props: InferGetStaticPropsType<typeof getStaticProp
           {title}
         </Typography>
         <TinaMarkdown
-          key={theme.palette.mode}
-          components={customRenderers(props.allPages as TinaPage[], theme.palette.mode)}
+          components={customRenderers(props.allPages as TinaPage[])}
           content={slug === 'tldr' ? _body.children.slice(0, -1) : _body}
         />
       </MarkdownStyling>
@@ -381,11 +393,16 @@ export const getStaticProps = async ({ params }: { params: { filename: string } 
   const tinaProps = await client.queries.contentQuery({
     relativePath: `${params.filename}.mdx`,
   });
-  const pagesListData = await client.queries.pageConnection();
+
+  // pageConnection pulls every page's full body AST (~500KB serialized into __NEXT_DATA__).
+  // Only the <TLDR> renderer reads it, and that component appears solely on the tldr page - so
+  // fetching it everywhere made every other page ship ~16x its own content for nothing.
+  const needsAllPages = params.filename === 'tldr';
+  const pagesListData = needsAllPages ? await client.queries.pageConnection() : undefined;
 
   const props = {
     ...tinaProps,
-    allPages: pagesListData.data.pageConnection?.edges?.map((page) => page?.node),
+    allPages: pagesListData?.data.pageConnection?.edges?.map((page) => page?.node) ?? [],
     enableVisualEditing: process.env.VERCEL_ENV === 'preview',
   };
   return {

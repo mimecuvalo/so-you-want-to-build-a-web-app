@@ -1,17 +1,21 @@
 import { AppBar, Toolbar, IconButton, Drawer, useTheme, Grid } from '@mui/material';
 import { GitHub, Lightbulb, Menu } from '@mui/icons-material';
-import { useContext, useState } from 'react';
+import { useState } from 'react';
 import { PAGES } from '@/application/constants';
 import Link from './Link';
 import { useRouter } from 'next/router';
 import Image from 'next/image';
-import ThemeModeContext from '@/application/ThemeModeContext';
+import { useColorScheme } from '@mui/material/styles';
 
 export default function Header() {
-  const { setIsDarkModeExplicitlyOn } = useContext(ThemeModeContext);
   const theme = useTheme();
+  const { mode, systemMode, setMode } = useColorScheme();
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const router = useRouter();
+
+  // N.B. Resolved only inside the click handler: `mode`/`systemMode` are undefined during SSR and
+  // on the first client render, so branching on them while rendering would flash or mismatch.
+  const toggleColorScheme = () => setMode((mode === 'system' ? systemMode : mode) === 'dark' ? 'light' : 'dark');
 
   return (
     <header>
@@ -20,23 +24,28 @@ export default function Header() {
           sx={{
             justifyContent: 'space-between',
             pr: 0,
-            background: theme.palette.mode === 'dark' ? theme.palette.background.paper : '#fff',
+            // background.paper is already #fff in light and the paper grey in dark.
+            background: theme.vars.palette.background.paper,
           }}
         >
           <IconButton
             aria-label="open drawer"
             onClick={() => setIsDrawerOpen(true)}
             edge="start"
-            sx={{ color: theme.palette.mode === 'dark' ? '#fff' : '#000' }}
+            sx={(theme) => ({ color: '#000', ...theme.applyStyles('dark', { color: '#fff' }) })}
           >
             <Menu />
           </IconButton>
 
           <IconButton
             aria-label="toggle dark mode"
-            onClick={() => setIsDarkModeExplicitlyOn(theme.palette.mode !== 'dark')}
+            onClick={toggleColorScheme}
             edge="start"
-            sx={{ color: theme.palette.mode === 'dark' ? '#fff' : '#000', transform: 'rotate(180deg)' }}
+            sx={(theme) => ({
+              color: '#000',
+              transform: 'rotate(180deg)',
+              ...theme.applyStyles('dark', { color: '#fff' }),
+            })}
           >
             <Lightbulb />
           </IconButton>
@@ -47,7 +56,9 @@ export default function Header() {
         anchor="left"
         open={isDrawerOpen}
         onClose={() => setIsDrawerOpen(false)}
-        PaperProps={{ sx: { py: 4, background: theme.palette.mode === 'dark' ? '#000' : '#fff' } }}
+        PaperProps={{
+          sx: (theme) => ({ py: 4, background: '#fff', ...theme.applyStyles('dark', { background: '#000' }) }),
+        }}
       >
         <ol>
           {PAGES.map((page) => (
