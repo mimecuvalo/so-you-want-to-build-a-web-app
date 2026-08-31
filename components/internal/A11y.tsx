@@ -105,8 +105,11 @@ export default function A11y() {
                   {issue.nodes.map((node, idx) => (
                     <div
                       key={idx}
+                      tabIndex={0}
                       onMouseOver={() => handleMouseOver(node.target as unknown as string)}
                       onMouseOut={() => handleMouseOut(node.target as unknown as string)}
+                      onFocus={() => handleMouseOver(node.target as unknown as string)}
+                      onBlur={() => handleMouseOut(node.target as unknown as string)}
                     >
                       {node.target}
                     </div>

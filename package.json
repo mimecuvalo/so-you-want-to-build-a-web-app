@@ -8,26 +8,22 @@
   },
   "license": "MIT",
   "engines": {
-    "node": ">=18.17.0"
+    "node": ">=20.9.0"
   },
   "bugs": {
     "url": "https://github.com/mimecuvalo/so-you-want-to-build-a-web-app/issues"
   },
   "scripts": {
-    "dev": "tinacms dev -c \"next dev\"",
+    "dev": "tinacms dev -c \"next dev --webpack\"",
     "tina-generate-types": "tinacms dev --no-server",
-    "build": "tinacms build && next build",
+    "build": "tinacms build && next build --webpack",
     "start": "tinacms build && next start",
-    "export": "npm run build && next export",
-    "lint": "eslint . --max-warnings 0",
-    "lint:fix": "eslint --fix .",
-    "alex": "alex .",
+    "lint": "oxlint",
+    "lint:fix": "oxlint --fix",
+    "format": "oxfmt",
+    "format:check": "oxfmt --check",
     "config": "node scripts/config.js",
     "prepare": "husky",
-    "prettier:all": "prettier --check .",
-    "prettier:fix": "prettier --write",
-    "prettier:fix:all": "prettier --write .",
-    "ts-script": "ts-node-script -r tsconfig-paths/register",
     "type-check": "tsc --noEmit"
   },
   "dependencies": {
@@ -37,48 +33,36 @@
     "@mui/icons-material": "7.2.0",
     "@mui/material": "7.2.0",
     "@vercel/analytics": "1.1.1",
-    "circular-dependency-plugin": "5.2.2",
     "classnames": "2.5.1",
-    "next": "15.5.20",
+    "next": "16.3.3",
     "prism-react-renderer": "2.4.1",
     "prismjs": "1.30.0",
-    "react": "19.1.0",
-    "react-dom": "19.1.0",
+    "react": "19.2.8",
+    "react-dom": "19.2.8",
     "sanitize.css": "13.0.0",
     "tinacms": "2.7.9",
     "uuid": "11.1.0"
   },
   "devDependencies": {
-    "@eslint/eslintrc": "^3.3.1",
-    "@eslint/js": "^9.30.1",
     "@tinacms/cli": "1.9.9",
     "@types/node": "24.0.10",
-    "@types/react": "19.1.8",
-    "@types/react-dom": "19.1.6",
+    "@types/react": "19.2.17",
+    "@types/react-dom": "19.2.3",
     "@types/uuid": "10.0.0",
-    "@typescript-eslint/eslint-plugin": "8.36.0",
-    "@typescript-eslint/parser": "8.36.0",
-    "alex": "11.0.1",
     "axe-core": "4.10.3",
-    "eslint": "9.30.1",
-    "eslint-config-next": "15.5.20",
     "husky": "9.1.7",
-    "import-sort-style-eslint": "6.0.0",
     "lint-staged": "16.1.2",
-    "prettier": "3.6.2",
-    "prettier-plugin-import-sort": "0.0.7",
-    "ts-node": "10.9.2",
-    "typescript": "5.8.3"
+    "oxfmt": "0.65.0",
+    "oxlint": "1.75.0",
+    "typescript": "7.0.2"
   },
   "lint-staged": {
     "**/*.{js,jsx,ts,tsx,json,css,scss,md}": [
-      "prettier --write"
+      "oxfmt"
+    ],
+    "**/*.{js,jsx,ts,tsx}": [
+      "oxlint --fix"
     ]
-  },
-  "importSort": {
-    ".js, .jsx, .ts, .tsx": {
-      "style": "eslint"
-    }
   },
   "browserslist": "last 2 versions",
   "sideEffects": false,

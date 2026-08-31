@@ -24,10 +24,10 @@ jobs:
       - name: Install
         if: steps.yarn-cache.outputs.cache-hit != 'true'
         run: yarn install --immutable
-      - name: Alex
-        run: yarn alex
-      - name: Run ESLint
+      - name: Run oxlint
         run: yarn lint
+      - name: Check formatting
+        run: yarn format:check
       - name: Generate Tina types
         run: yarn tina-generate-types
       - name: Run type-check
