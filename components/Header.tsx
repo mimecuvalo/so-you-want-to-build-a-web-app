@@ -1,4 +1,4 @@
-import { AppBar, Toolbar, IconButton, Drawer, useTheme, Grid } from '@mui/material';
+import { AppBar, Toolbar, IconButton, Drawer, useTheme, Grid, Typography } from '@mui/material';
 import { GitHub, Lightbulb, Menu } from '@mui/icons-material';
 import { useState } from 'react';
 import { PAGES } from '@/application/constants';
@@ -18,14 +18,14 @@ export default function Header() {
   const toggleColorScheme = () => setMode((mode === 'system' ? systemMode : mode) === 'dark' ? 'light' : 'dark');
 
   return (
-    <header>
-      <AppBar position="fixed" sx={{ background: 'none', boxShadow: 'none' }}>
+    <>
+      <AppBar position="fixed" sx={{ background: 'none !important', boxShadow: 'none' }}>
         <Toolbar
           sx={{
             justifyContent: 'space-between',
             pr: 0,
             // background.paper is already #fff in light and the paper grey in dark.
-            background: theme.vars.palette.background.paper,
+            background: 'var(--background)',
           }}
         >
           <IconButton
@@ -36,6 +36,12 @@ export default function Header() {
           >
             <Menu />
           </IconButton>
+
+          {router.asPath !== '/so-you-want-to-build-a-web-app' && (
+            <Typography variant="h4" component="div">
+              <Link href="/">so, you want to build a web app</Link>
+            </Typography>
+          )}
 
           <IconButton
             aria-label="toggle dark mode"
@@ -89,6 +95,6 @@ export default function Header() {
           </Link>
         </Grid>
       </Drawer>
-    </header>
+    </>
   );
 }
