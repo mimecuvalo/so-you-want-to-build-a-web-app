@@ -62,8 +62,10 @@ export default function Header() {
         anchor="left"
         open={isDrawerOpen}
         onClose={() => setIsDrawerOpen(false)}
-        PaperProps={{
-          sx: (theme) => ({ py: 4, background: '#fff', ...theme.applyStyles('dark', { background: '#000' }) }),
+        slotProps={{
+          paper: {
+            sx: (theme) => ({ py: 4, background: '#fff', ...theme.applyStyles('dark', { background: '#000' }) }),
+          },
         }}
       >
         <ol>
@@ -86,7 +88,7 @@ export default function Header() {
           ))}
         </ol>
 
-        <Grid container justifyContent="center" alignItems="center" sx={{ mt: 4 }}>
+        <Grid container sx={{ justifyContent: 'center', alignItems: 'center', mt: 4 }}>
           <Link href="https://github.com/mimecuvalo/so-you-want-to-build-a-web-app" target="_blank" sx={{ mr: 2 }}>
             <GitHub sx={{ color: '#000', width: 32, height: 32 }} />
           </Link>

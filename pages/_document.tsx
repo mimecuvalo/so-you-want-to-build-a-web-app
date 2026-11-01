@@ -5,7 +5,6 @@ import { createEmotionCache } from 'styles';
 import InitColorSchemeScript from '@mui/material/InitColorSchemeScript';
 import createEmotionServer from '@emotion/server/create-instance';
 import crypto from 'crypto';
-import { v4 } from 'uuid';
 import { SITE_NAME } from '@/application/constants';
 
 const generateCsp = (nonce: string) => {
@@ -62,7 +61,7 @@ export default class MyDocument extends Document {
     const { extractCriticalToChunks } = createEmotionServer(cache);
 
     const hash = crypto.createHash('sha256');
-    hash.update(v4());
+    hash.update(crypto.randomUUID());
     const nonce = hash.digest('base64');
 
     ctx.renderPage = () =>

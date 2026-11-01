@@ -16,7 +16,7 @@ export default function Help() {
 
   const handleAdmin = () => {
     handleClose();
-    window.location.href = '/admin';
+    window.location.assign('/admin');
   };
 
   const handleClose = () => {

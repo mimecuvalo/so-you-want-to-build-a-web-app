@@ -8,7 +8,7 @@
   },
   "license": "MIT",
   "engines": {
-    "node": ">=20.9.0"
+    "node": "26.x"
   },
   "bugs": {
     "url": "https://github.com/mimecuvalo/so-you-want-to-build-a-web-app/issues"
@@ -30,30 +30,28 @@
     "@emotion/react": "11.14.0",
     "@emotion/server": "11.11.0",
     "@emotion/styled": "11.14.1",
-    "@mui/icons-material": "7.2.0",
-    "@mui/material": "7.2.0",
-    "@vercel/analytics": "1.1.1",
+    "@mui/icons-material": "9.5.0",
+    "@mui/material": "9.5.0",
+    "@vercel/analytics": "2.0.1",
     "classnames": "2.5.1",
-    "next": "16.3.3",
+    "next": "16.4.3",
     "prism-react-renderer": "2.4.1",
     "prismjs": "1.30.0",
-    "react": "19.2.8",
-    "react-dom": "19.2.8",
+    "react": "19.3.1",
+    "react-dom": "19.3.1",
     "sanitize.css": "13.0.0",
-    "tinacms": "2.7.9",
-    "uuid": "11.1.0"
+    "tinacms": "3.15.1"
   },
   "devDependencies": {
-    "@tinacms/cli": "1.9.9",
-    "@types/node": "24.0.10",
-    "@types/react": "19.2.17",
-    "@types/react-dom": "19.2.3",
-    "@types/uuid": "10.0.0",
-    "axe-core": "4.10.3",
+    "@tinacms/cli": "4.0.4",
+    "@types/node": "26.6.6",
+    "@types/react": "19.3.0",
+    "@types/react-dom": "19.3.0",
+    "axe-core": "4.14.0",
     "husky": "9.1.7",
-    "lint-staged": "16.1.2",
-    "oxfmt": "0.65.0",
-    "oxlint": "1.75.0",
+    "lint-staged": "17.6.0",
+    "oxfmt": "0.75.0",
+    "oxlint": "1.90.0",
     "typescript": "7.0.2"
   },
   "lint-staged": {
@@ -66,5 +64,5 @@
   },
   "browserslist": "last 2 versions",
   "sideEffects": false,
-  "packageManager": "yarn@1.22.19"
+  "packageManager": "yarn@1.22.22"
 }

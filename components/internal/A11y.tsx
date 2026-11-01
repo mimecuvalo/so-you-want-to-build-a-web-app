@@ -26,7 +26,7 @@ export default function A11y() {
   const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
   const [errorCount, setErrorCount] = useState(0);
   const [results, setResults] = useState<axe.AxeResults | null>(null);
-  const [loaded, setLoaded] = useState(false);
+  const [auditRun, setAuditRun] = useState(0);
 
   const handleClick = (event: MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
@@ -39,35 +39,29 @@ export default function A11y() {
   const handleRerun = () => {
     setErrorCount(0);
     setResults(null);
-    setLoaded(false);
+    setAuditRun((run) => run + 1);
   };
 
   useEffect(() => {
-    if (loaded) {
-      return;
-    }
     // Wait a tick until the page more or less finishes rendering to make sure this doesn't block
     // the app's main functionality.
-    const timeoutId = setTimeout(() => runAudit(), 0);
-    setLoaded(true);
+    const timeoutId = setTimeout(() => {
+      console.debug('[a11y]: running accessibility audit...');
+
+      try {
+        axe.run(document, {}, (err, results) => {
+          if (err) throw err;
+          console.debug('[a11y]:', results);
+          setErrorCount(results.violations.length + results.incomplete.length);
+          setResults(results);
+        });
+      } catch (ex) {
+        console.error(ex);
+      }
+    }, 0);
 
     return () => clearTimeout(timeoutId);
-  }, [loaded]);
-
-  function runAudit() {
-    console.debug('[a11y]: running accessibility audit...');
-
-    try {
-      axe.run(document, {}, (err, results) => {
-        if (err) throw err;
-        console.debug('[a11y]:', results);
-        setErrorCount(results.violations.length + results.incomplete.length);
-        setResults(results);
-      });
-    } catch (ex) {
-      console.error(ex);
-    }
-  }
+  }, [auditRun]);
 
   function renderIssueByType(typeFilter: string) {
     if (!results) return null;

@@ -247,7 +247,7 @@ const customRenderers = (allPages: TinaPage[]) => ({
               <TinaMarkdown
                 content={allPages
                   .find((pageData) => orderedPage.slug === pageData._sys.filename)
-                  ?._body.children.find((child: any) => child.type === 'ul')}
+                  ?._body?.children.find((child: any) => child.type === 'ul')}
               />
             </TLDRBody>
           </TLDRListItem>
@@ -257,7 +257,7 @@ const customRenderers = (allPages: TinaPage[]) => ({
   },
 
   YouTube: (props: any) => (
-    <Grid container justifyContent="center">
+    <Grid container sx={{ justifyContent: 'center' }}>
       <iframe
         width="560"
         height="315"
@@ -330,7 +330,7 @@ function Pagination({ slug }: { slug: string }) {
   return (
     <>
       <Divider sx={{ mt: 6 }} />
-      <Grid container justifyContent="space-between" sx={{ mt: 4 }}>
+      <Grid container sx={{ justifyContent: 'space-between', mt: 4 }}>
         {prev && currentPageIndex < PAGES.length - 1 && (
           <Link sx={{ fontWeight: 'bold' }} href={`/${prev.slug}`}>
             <ArrowBack /> {prev.title}
@@ -356,12 +356,9 @@ export default function Page(props: InferGetStaticPropsType<typeof getStaticProp
   const slug = props.variables.relativePath.replace('.mdx', '');
   const url = pageUrl(slug);
 
-  if (_body.children[0].type === 'invalid_markdown') {
-    console.debug(
-      'Invalid markdown',
-      _body.children[0].message,
-      JSON.stringify(_body.children[0].position, undefined, 2)
-    );
+  const firstChild = _body?.children[0] as { type: string; message?: string; position?: unknown } | undefined;
+  if (firstChild?.type === 'invalid_markdown') {
+    console.debug('Invalid markdown', firstChild.message, JSON.stringify(firstChild.position, undefined, 2));
   }
 
   return (
@@ -381,7 +378,7 @@ export default function Page(props: InferGetStaticPropsType<typeof getStaticProp
         </Typography>
         <TinaMarkdown
           components={customRenderers(props.allPages as TinaPage[])}
-          content={slug === 'tldr' ? _body.children.slice(0, -1) : _body}
+          content={slug === 'tldr' ? _body?.children.slice(0, -1) : _body}
         />
       </MarkdownStyling>
       <Pagination slug={slug} />

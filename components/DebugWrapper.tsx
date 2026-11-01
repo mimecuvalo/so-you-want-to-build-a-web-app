@@ -1,4 +1,4 @@
-import { Suspense, lazy, memo, useEffect, useState } from 'react';
+import { Suspense, lazy, memo, useSyncExternalStore } from 'react';
 
 import Help from './Help';
 import { styled } from '@mui/material/styles';
@@ -17,11 +17,12 @@ const StyledDebugWrapper = styled('div')`
 
 // NB: we memoize here because it has the a11y script included on dev which is expensive.
 const DebugWrapper = memo(function DebugWrapper() {
-  const [isLoaded, setIsLoaded] = useState(false);
-
-  useEffect(() => {
-    setIsLoaded(true);
-  }, []);
+  // False during SSR and hydration, true afterwards on the client.
+  const isLoaded = useSyncExternalStore(
+    () => () => {},
+    () => true,
+    () => false
+  );
 
   return (
     <StyledDebugWrapper>
