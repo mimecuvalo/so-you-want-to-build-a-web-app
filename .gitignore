@@ -41,5 +41,3 @@ logs/*.log.gz
 /.output/
 /.tanstack/
 
-# Tina
-.tina/__generated__

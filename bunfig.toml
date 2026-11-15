@@ -1,6 +1,6 @@
 [install]
-# Hoisted rather than isolated: @tinacms/schema-tools imports `yup` without declaring it, which
-# only resolves when it's hoisted to the top-level node_modules. Overrides ~/.bunfig.toml.
+# Hoisted rather than isolated: under the isolated global store, @vitejs/plugin-react can't resolve
+# its `vite` peer. Overrides ~/.bunfig.toml.
 linker = "hoisted"
 # Pin exact versions on `bun add`.
 exact = true

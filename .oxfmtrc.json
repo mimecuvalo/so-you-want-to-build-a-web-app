@@ -4,13 +4,5 @@
   "trailingComma": "es5",
   "printWidth": 120,
   "sortPackageJson": false,
-  "ignorePatterns": [
-    "/dist/",
-    "/.output/",
-    "/public/",
-    "**/*.mdx",
-    "**/*.gen.ts",
-    "tina/__generated__/",
-    "tina/tina-lock.json"
-  ]
+  "ignorePatterns": ["/dist/", "/.output/", "/public/", "**/*.mdx", "**/*.gen.ts"]
 }

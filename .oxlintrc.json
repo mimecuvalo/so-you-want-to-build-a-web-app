@@ -8,5 +8,5 @@
     "builtin": true
   },
   "rules": {},
-  "ignorePatterns": ["dist", ".output", "public", "tina/__generated__", "**/*.gen.ts"]
+  "ignorePatterns": ["dist", ".output", "public", "**/*.gen.ts"]
 }

@@ -21,7 +21,7 @@
       "util/*": ["./util/*"]
     },
     "forceConsistentCasingInFileNames": true,
-    "types": ["vite/client", "node", "vitest/globals", "@testing-library/jest-dom"],
+    "types": ["vite/client", "node", "mdx", "vitest/globals", "@testing-library/jest-dom"],
     "allowImportingTsExtensions": true
   },
   "include": ["**/*.ts", "**/*.tsx", "**/*.d.ts"],

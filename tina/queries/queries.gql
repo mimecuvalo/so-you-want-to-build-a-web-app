@@ -1,5 +1,0 @@
-query contentQuery($relativePath: String!) {
-  page(relativePath: $relativePath) {
-    ...PageParts
-  }
-}

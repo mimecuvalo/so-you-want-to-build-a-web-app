@@ -2,59 +2,112 @@
 import 'util/prism-languages';
 
 import { createFileRoute, notFound } from '@tanstack/react-router';
-import { createServerFn } from '@tanstack/react-start';
-import { staticFunctionMiddleware } from '@tanstack/start-static-server-functions';
-import { useTina } from 'tinacms/dist/react';
-import { client } from '@/tina/__generated__/client';
-import { TinaMarkdown } from 'tinacms/dist/rich-text';
 import { ArrowLeftIcon, ArrowRightIcon } from '@radix-ui/react-icons';
 import classNames from 'classnames';
+import type { MDXComponents, MDXContent } from 'mdx/types';
+import { Highlight, themes } from 'prism-react-renderer';
+import { Children, isValidElement, Suspense, use, type ReactElement, type ReactNode } from 'react';
 import { Link } from 'components';
 import { PAGES, SITE_NAME, SITE_URL } from 'lib/constants';
+import { loadPage } from 'lib/content';
 import { pageUrl } from 'util/url-factory';
-import { Page as TinaPage } from '@/tina/__generated__/types';
-import { Prism } from 'tinacms/dist/rich-text/prism';
 import styles from 'styles/page.module.css';
 
-const getId = (children: any) => {
-  const firstContent = children.props.content[0];
-  const text = firstContent.text || firstContent.children[0].text;
+const textOf = (node: ReactNode): string =>
+  Children.toArray(node)
+    .map((child) =>
+      typeof child === 'string' || typeof child === 'number'
+        ? String(child)
+        : isValidElement<{ children?: ReactNode }>(child)
+          ? textOf(child.props.children)
+          : ''
+    )
+    .join('');
 
-  return text?.replace(/\W/g, '-');
-};
+const getId = (children: ReactNode) => textOf(children).replace(/\W/g, '-');
 
-const customRenderers = (allPages: TinaPage[]) => ({
-  a: (props: any) => (
-    <Link href={props.url} target={props.url.startsWith('/') ? '' : '_blank'}>
-      {props.children}
+// An MDX page's top-level blocks. With no `wrapper` component, MDXContent returns a fragment of them
+// directly, which is what lets a page drop or pick out individual blocks.
+const topLevelBlocks = (Content: MDXContent, components: MDXComponents) =>
+  Children.toArray((Content({ components }) as ReactElement<{ children: ReactNode }>).props.children).filter(
+    isValidElement
+  );
+
+function CodeBlock({ code, language, theme }: { code: string; language: string; theme: keyof typeof themes }) {
+  return (
+    <Highlight theme={themes[theme]} code={code} language={language}>
+      {({ className, style, tokens, getLineProps, getTokenProps }) => (
+        <pre className={className} style={style}>
+          {tokens.map((line, i) => (
+            <div key={i} {...getLineProps({ line })}>
+              {line.map((token, key) => (
+                <span key={key} {...getTokenProps({ token })} />
+              ))}
+            </div>
+          ))}
+        </pre>
+      )}
+    </Highlight>
+  );
+}
+
+function TLDR() {
+  return (
+    <ol className={styles.tldr}>
+      {PAGES.map((page) => {
+        const { default: Content } = use(loadPage(page.slug));
+        // Each page's summary is the first bulleted list in it.
+        const summary = topLevelBlocks(Content, components).find((block) => block.type === 'ul') as
+          | ReactElement<{ children: ReactNode }>
+          | undefined;
+
+        return (
+          <li key={page.slug} className={styles.tldrItem}>
+            <h2 className={styles.tldrHeader}>
+              <Link href={`/${page.slug}`}>{page.title}</Link>
+            </h2>
+            <ul className={styles.tldrBody}>{summary?.props.children}</ul>
+          </li>
+        );
+      })}
+    </ol>
+  );
+}
+
+const components: MDXComponents = {
+  a: ({ href = '', children }) => (
+    <Link href={href} target={href.startsWith('/') ? '' : '_blank'}>
+      {children}
     </Link>
   ),
 
   // N.B. We only want one H1 on the page, and that's the title, so we downstep everything else.
-  h1: (props: any) => <h2 id={getId(props.children)}>{props.children}</h2>,
+  h1: ({ children }) => <h2 id={getId(children)}>{children}</h2>,
+  h2: ({ children }) => <h3 id={getId(children)}>{children}</h3>,
+  h3: ({ children }) => <h4>{children}</h4>,
 
-  // N.B. We only want one H1 on the page, and that's the title, so we downstep everything else.
-  h2: (props: any) => <h3 id={getId(props.children)}>{props.children}</h3>,
+  pre: ({ children }) => {
+    const { className = '', children: code } = (children as ReactElement<{ className?: string; children: string }>)
+      .props;
+    const props = { code: code.replace(/\n$/, ''), language: className.replace(/^language-/, '') };
 
-  // N.B. We only want one H1 on the page, and that's the title, so we downstep everything else.
-  h3: (props: any) => <h4>{props.children}</h4>,
+    return (
+      <>
+        <div className={styles.lightSchemeOnly}>
+          <CodeBlock {...props} theme="nightOwlLight" />
+        </div>
+        <div className={styles.darkSchemeOnly}>
+          <CodeBlock {...props} theme="nightOwl" />
+        </div>
+      </>
+    );
+  },
 
-  code_block: (props: any) => (
-    <>
-      <div className={styles.lightSchemeOnly}>
-        <Prism {...props} theme="nightOwlLight" />
-      </div>
-      <div className={styles.darkSchemeOnly}>
-        <Prism {...props} theme="nightOwl" />
-      </div>
-    </>
-  ),
-
-  // N.B. This div/span wrapper matches the structure, more or less, of the Outline editor's img wrapper.
-  img: (props: any) => (
-    <span className={styles.figure} data-float={props.caption}>
-      <img src={props.url} alt={props.alt} />
-      <span className={styles.caption}>{props.alt}</span>
+  // A markdown image's title (`![alt](src "right-33")`) picks its float.
+  img: ({ src, alt, title }) => (
+    <span className={styles.figure} data-float={title}>
+      <img src={src} alt={alt} />
+      <span className={styles.caption}>{alt}</span>
     </span>
   ),
 
@@ -70,40 +123,21 @@ const customRenderers = (allPages: TinaPage[]) => ({
     </ol>
   ),
 
-  TLDR: () => {
-    return (
-      <ol className={styles.tldr}>
-        {PAGES.map((orderedPage) => (
-          <li key={orderedPage.slug} className={styles.tldrItem}>
-            <h2 className={styles.tldrHeader}>
-              <Link href={`/${orderedPage.slug}`}>{orderedPage.title}</Link>
-            </h2>
-            <ul className={styles.tldrBody}>
-              <TinaMarkdown
-                content={allPages
-                  .find((pageData) => orderedPage.slug === pageData._sys.filename)
-                  ?._body?.children.find((child: any) => child.type === 'ul')}
-              />
-            </ul>
-          </li>
-        ))}
-      </ol>
-    );
-  },
+  TLDR,
 
-  YouTube: (props: any) => (
+  YouTube: ({ href }: { href: string }) => (
     <div className={styles.video}>
       <iframe
         width="560"
         height="315"
-        src={props.href}
+        src={href}
         title="YouTube video player"
         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
         allowFullScreen
       ></iframe>
     </div>
   ),
-});
+};
 
 const DESCRIPTION = 'A discerning guide to showing you the ropes.';
 
@@ -170,66 +204,43 @@ function Pagination({ slug }: { slug: string }) {
   );
 }
 
-// Runs against Tina at prerender time only. staticFunctionMiddleware writes each result to
-// /__tsr/staticServerFnCache/*.json, which is what client-side navigations fetch afterwards - so
-// neither the Tina token nor a live Tina request ever reaches the browser.
-const getPage = createServerFn({ method: 'GET' })
-  .middleware([staticFunctionMiddleware])
-  .validator((filename: string) => filename)
-  .handler(async ({ data: filename }) => {
-    const tinaProps = await client.queries.contentQuery({ relativePath: `${filename}.mdx` });
-
-    // pageConnection pulls every page's full body AST (~500KB). Only the <TLDR> renderer reads
-    // it, and that component appears solely on the tldr page - so fetching it everywhere would
-    // make every other page ship ~16x its own content for nothing.
-    const pagesListData = filename === 'tldr' ? await client.queries.pageConnection() : undefined;
-
-    return {
-      data: tinaProps.data,
-      query: tinaProps.query,
-      variables: tinaProps.variables,
-      allPages: (pagesListData?.data.pageConnection?.edges?.map((page) => page?.node) ?? []) as TinaPage[],
-    };
-  });
-
 export const Route = createFileRoute('/$filename')({
   loader: async ({ params: { filename } }) => {
-    // PAGES mirrors content/pages, so anything else would only 404 at Tina - and in production
-    // there'd be no cached JSON for it either.
+    // PAGES mirrors content/pages, so anything else has no MDX file to load.
     if (!PAGES.some((page) => page.slug === filename)) {
       throw notFound();
     }
-    return getPage({ data: filename });
+    // The tl;dr page summarizes every other page, so it needs them all loaded.
+    const slugs = filename === 'tldr' ? PAGES.map((page) => page.slug) : [filename];
+    const [{ frontmatter }] = await Promise.all([loadPage(filename), ...slugs.map(loadPage)]);
+    return { title: frontmatter.title };
   },
-  head: ({ params, loaderData }) =>
-    loaderData ? contentHead(loaderData.data.page.title, pageUrl(params.filename)) : {},
+  head: ({ params, loaderData }) => (loaderData ? contentHead(loaderData.title, pageUrl(params.filename)) : {}),
   component: Page,
 });
 
 function Page() {
-  const props = Route.useLoaderData();
   const { filename: slug } = Route.useParams();
-  const {
-    data: {
-      page: { title, _body },
-    },
-  } = useTina(props);
-
-  const firstChild = _body?.children[0] as { type: string; message?: string; position?: unknown } | undefined;
-  if (firstChild?.type === 'invalid_markdown') {
-    console.debug('Invalid markdown', firstChild.message, JSON.stringify(firstChild.position, undefined, 2));
-  }
+  const { title } = Route.useLoaderData();
 
   return (
     <>
       <div className={styles.markdown}>
         <h1 className={styles.title}>{title}</h1>
-        <TinaMarkdown
-          components={customRenderers(props.allPages)}
-          content={slug === 'tldr' ? _body?.children.slice(0, -1) : _body}
-        />
+        {/* Hydration doesn't rerun the loader, so the page's chunk may still be in flight; the
+            prerendered HTML stays on screen until it lands. */}
+        <Suspense>
+          <Body slug={slug} />
+        </Suspense>
       </div>
       <Pagination slug={slug} />
     </>
   );
+}
+
+function Body({ slug }: { slug: string }) {
+  const { default: Content } = use(loadPage(slug));
+
+  // The tl;dr page's own summary (its last block) is shown inside <TLDR> instead.
+  return slug === 'tldr' ? topLevelBlocks(Content, components).slice(0, -1) : <Content components={components} />;
 }

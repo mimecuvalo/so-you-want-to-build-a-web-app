@@ -1,6 +1,10 @@
 import { defineConfig } from 'vite';
 import { tanstackStart } from '@tanstack/react-start/plugin/vite';
 import viteReact from '@vitejs/plugin-react';
+import mdx from '@mdx-js/rollup';
+import remarkFrontmatter from 'remark-frontmatter';
+import remarkGfm from 'remark-gfm';
+import remarkMdxFrontmatter from 'remark-mdx-frontmatter';
 import { PAGES } from './lib/constants.ts';
 
 export default defineConfig({
@@ -10,6 +14,8 @@ export default defineConfig({
   // Node hoists them above that setup; bundled, they evaluate in import order.
   ssr: { noExternal: ['prismjs'] },
   plugins: [
+    // content/pages/*.mdx compile to React components; their frontmatter is exported as `frontmatter`.
+    { enforce: 'pre', ...mdx({ remarkPlugins: [remarkGfm, remarkFrontmatter, remarkMdxFrontmatter] }) },
     // The whole book is prerendered to static HTML at build time - there is no server at runtime.
     // Vercel just uploads dist/client, which is what keeps deploys fast.
     tanstackStart({
@@ -30,6 +36,6 @@ export default defineConfig({
         filter: ({ path }) => path !== '/' && !path.includes('#'),
       },
     }),
-    viteReact(),
+    viteReact({ include: /\.(mdx|[jt]sx?)$/ }),
   ],
 });

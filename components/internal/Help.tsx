@@ -27,10 +27,6 @@ export default function Help() {
       <Menu.Portal>
         <Menu.Positioner sideOffset={8} side="top" align="end">
           <Menu.Popup className={styles.menuPopup}>
-            {/* TinaCMS's editor, served from public/admin. */}
-            <Menu.Item className={styles.menuItem} onClick={() => window.location.assign('/admin')}>
-              Admin
-            </Menu.Item>
             <Menu.Item className={styles.menuItem} onClick={toggleReactScan}>
               React Scan
             </Menu.Item>
