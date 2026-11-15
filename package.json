@@ -17,7 +17,7 @@
   "scripts": {
     "dev": "tinacms dev -c \"bun --bun vite dev\"",
     "tina-generate-types": "tinacms dev --no-server",
-    "build": "tinacms build && vite build",
+    "build": "tinacms build --local --skip-cloud-checks --skip-search-index -c \"vite build\"",
     "lint": "oxlint",
     "lint:fix": "oxlint --fix",
     "format": "oxfmt",
@@ -71,5 +71,5 @@
     ]
   },
   "browserslist": "last 2 versions",
-  "packageManager": "bun@1.4.2"
+  "packageManager": "bun@1.4.4"
 }
