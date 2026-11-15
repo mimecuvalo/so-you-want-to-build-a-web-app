@@ -1,101 +1,83 @@
-import { AppBar, Toolbar, IconButton, Drawer, useTheme, Grid, Typography } from '@mui/material';
-import { GitHub, Lightbulb, Menu } from '@mui/icons-material';
 import { useState } from 'react';
-import { PAGES } from '@/application/constants';
-import Link from './Link';
+import { Drawer } from '@base-ui/react/drawer';
+import { GitHubLogoIcon, HamburgerMenuIcon } from '@radix-ui/react-icons';
 import { useLocation } from '@tanstack/react-router';
-import { useColorScheme } from '@mui/material/styles';
+import classNames from 'classnames';
+import { PAGES } from 'lib/constants';
+import { toggleColorScheme } from 'lib/color-scheme';
+import Link from './Link';
+import styles from './header.module.css';
+
+// Material's "Lightbulb" glyph, kept from before the move off MUI since Radix has no equivalent.
+function LightbulbIcon() {
+  return (
+    <svg viewBox="0 0 24 24" width={24} height={24} fill="currentColor" aria-hidden>
+      <path d="M9 21c0 .5.4 1 1 1h4c.6 0 1-.5 1-1v-1H9zm3-19C8.1 2 5 5.1 5 9c0 2.4 1.2 4.5 3 5.7V17c0 .5.4 1 1 1h6c.6 0 1-.5 1-1v-2.3c1.8-1.3 3-3.4 3-5.7 0-3.9-3.1-7-7-7" />
+    </svg>
+  );
+}
 
 export default function Header() {
-  const theme = useTheme();
-  const { mode, systemMode, setMode } = useColorScheme();
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const pathname = useLocation({ select: (location) => location.pathname });
 
-  // N.B. Resolved only inside the click handler: `mode`/`systemMode` are undefined during SSR and
-  // on the first client render, so branching on them while rendering would flash or mismatch.
-  const toggleColorScheme = () => setMode((mode === 'system' ? systemMode : mode) === 'dark' ? 'light' : 'dark');
-
   return (
-    <>
-      <AppBar position="fixed" sx={{ background: 'none !important', boxShadow: 'none' }}>
-        <Toolbar
-          sx={{
-            justifyContent: 'space-between',
-            pr: 0,
-            // background.paper is already #fff in light and the paper grey in dark.
-            background: 'var(--background)',
-          }}
-        >
-          <IconButton
-            aria-label="open drawer"
-            onClick={() => setIsDrawerOpen(true)}
-            edge="start"
-            sx={(theme) => ({ color: '#000', ...theme.applyStyles('dark', { color: '#fff' }) })}
-          >
-            <Menu />
-          </IconButton>
+    <header className={styles.header}>
+      <Drawer.Root open={isDrawerOpen} onOpenChange={setIsDrawerOpen} swipeDirection="left">
+        <Drawer.Trigger className={styles.iconButton} aria-label="open drawer">
+          <HamburgerMenuIcon width={24} height={24} aria-hidden />
+        </Drawer.Trigger>
 
-          {pathname !== '/so-you-want-to-build-a-web-app' && (
-            <Typography variant="h4" component="div">
-              <Link href="/">so, you want to build a web app</Link>
-            </Typography>
-          )}
+        <Drawer.Portal>
+          <Drawer.Backdrop className={styles.backdrop} />
+          <Drawer.Viewport className={styles.viewport}>
+            <Drawer.Popup className={styles.drawer} aria-label="table of contents">
+              <Drawer.Content>
+                <ol className={styles.nav}>
+                  {PAGES.map((page) => {
+                    const isCurrent = pathname.slice(1) === page.slug;
+                    return (
+                      <li key={page.slug} className={classNames({ [styles.current]: isCurrent })}>
+                        <Link
+                          href={`/${page.slug}`}
+                          aria-current={isCurrent ? 'page' : undefined}
+                          onClick={() => setIsDrawerOpen(false)}
+                        >
+                          {page.title}
+                        </Link>
+                      </li>
+                    );
+                  })}
+                </ol>
 
-          <IconButton
-            aria-label="toggle dark mode"
-            onClick={toggleColorScheme}
-            edge="start"
-            sx={(theme) => ({
-              color: '#000',
-              transform: 'rotate(180deg)',
-              ...theme.applyStyles('dark', { color: '#fff' }),
-            })}
-          >
-            <Lightbulb />
-          </IconButton>
-        </Toolbar>
-      </AppBar>
+                <div className={styles.drawerFooter}>
+                  <Link href="https://github.com/mimecuvalo/so-you-want-to-build-a-web-app" target="_blank">
+                    <GitHubLogoIcon className={styles.github} width={32} height={32} aria-label="GitHub" />
+                  </Link>
+                  <Link href="https://www.nightlight.rocks" target="_blank">
+                    <img className={styles.nightlight} alt="nightlight" src="/favicon.svg" width={29.5} height={29.5} />
+                  </Link>
+                </div>
+              </Drawer.Content>
+            </Drawer.Popup>
+          </Drawer.Viewport>
+        </Drawer.Portal>
+      </Drawer.Root>
 
-      <Drawer
-        anchor="left"
-        open={isDrawerOpen}
-        onClose={() => setIsDrawerOpen(false)}
-        slotProps={{
-          paper: {
-            sx: (theme) => ({ py: 4, background: '#fff', ...theme.applyStyles('dark', { background: '#000' }) }),
-          },
-        }}
+      {pathname !== '/so-you-want-to-build-a-web-app' && (
+        <div className={styles.title}>
+          <Link href="/">so, you want to build a web app</Link>
+        </div>
+      )}
+
+      <button
+        type="button"
+        className={classNames(styles.iconButton, styles.colorSchemeToggle)}
+        aria-label="toggle dark mode"
+        onClick={toggleColorScheme}
       >
-        <ol>
-          {PAGES.map((page) => (
-            <li
-              key={page.slug}
-              style={{
-                padding: '8px 16px',
-                backgroundColor: pathname.slice(1) === page.slug ? theme.palette.primary.light : ' ',
-              }}
-            >
-              <Link
-                href={`/${page.slug}`}
-                sx={{ display: 'block', fontWeight: pathname.slice(1) === page.slug ? 'bold' : 'normal' }}
-                onClick={() => setIsDrawerOpen(false)}
-              >
-                {page.title}
-              </Link>
-            </li>
-          ))}
-        </ol>
-
-        <Grid container sx={{ justifyContent: 'center', alignItems: 'center', mt: 4 }}>
-          <Link href="https://github.com/mimecuvalo/so-you-want-to-build-a-web-app" target="_blank" sx={{ mr: 2 }}>
-            <GitHub sx={{ color: '#000', width: 32, height: 32 }} />
-          </Link>
-          <Link href="https://www.nightlight.rocks" target="_blank">
-            <img alt="nightlight" src="/favicon.svg" width={29.5} height={29.5} style={{ borderRadius: '50%' }} />
-          </Link>
-        </Grid>
-      </Drawer>
-    </>
+        <LightbulbIcon />
+      </button>
+    </header>
   );
 }

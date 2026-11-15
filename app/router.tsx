@@ -1,7 +1,7 @@
 import { createRouter } from '@tanstack/react-router';
 import { routeTree } from './routeTree.gen';
-import NotFound from 'components/error/NotFound';
-import InternalServerError from 'components/error/InternalServerError';
+import ErrorScreen from 'components/pages/ErrorScreen';
+import NotFound from 'components/pages/NotFound';
 
 export interface RouterContext {
   nonce?: string;
@@ -21,8 +21,9 @@ export function getRouter() {
     ssr: { nonce },
     scrollRestoration: true,
     defaultPreload: 'intent',
+    defaultViewTransition: true,
     defaultNotFoundComponent: NotFound,
-    defaultErrorComponent: InternalServerError,
+    defaultErrorComponent: ErrorScreen,
   });
 }
 

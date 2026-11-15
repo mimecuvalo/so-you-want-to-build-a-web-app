@@ -6,13 +6,11 @@
   "sortPackageJson": false,
   "ignorePatterns": [
     "/dist/",
-    "/out/",
-    "/build/",
-    "/coverage/",
+    "/.output/",
     "/public/",
     "**/*.mdx",
+    "**/*.gen.ts",
     "tina/__generated__/",
-    "tina/tina-lock.json",
-    "app/routeTree.gen.ts"
+    "tina/tina-lock.json"
   ]
 }

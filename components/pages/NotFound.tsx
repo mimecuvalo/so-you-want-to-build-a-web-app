@@ -1,20 +1,20 @@
-import { Emoji, Message } from 'components/error/error.styles';
-import { Link, Typography } from 'components';
+import Link from 'components/Link';
+import styles from './error.module.css';
 
 export default function NotFound() {
   return (
-    <Message>
-      <Emoji role="img" aria-label="upside down face">
+    <div className={styles.message}>
+      <span className={styles.emoji} role="img" aria-label="upside down face">
         🙃
-      </Emoji>
-      <Typography variant="h1">
+      </span>
+      <h1>
         <span className="notranslate">404:</span> Not found
-      </Typography>
+      </h1>
       <div>
         I’m sorry, dave. I’m afraid I can’t do that.
         <br />
         Try going back to the <Link href="/">beginning</Link>.
       </div>
-    </Message>
+    </div>
   );
 }

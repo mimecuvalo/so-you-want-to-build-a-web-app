@@ -1,7 +1,7 @@
 import { defineConfig } from 'vite';
 import { tanstackStart } from '@tanstack/react-start/plugin/vite';
 import viteReact from '@vitejs/plugin-react';
-import { PAGES } from './application/constants.ts';
+import { PAGES } from './lib/constants.ts';
 
 export default defineConfig({
   server: { port: 3000 },

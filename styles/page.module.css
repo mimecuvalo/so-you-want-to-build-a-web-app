@@ -1,0 +1,207 @@
+/* Typography for a rendered book page (TinaMarkdown output). */
+
+.markdown h1,
+.markdown h2,
+.markdown h3 {
+  font-family: var(--font-header);
+}
+
+.markdown h1 {
+  font-size: var(--font-size-xl);
+}
+
+.markdown h2 {
+  margin-top: var(--space-4);
+  font-size: var(--font-size-md);
+}
+
+.markdown h3 {
+  margin-top: var(--space-3);
+  font-size: var(--font-size-base);
+}
+
+.markdown h1::first-letter {
+  font-size: 3rem;
+  margin-right: -1rem;
+}
+
+.markdown ul,
+.markdown ol {
+  padding: 0;
+  margin-top: 0;
+  margin-inline-start: 1.5rem;
+}
+
+.markdown p,
+.markdown code,
+.markdown pre,
+.markdown ul,
+.markdown ol,
+.markdown blockquote {
+  margin-bottom: 1rem;
+}
+
+.markdown ul ul,
+.markdown ol ol {
+  margin-bottom: 0;
+}
+
+.markdown blockquote {
+  border-inline-start: 1px solid var(--color-grey-500);
+  padding-inline-start: 1.5rem;
+  margin-inline-start: 0;
+  font-style: italic;
+}
+
+.markdown pre {
+  padding: 0.5rem;
+  font-size: var(--font-size-sm);
+}
+
+.markdown code {
+  border-radius: 1px;
+  line-height: 1.6;
+  padding: 2px 0 1px;
+  border: 1px solid var(--color-code-border);
+  color: var(--color-code);
+  background-color: var(--color-code-background);
+}
+
+.markdown a code {
+  color: var(--color-primary);
+}
+
+.divider {
+  height: 0;
+  border: 0;
+  border-bottom: 1px solid var(--color-divider);
+  margin: var(--space-6) 0;
+}
+
+/* Hangs the leading emoji out into the left margin on wider screens. */
+.title {
+  text-wrap: balance;
+}
+
+@media (min-width: 600px) {
+  .title {
+    margin-inline-start: -4.25rem;
+    padding-left: 4.25rem;
+    text-indent: -4.75rem;
+  }
+}
+
+/* ---- Images ---- */
+
+.figure {
+  display: block;
+  margin: 2rem 0;
+  text-align: center;
+}
+
+.figure img {
+  max-width: 100%;
+}
+
+.figure[data-float='right-33'] {
+  float: right;
+  width: 33%;
+  margin-left: var(--space-2);
+}
+
+.caption {
+  display: block;
+  font-size: var(--font-size-xs);
+  font-style: italic;
+  text-align: center;
+}
+
+.video {
+  display: flex;
+  justify-content: center;
+}
+
+/* ---- Code blocks ---- */
+/* Prism picks its theme in JS, so it cannot follow a CSS variable the way everything else does.
+   Both are rendered and the active scheme reveals one; `display: none` also keeps the hidden copy
+   out of the accessibility tree, so screen readers still see each block exactly once. */
+
+.darkSchemeOnly {
+  display: none;
+}
+
+:global(:root.dark) .lightSchemeOnly {
+  display: none;
+}
+
+:global(:root.dark) .darkSchemeOnly {
+  display: block;
+}
+
+@media (prefers-color-scheme: dark) {
+  :global(:root:not(.light)) .lightSchemeOnly {
+    display: none;
+  }
+
+  :global(:root:not(.light)) .darkSchemeOnly {
+    display: block;
+  }
+}
+
+/* ---- Table of contents / TL;DR ---- */
+
+.tocItem {
+  margin: var(--space-1) 0;
+}
+
+.tldr {
+  list-style-type: decimal-leading-zero;
+}
+
+.tldrItem {
+  margin-left: 3.25rem;
+  font-size: 1.25rem;
+  font-family: var(--font-header);
+}
+
+.markdown .tldrHeader {
+  margin-left: -1rem;
+  padding-left: 1.5rem;
+  text-indent: -1.75rem;
+}
+
+.markdown .tldrHeader::first-letter {
+  font-size: 1.5rem;
+  margin-right: -1rem;
+}
+
+.markdown .tldrBody {
+  font-size: 1rem;
+  font-family: var(--font-body);
+  list-style-type: disc;
+  margin-left: -3.25rem;
+}
+
+/* ---- Pagination ---- */
+
+.pagination {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  margin-top: var(--space-4);
+}
+
+.pagination a {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25em;
+  font-weight: var(--font-weight-bold);
+}
+
+.theEnd {
+  font-family: cursive;
+}
+
+.paginationDivider {
+  margin-bottom: 0;
+}

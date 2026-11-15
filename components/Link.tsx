@@ -1,35 +1,35 @@
-import { Link as MuiLink, LinkProps as MuiLinkProps } from '@mui/material';
+import type { AnchorHTMLAttributes, Ref } from 'react';
 import { createLink } from '@tanstack/react-router';
+import classNames from 'classnames';
 
-// MUI's anchor styling with TanStack Router's client-side navigation and intent-preloading.
-const RouterLink = createLink(MuiLink);
+type AnchorProps = AnchorHTMLAttributes<HTMLAnchorElement> & { ref?: Ref<HTMLAnchorElement> };
 
-const Link: React.FC<MuiLinkProps> = ({ children, target, href, ...props }) => {
+function Anchor({ className, ...props }: AnchorProps) {
+  return <a className={classNames('link', className)} {...props} />;
+}
+
+// The template's plain anchor styling with TanStack Router's client-side navigation and
+// intent-preloading.
+const RouterLink = createLink(Anchor);
+
+export default function Link({ children, target, href, ...props }: AnchorProps) {
   // Only same-site paths navigate client-side. Everything else - external URLs, `#anchor`,
   // mailto: - stays a plain anchor and keeps its existing behavior.
   const isInternal = typeof href === 'string' && href.startsWith('/') && !target;
 
   if (!isInternal) {
     return (
-      <MuiLink
-        underline="hover"
-        href={href}
-        target={target}
-        rel={target === '_blank' ? 'noopener noreferrer' : undefined}
-        {...props}
-      >
+      <Anchor href={href} target={target} rel={target === '_blank' ? 'noopener noreferrer' : undefined} {...props}>
         {children}
-      </MuiLink>
+      </Anchor>
     );
   }
 
   // The router takes the fragment separately; folding it into `to` would treat it as path.
   const [to, hash] = href.split('#');
   return (
-    <RouterLink underline="hover" to={to} hash={hash} {...props}>
+    <RouterLink to={to} hash={hash} {...props}>
       {children}
     </RouterLink>
   );
-};
-
-export default Link;
+}

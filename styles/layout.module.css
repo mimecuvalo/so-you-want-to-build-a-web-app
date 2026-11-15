@@ -1,0 +1,13 @@
+/* The reading column every page renders into, below the fixed header. */
+.main {
+  width: 100%;
+  margin: var(--space-8) auto;
+  padding: 0 var(--space-2);
+}
+
+@media (min-width: 600px) {
+  .main {
+    width: clamp(45ch, 80%, 75ch);
+    padding: 0 var(--space-3);
+  }
+}

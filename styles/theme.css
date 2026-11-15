@@ -1,0 +1,123 @@
+/*
+ * The same numeric tokens are also available to JS via styles/constants.ts.
+ *
+ * Color scheme: follows prefers-color-scheme by default. An explicit choice from the header toggle
+ * puts a `light` or `dark` class on <html> (see lib/color-scheme.ts), which pins `color-scheme` and
+ * so flips every `light-dark()` below.
+ */
+:root {
+  color-scheme: light dark;
+
+  /* ---- Palette ---- */
+  --color-primary: #4642ff;
+  --color-primary-light: #eae9ff;
+  --color-primary-dark: #16147f;
+  --color-primary-contrast: #ffffff;
+
+  --color-secondary: #f9d65b;
+  --color-secondary-light: #fff8e0;
+  --color-secondary-dark: #f2c72e;
+
+  --color-error: #ec1000;
+  --color-error-light: #fde7e5;
+  --color-error-dark: #ed0900;
+
+  --color-warning: #ffb450;
+  --color-warning-light: #fff0dc;
+  --color-warning-dark: #ff7830;
+
+  --color-success: #00aa70;
+  --color-success-light: #e5f6f0;
+  --color-success-dark: #00774e;
+
+  --color-info: #3567fd;
+  --color-info-light: #7798fc;
+  --color-info-dark: #002cb4;
+
+  --color-grey-100: #f9f9f9;
+  --color-grey-300: #f2f2f2;
+  --color-grey-500: #cccccc;
+  --color-grey-700: #666666;
+  --color-grey-800: #323232;
+
+  --color-white: #ffffff;
+  --color-black: #000000;
+
+  /* ---- Scheme-aware colors ---- */
+  --background: light-dark(var(--color-white), #0a0a0a);
+  --foreground: light-dark(#171717, #ededed);
+  --color-icon: light-dark(var(--color-black), var(--color-white));
+  --color-surface: light-dark(var(--color-white), var(--color-black));
+  --color-divider: light-dark(rgba(0, 0, 0, 0.12), rgba(255, 255, 255, 0.12));
+  --color-hover: light-dark(rgba(0, 0, 0, 0.04), rgba(255, 255, 255, 0.08));
+  --color-code: light-dark(#1e1919, #f7f5f2);
+  --color-code-background: light-dark(#f7f5f2, #242121);
+  --color-code-border: light-dark(hsla(36, 23%, 55%, 0.2), hsla(34, 3%, 54%, 0.2));
+
+  --color-text: var(--foreground);
+  --color-text-secondary: var(--color-grey-700);
+  --color-text-disabled: var(--color-grey-500);
+
+  /* ---- Typography ---- */
+  /* Self-hosted via @fontsource (imported in app/routes/__root.tsx and styles/fonts.css). */
+  --font-press-start-2p: 'Press Start 2P';
+  --font-noto-color-emoji: 'Noto Color Emoji';
+  --font-emojis: var(--font-noto-color-emoji), 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
+  --font-body: Arial, Helvetica, sans-serif;
+  --font-mono: Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace, var(--font-emojis);
+  --font-header: var(--font-press-start-2p), var(--font-mono);
+
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-weight-bold: 700;
+
+  --font-size-xs: 0.75rem;
+  --font-size-sm: 0.875rem;
+  --font-size-base: 1rem;
+  --font-size-md: 1.25rem;
+  --font-size-lg: 1.5rem;
+  --font-size-xl: 2rem;
+
+  --line-height-tight: 1.2;
+  --line-height-base: 1.5;
+
+  /* ---- Spacing (8px base, matches constants.spacing) ---- */
+  --space-0-5: 4px;
+  --space-1: 8px;
+  --space-2: 16px;
+  --space-3: 24px;
+  --space-4: 32px;
+  --space-6: 48px;
+  --space-8: 64px;
+
+  /* ---- Shape ---- */
+  --radius: 4px;
+  --shadow-drawer:
+    0 8px 10px -5px rgba(0, 0, 0, 0.2), 0 16px 24px 2px rgba(0, 0, 0, 0.14), 0 6px 30px 5px rgba(0, 0, 0, 0.12);
+
+  /* ---- Layout ---- */
+  --header-height: 64px;
+
+  /* ---- Breakpoints (informational; CSS can't use vars in media queries - use the literal) ---- */
+  --breakpoint-sm: 600px;
+  --breakpoint-md: 960px;
+  --breakpoint-lg: 1280px;
+  --breakpoint-xl: 1920px;
+
+  /* ---- Z-index (key layers) ---- */
+  --z-below-page: -1;
+  --z-page: 0;
+  --z-above-page: 1;
+  --z-header: 1100;
+  --z-drawer: 1200;
+  --z-modal-overlay: 1300;
+  --z-important: 2147483647;
+}
+
+:root.light {
+  color-scheme: light;
+}
+
+:root.dark {
+  color-scheme: dark;
+}

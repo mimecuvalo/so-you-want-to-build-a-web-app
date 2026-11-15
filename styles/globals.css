@@ -1,6 +1,4 @@
-@import 'sanitize.css/sanitize.css';
-@import 'sanitize.css/forms.css';
-@import 'sanitize.css/typography.css';
+@import './theme.css';
 
 * {
   box-sizing: border-box;
@@ -8,33 +6,9 @@
   margin: 0;
 }
 
-:root {
-  /* Self-hosted via @fontsource (imported in app/routes/__root.tsx). */
-  --font-inter: 'Inter Variable';
-  --font-press-start-2p: 'Press Start 2P';
-  --font-noto-color-emoji: 'Noto Color Emoji';
-
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-/* Keyed off the `dark` class InitColorSchemeScript sets on <html> before first paint (rather
-   than prefers-color-scheme alone) so these follow an explicit user choice too. MUI's CSS
-   variables own `color-scheme` and the body colors; these remain for plain-CSS consumers. */
-:root.dark {
-  --background: #0a0a0a;
-  --foreground: #ededed;
-}
-
 html {
   scroll-behavior: smooth;
-}
-
-h3,
-h4,
-h5,
-h6 {
-  margin: 0;
+  -webkit-text-size-adjust: 100%;
 }
 
 html,
@@ -46,7 +20,9 @@ body {
 body {
   color: var(--foreground);
   background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-body);
+  font-size: var(--font-size-base);
+  line-height: var(--line-height-base);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -61,14 +37,60 @@ body::backdrop {
   }
 }
 
+b,
+strong {
+  font-weight: var(--font-weight-bold);
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--font-header);
+  font-weight: var(--font-weight-bold);
+}
+
+h1 {
+  font-size: var(--font-size-xl);
+  line-height: var(--line-height-base);
+  margin: var(--space-1) 0;
+}
+
+h2 {
+  font-size: var(--font-size-lg);
+  line-height: var(--line-height-tight);
+  margin: var(--space-2) 0;
+}
+
+h3 {
+  font-size: var(--font-size-md);
+  line-height: var(--line-height-tight);
+  margin: var(--space-1) 0;
+}
+
+h4 {
+  font-size: var(--font-size-base);
+  line-height: var(--line-height-base);
+  margin: var(--space-1) 0;
+}
+
 a {
   color: inherit;
   text-decoration: none;
 }
 
-/* Cross-document only, so this now fires just on hard navigations (a typed URL, an external
-   entry, no JS). In-app links go through the router and navigate client-side instead - driving
-   a transition around those by hand freezes the page on a snapshot for the whole data fetch. */
+.link {
+  color: var(--color-primary);
+  cursor: pointer;
+}
+
+.link:hover {
+  text-decoration: underline;
+}
+
+/* Hard navigations (a typed URL, an external entry, no JS). In-app links get theirs from the
+   router's defaultViewTransition, which snapshots only after loaders finish, so the page isn't
+   frozen during the fetch. */
 @view-transition {
   navigation: auto;
 }
@@ -80,15 +102,3 @@ a {
     animation: none !important;
   }
 }
-
-/* In development, turn this on to highlight untranslated strings. */
-/* .App-is-development *:not(.notranslate) {
-  text-shadow: 3px 3px red;
-}
-
-.App-is-development .notranslate,
-.App-is-development .notranslate *,
-.App-is-development .i18n-msg,
-.App-is-development .i18n-msg * {
-  text-shadow: none;
-} */

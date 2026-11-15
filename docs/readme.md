@@ -7,7 +7,6 @@
 
 <p align="center">
   <a href="https://github.com/mimecuvalo/all-the-things-example/actions"><img src="https://github.com/mimecuvalo/all-the-things-example/actions/workflows/ci.yml/badge.svg" alt="CI status" /></a>
-  <a href="https://github.com/prettier/prettier"><img src="https://img.shields.io/badge/code_style-prettier-ff69b4.svg" alt="prettier status" /></a>
   <a href="https://github.com/githubusername/project/docs/license.md"><img src="https://img.shields.io/badge/license-MIT-brightgreen.svg" alt="license" /></a>
 </p>
 
@@ -20,7 +19,7 @@ Write your stunning description here.
 This is a project bootstrapped with [`all-the-things`](https://github.com/mimecuvalo/all-the-things).
 
 ```sh
-bun install
+yarn
 ```
 
 _Prerequisites: Node 14+ if you want proper internationalization (i18n) support (via full-icu)._
@@ -30,7 +29,7 @@ _Prerequisites: Node 14+ if you want proper internationalization (i18n) support 
 First, run the development server:
 
 ```bash
-bun run dev
+bun dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
@@ -52,13 +51,13 @@ and set DATABASE_URL=postgresql://postgres:password@databasedomain.com:PORT/post
 Then, to sync your DB:
 
 ```sh
-bunx prisma db push
+npx prisma db push
 ```
 
 To view your DB locally:
 
 ```sh
-bunx prisma studio
+npx prisma studio
 ```
 
 To learn more about Prisma, read the docs [here](https://www.prisma.io/).

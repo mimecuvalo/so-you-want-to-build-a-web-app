@@ -1,4 +1,4 @@
-import { SITE_URL } from '@/application/constants';
+import { SITE_URL } from 'lib/constants';
 
 export function prettifyUrl(url: string) {
   return url.replace(/ /g, '+');

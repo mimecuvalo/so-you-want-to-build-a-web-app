@@ -14,21 +14,14 @@
     "jsx": "react-jsx",
     "paths": {
       "@/*": ["./*"],
-      "app/*": ["./application/*"],
       "components": ["./components"],
       "components/*": ["./components/*"],
-      "data": ["./data"],
-      "data/*": ["./data/*"],
-      "hooks": ["./hooks"],
-      "i18n": ["./i18n"],
-      "i18n/*": ["./i18n/*"],
-      "styles": ["./styles"],
+      "lib/*": ["./lib/*"],
       "styles/*": ["./styles/*"],
-      "util/*": ["./util/*"],
-      "vendor/*": ["./vendor/*"]
+      "util/*": ["./util/*"]
     },
     "forceConsistentCasingInFileNames": true,
-    "types": ["vite/client", "node"],
+    "types": ["vite/client", "node", "vitest/globals", "@testing-library/jest-dom"],
     "allowImportingTsExtensions": true
   },
   "include": ["**/*.ts", "**/*.tsx", "**/*.d.ts"],

@@ -7,167 +7,14 @@ import { staticFunctionMiddleware } from '@tanstack/start-static-server-function
 import { useTina } from 'tinacms/dist/react';
 import { client } from '@/tina/__generated__/client';
 import { TinaMarkdown } from 'tinacms/dist/rich-text';
-import { Grid, Link, Typography, styled } from 'components';
-import { PAGES, SITE_NAME, SITE_URL } from '@/application/constants';
+import { ArrowLeftIcon, ArrowRightIcon } from '@radix-ui/react-icons';
+import classNames from 'classnames';
+import { Link } from 'components';
+import { PAGES, SITE_NAME, SITE_URL } from 'lib/constants';
 import { pageUrl } from 'util/url-factory';
-import { ArrowBack, ArrowForward } from '@mui/icons-material';
 import { Page as TinaPage } from '@/tina/__generated__/types';
-import { Box, Divider } from '@mui/material';
 import { Prism } from 'tinacms/dist/rich-text/prism';
-
-const MarkdownStyling = styled('div')`
-  h1,
-  h2,
-  h3 {
-    font-family: ${(props) => props.theme.typography.h1.fontFamily};
-  }
-
-  h1 {
-    font-size: ${(props) => props.theme.typography.h1.fontSize};
-  }
-
-  h2 {
-    margin-top: ${(props) => props.theme.spacing(4)};
-    font-size: ${(props) => props.theme.typography.h3.fontSize};
-  }
-
-  h3 {
-    margin-top: ${(props) => props.theme.spacing(3)};
-    font-size: ${(props) => props.theme.typography.h4.fontSize};
-  }
-
-  h1::first-letter {
-    font-size: 3rem;
-    margin-right: -1rem;
-  }
-
-  ul,
-  ol {
-    padding: 0;
-    margin-inline-start: 1.5rem;
-  }
-
-  p,
-  code,
-  pre,
-  ul,
-  ol,
-  blockquote {
-    margin-bottom: 1rem;
-  }
-
-  ul ul,
-  ol ol {
-    margin-bottom: 0;
-  }
-
-  ul,
-  ol {
-    margin-top: 0;
-  }
-
-  blockquote {
-    border-inline-start: 1px solid ${(props) => props.theme.palette.grey[400]};
-    padding-inline-start: 1.5rem;
-    margin-inline-start: 0rem;
-    font-style: italic;
-  }
-
-  pre {
-    padding: 0.5rem;
-    font-size: ${(props) => props.theme.typography.body2.fontSize};
-  }
-
-  code {
-    border-radius: 1px;
-    line-height: 1.6;
-    padding: 2px 0 1px;
-    border: 1px solid #e6e8eb;
-    color: #1e1919;
-    background-color: #f7f5f2;
-    border-color: hsla(36, 23%, 55%, 0.2);
-  }
-
-  hr {
-    margin: ${(props) => props.theme.spacing(6, 0)};
-  }
-
-  ${(props) =>
-    props.theme.applyStyles('dark', {
-      code: {
-        color: '#f7f5f2',
-        backgroundColor: '#242121',
-        borderColor: 'hsla(34, 3%, 54%, .2)',
-      },
-    })}
-
-  a code {
-    color: ${(props) => props.theme.palette.primary.main};
-  }
-`;
-
-const TLDRPageHeader = styled(Typography)`
-  margin-left: -1rem;
-  padding-left: 1.5rem;
-  text-indent: -1.75rem;
-
-  &::first-letter {
-    font-size: 1.5rem;
-    margin-right: -1rem;
-  }
-`;
-
-const TLDRListItem = styled('li')`
-  margin-left: 3.25rem;
-  font-size: 1.25rem;
-  font-family: ${(props) => props.theme.typography.h1.fontFamily};
-`;
-
-const TLDRBody = styled('ul')`
-  font-size: 1rem;
-  font-family: ${(props) => props.theme.typography.fontFamily};
-  list-style-type: disc;
-  margin-left: -3.25rem !important;
-`;
-
-const Figure = styled('span')<{
-  $float: string;
-}>`
-  display: block;
-  margin: 2rem 0;
-  text-align: center;
-
-  img {
-    max-width: 100%;
-  }
-
-  .caption {
-    display: block;
-    font-size: ${(props) => props.theme.typography.subtitle1.fontSize};
-    font-style: italic;
-    text-align: center;
-  }
-
-  ${(props) =>
-    props.$float === 'right-33' &&
-    `
-    & {
-      float: right;
-      width: 33%;
-      margin-left: ${props.theme.spacing(2)};
-    }
-  `}
-`;
-
-// Prism picks its theme in JS, so it cannot follow a CSS variable the way everything else does.
-// Render both and let the color-scheme class reveal one; `display: none` also keeps the hidden
-// copy out of the accessibility tree, so screen readers still see each block exactly once.
-const LightSchemeOnly = styled('div')(({ theme }) => theme.applyStyles('dark', { display: 'none' }));
-
-const DarkSchemeOnly = styled('div')(({ theme }) => ({
-  display: 'none',
-  ...theme.applyStyles('dark', { display: 'block' }),
-}));
+import styles from 'styles/page.module.css';
 
 const getId = (children: any) => {
   const firstContent = children.props.content[0];
@@ -184,48 +31,39 @@ const customRenderers = (allPages: TinaPage[]) => ({
   ),
 
   // N.B. We only want one H1 on the page, and that's the title, so we downstep everything else.
-  h1: (props: any) => (
-    <Typography variant="h2" id={getId(props.children)}>
-      {props.children}
-    </Typography>
-  ),
+  h1: (props: any) => <h2 id={getId(props.children)}>{props.children}</h2>,
 
   // N.B. We only want one H1 on the page, and that's the title, so we downstep everything else.
-  h2: (props: any) => (
-    <Typography variant="h3" id={getId(props.children)}>
-      {props.children}
-    </Typography>
-  ),
+  h2: (props: any) => <h3 id={getId(props.children)}>{props.children}</h3>,
 
   // N.B. We only want one H1 on the page, and that's the title, so we downstep everything else.
-  h3: (props: any) => <Typography variant="h4">{props.children}</Typography>,
+  h3: (props: any) => <h4>{props.children}</h4>,
 
   code_block: (props: any) => (
     <>
-      <LightSchemeOnly>
+      <div className={styles.lightSchemeOnly}>
         <Prism {...props} theme="nightOwlLight" />
-      </LightSchemeOnly>
-      <DarkSchemeOnly>
+      </div>
+      <div className={styles.darkSchemeOnly}>
         <Prism {...props} theme="nightOwl" />
-      </DarkSchemeOnly>
+      </div>
     </>
   ),
 
   // N.B. This div/span wrapper matches the structure, more or less, of the Outline editor's img wrapper.
   img: (props: any) => (
-    <Figure $float={props.caption}>
-      {/* eslint-disable-next-line */}
+    <span className={styles.figure} data-float={props.caption}>
       <img src={props.url} alt={props.alt} />
-      <span className="caption">{props.alt}</span>
-    </Figure>
+      <span className={styles.caption}>{props.alt}</span>
+    </span>
   ),
 
-  hr: () => <Divider />,
+  hr: () => <hr className={styles.divider} />,
 
   TableOfContents: () => (
     <ol>
       {PAGES.map((page) => (
-        <li key={page.slug} style={{ margin: '8px 0' }}>
+        <li key={page.slug} className={styles.tocItem}>
           <Link href={`/${page.slug}`}>{page.title}</Link>
         </li>
       ))}
@@ -234,27 +72,27 @@ const customRenderers = (allPages: TinaPage[]) => ({
 
   TLDR: () => {
     return (
-      <ol style={{ listStyleType: 'decimal-leading-zero' }}>
+      <ol className={styles.tldr}>
         {PAGES.map((orderedPage) => (
-          <TLDRListItem key={orderedPage.slug}>
-            <TLDRPageHeader variant="h2">
+          <li key={orderedPage.slug} className={styles.tldrItem}>
+            <h2 className={styles.tldrHeader}>
               <Link href={`/${orderedPage.slug}`}>{orderedPage.title}</Link>
-            </TLDRPageHeader>
-            <TLDRBody>
+            </h2>
+            <ul className={styles.tldrBody}>
               <TinaMarkdown
                 content={allPages
                   .find((pageData) => orderedPage.slug === pageData._sys.filename)
                   ?._body?.children.find((child: any) => child.type === 'ul')}
               />
-            </TLDRBody>
-          </TLDRListItem>
+            </ul>
+          </li>
         ))}
       </ol>
     );
   },
 
   YouTube: (props: any) => (
-    <Grid container sx={{ justifyContent: 'center' }}>
+    <div className={styles.video}>
       <iframe
         width="560"
         height="315"
@@ -263,7 +101,7 @@ const customRenderers = (allPages: TinaPage[]) => ({
         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
         allowFullScreen
       ></iframe>
-    </Grid>
+    </div>
   ),
 });
 
@@ -314,20 +152,20 @@ function Pagination({ slug }: { slug: string }) {
 
   return (
     <>
-      <Divider sx={{ mt: 6 }} />
-      <Grid container sx={{ justifyContent: 'space-between', mt: 4 }}>
+      <hr className={classNames(styles.divider, styles.paginationDivider)} />
+      <nav className={styles.pagination} aria-label="pagination">
         {prev && currentPageIndex < PAGES.length - 1 && (
-          <Link sx={{ fontWeight: 'bold' }} href={`/${prev.slug}`}>
-            <ArrowBack /> {prev.title}
+          <Link href={`/${prev.slug}`}>
+            <ArrowLeftIcon width={24} height={24} aria-hidden /> {prev.title}
           </Link>
         )}
         {next && currentPageIndex < PAGES.length - 2 && (
-          <Link sx={{ fontWeight: 'bold' }} href={`/${next.slug}`}>
-            {next.title} <ArrowForward />
+          <Link href={`/${next.slug}`}>
+            {next.title} <ArrowRightIcon width={24} height={24} aria-hidden />
           </Link>
         )}
-        {currentPageIndex === PAGES.length - 2 && <Box sx={{ fontFamily: 'cursive' }}>the end</Box>}
-      </Grid>
+        {currentPageIndex === PAGES.length - 2 && <div className={styles.theEnd}>the end</div>}
+      </nav>
     </>
   );
 }
@@ -384,23 +222,13 @@ function Page() {
 
   return (
     <>
-      <MarkdownStyling>
-        <Typography
-          variant="h1"
-          sx={{
-            textWrap: 'balance',
-            marginInlineStart: { sm: '-4.25rem' },
-            paddingLeft: { sm: '4.25rem' },
-            textIndent: { sm: '-4.75rem' },
-          }}
-        >
-          {title}
-        </Typography>
+      <div className={styles.markdown}>
+        <h1 className={styles.title}>{title}</h1>
         <TinaMarkdown
           components={customRenderers(props.allPages)}
           content={slug === 'tldr' ? _body?.children.slice(0, -1) : _body}
         />
-      </MarkdownStyling>
+      </div>
       <Pagination slug={slug} />
     </>
   );

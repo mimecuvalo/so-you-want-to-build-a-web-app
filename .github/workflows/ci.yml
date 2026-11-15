@@ -29,5 +29,9 @@ jobs:
         run: bun run format:check
       - name: Generate Tina types
         run: bun run tina-generate-types
+      - name: Run tests
+        run: bun run test:ci
       - name: Run type-check
         run: bun run type-check
+      - name: Build production application
+        run: bun run build
