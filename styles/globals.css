@@ -9,6 +9,11 @@
 }
 
 :root {
+  /* Self-hosted via @fontsource (imported in app/routes/__root.tsx). */
+  --font-inter: 'Inter Variable';
+  --font-press-start-2p: 'Press Start 2P';
+  --font-noto-color-emoji: 'Noto Color Emoji';
+
   --background: #ffffff;
   --foreground: #171717;
 }
@@ -62,7 +67,7 @@ a {
 }
 
 /* Cross-document only, so this now fires just on hard navigations (a typed URL, an external
-   entry, no JS). In-app links go through next/link and navigate client-side instead - driving
+   entry, no JS). In-app links go through the router and navigate client-side instead - driving
    a transition around those by hand freezes the page on a snapshot for the whole data fetch. */
 @view-transition {
   navigation: auto;

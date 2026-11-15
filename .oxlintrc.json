@@ -8,5 +8,14 @@
     "builtin": true
   },
   "rules": {},
-  "ignorePatterns": ["node_modules", ".next", "out", "build", "coverage", "public", "tina/__generated__"]
+  "ignorePatterns": [
+    "node_modules",
+    "dist",
+    "out",
+    "build",
+    "coverage",
+    "public",
+    "tina/__generated__",
+    "app/routeTree.gen.ts"
+  ]
 }

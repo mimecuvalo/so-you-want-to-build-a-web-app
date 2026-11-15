@@ -1,13 +1,10 @@
 import { Link as MuiLink, LinkProps as MuiLinkProps } from '@mui/material';
-import NextLink from 'next/link';
+import { createLink } from '@tanstack/react-router';
 
-export interface LinkProps extends MuiLinkProps {
-  // Pages Router still prefetches on hover when this is false. That's the behavior we want for
-  // the nav drawer, whose 18 links would otherwise all prefetch the moment it opens.
-  prefetch?: boolean;
-}
+// MUI's anchor styling with TanStack Router's client-side navigation and intent-preloading.
+const RouterLink = createLink(MuiLink);
 
-const Link: React.FC<LinkProps> = ({ children, target, href, prefetch = false, ...props }) => {
+const Link: React.FC<MuiLinkProps> = ({ children, target, href, ...props }) => {
   // Only same-site paths navigate client-side. Everything else - external URLs, `#anchor`,
   // mailto: - stays a plain anchor and keeps its existing behavior.
   const isInternal = typeof href === 'string' && href.startsWith('/') && !target;
@@ -26,10 +23,12 @@ const Link: React.FC<LinkProps> = ({ children, target, href, prefetch = false, .
     );
   }
 
+  // The router takes the fragment separately; folding it into `to` would treat it as path.
+  const [to, hash] = href.split('#');
   return (
-    <MuiLink component={NextLink} underline="hover" href={href} prefetch={prefetch} {...props}>
+    <RouterLink underline="hover" to={to} hash={hash} {...props}>
       {children}
-    </MuiLink>
+    </RouterLink>
   );
 };
 

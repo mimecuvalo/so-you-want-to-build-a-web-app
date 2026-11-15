@@ -5,13 +5,14 @@
   "printWidth": 120,
   "sortPackageJson": false,
   "ignorePatterns": [
-    "/.next/",
+    "/dist/",
     "/out/",
     "/build/",
     "/coverage/",
     "/public/",
     "**/*.mdx",
     "tina/__generated__/",
-    "tina/tina-lock.json"
+    "tina/tina-lock.json",
+    "app/routeTree.gen.ts"
   ]
 }

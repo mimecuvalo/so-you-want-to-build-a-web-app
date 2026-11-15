@@ -5,5 +5,5 @@ export function prettifyUrl(url: string) {
 }
 
 export function pageUrl(slug: string) {
-  return `${process.env.NODE_ENV === 'development' ? 'http://localhost:3000' : SITE_URL}/${slug}`;
+  return `${import.meta.env.DEV ? 'http://localhost:3000' : SITE_URL}/${slug}`;
 }

@@ -1,22 +1,19 @@
-import React from 'react';
-import { InferGetStaticPropsType } from 'next';
+// ugh, complicado. see: https://github.com/FormidableLabs/prism-react-renderer
+import 'util/prism-languages';
+
+import { createFileRoute, notFound } from '@tanstack/react-router';
+import { createServerFn } from '@tanstack/react-start';
+import { staticFunctionMiddleware } from '@tanstack/start-static-server-functions';
 import { useTina } from 'tinacms/dist/react';
-import { client } from '../tina/__generated__/client';
+import { client } from '@/tina/__generated__/client';
 import { TinaMarkdown } from 'tinacms/dist/rich-text';
 import { Grid, Link, Typography, styled } from 'components';
-import Head from 'next/head';
 import { PAGES, SITE_NAME, SITE_URL } from '@/application/constants';
 import { pageUrl } from 'util/url-factory';
 import { ArrowBack, ArrowForward } from '@mui/icons-material';
 import { Page as TinaPage } from '@/tina/__generated__/types';
 import { Box, Divider } from '@mui/material';
 import { Prism } from 'tinacms/dist/rich-text/prism';
-
-// ugh, complicado. see: https://github.com/FormidableLabs/prism-react-renderer
-import { Prism as OriginalPrism } from 'prism-react-renderer';
-(typeof global !== 'undefined' ? global : window).Prism = OriginalPrism;
-// eslint-disable-next-line
-require('prismjs/components/prism-bash');
 
 const MarkdownStyling = styled('div')`
   h1,
@@ -270,52 +267,40 @@ const customRenderers = (allPages: TinaPage[]) => ({
   ),
 });
 
-function ContentHead({ title, url }: { title: string; url: string }) {
-  return (
-    <Head>
-      <title>{title}</title>
-      <meta property="og:title" content={title} />
-      <meta property="og:description" content="A discerning guide to showing you the ropes." />
-      <meta property="og:type" content="website" />
-      <meta property="og:url" content={url} />
-      <meta property="og:site_name" content={SITE_NAME} />
-      <meta property="og:image" content={`${SITE_URL}/favicon.jpg`} />
+const DESCRIPTION = 'A discerning guide to showing you the ropes.';
 
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: `
+function contentHead(title: string, url: string) {
+  return {
+    meta: [
+      { title },
+      { property: 'og:title', content: title },
+      { property: 'og:description', content: DESCRIPTION },
+      { property: 'og:type', content: 'website' },
+      { property: 'og:url', content: url },
+      { property: 'og:site_name', content: SITE_NAME },
+      { property: 'og:image', content: `${SITE_URL}/favicon.jpg` },
+    ],
+    scripts: [
       {
-        "@context": "http://schema.org",
-        "@type": "NewsArticle",
-        "mainEntityOfPage": {
-          "@type": "WebPage",
-          "@id": "${url}"
-        },
-        "headline": "${title}",
-        "image": [
-          "${SITE_URL}/favicon.jpg"
-        ],
-        "datePublished": "2023-11-15T08:00:00+08:00",
-        "author": {
-          "@type": "Person",
-          "name": "Mime Čuvalo"
-        },
-        "publisher": {
-          "@type": "Organization",
-          "name": "${SITE_NAME}",
-          "logo": {
-            "@type": "ImageObject",
-            "url": "${SITE_URL}/favicon.jpg"
-          }
-        },
-        "description": "A discerning guide to showing you the ropes."
-      }
-      `,
-        }}
-      />
-    </Head>
-  );
+        type: 'application/ld+json',
+        children: JSON.stringify({
+          '@context': 'http://schema.org',
+          '@type': 'NewsArticle',
+          mainEntityOfPage: { '@type': 'WebPage', '@id': url },
+          headline: title,
+          image: [`${SITE_URL}/favicon.jpg`],
+          datePublished: '2023-11-15T08:00:00+08:00',
+          author: { '@type': 'Person', name: 'Mime Čuvalo' },
+          publisher: {
+            '@type': 'Organization',
+            name: SITE_NAME,
+            logo: { '@type': 'ImageObject', url: `${SITE_URL}/favicon.jpg` },
+          },
+          description: DESCRIPTION,
+        }),
+      },
+    ],
+  };
 }
 
 function Pagination({ slug }: { slug: string }) {
@@ -347,14 +332,50 @@ function Pagination({ slug }: { slug: string }) {
   );
 }
 
-export default function Page(props: InferGetStaticPropsType<typeof getStaticProps>) {
+// Runs against Tina at prerender time only. staticFunctionMiddleware writes each result to
+// /__tsr/staticServerFnCache/*.json, which is what client-side navigations fetch afterwards - so
+// neither the Tina token nor a live Tina request ever reaches the browser.
+const getPage = createServerFn({ method: 'GET' })
+  .middleware([staticFunctionMiddleware])
+  .validator((filename: string) => filename)
+  .handler(async ({ data: filename }) => {
+    const tinaProps = await client.queries.contentQuery({ relativePath: `${filename}.mdx` });
+
+    // pageConnection pulls every page's full body AST (~500KB). Only the <TLDR> renderer reads
+    // it, and that component appears solely on the tldr page - so fetching it everywhere would
+    // make every other page ship ~16x its own content for nothing.
+    const pagesListData = filename === 'tldr' ? await client.queries.pageConnection() : undefined;
+
+    return {
+      data: tinaProps.data,
+      query: tinaProps.query,
+      variables: tinaProps.variables,
+      allPages: (pagesListData?.data.pageConnection?.edges?.map((page) => page?.node) ?? []) as TinaPage[],
+    };
+  });
+
+export const Route = createFileRoute('/$filename')({
+  loader: async ({ params: { filename } }) => {
+    // PAGES mirrors content/pages, so anything else would only 404 at Tina - and in production
+    // there'd be no cached JSON for it either.
+    if (!PAGES.some((page) => page.slug === filename)) {
+      throw notFound();
+    }
+    return getPage({ data: filename });
+  },
+  head: ({ params, loaderData }) =>
+    loaderData ? contentHead(loaderData.data.page.title, pageUrl(params.filename)) : {},
+  component: Page,
+});
+
+function Page() {
+  const props = Route.useLoaderData();
+  const { filename: slug } = Route.useParams();
   const {
     data: {
       page: { title, _body },
     },
   } = useTina(props);
-  const slug = props.variables.relativePath.replace('.mdx', '');
-  const url = pageUrl(slug);
 
   const firstChild = _body?.children[0] as { type: string; message?: string; position?: unknown } | undefined;
   if (firstChild?.type === 'invalid_markdown') {
@@ -363,7 +384,6 @@ export default function Page(props: InferGetStaticPropsType<typeof getStaticProp
 
   return (
     <>
-      <ContentHead title={title} url={url} />
       <MarkdownStyling>
         <Typography
           variant="h1"
@@ -377,7 +397,7 @@ export default function Page(props: InferGetStaticPropsType<typeof getStaticProp
           {title}
         </Typography>
         <TinaMarkdown
-          components={customRenderers(props.allPages as TinaPage[])}
+          components={customRenderers(props.allPages)}
           content={slug === 'tldr' ? _body?.children.slice(0, -1) : _body}
         />
       </MarkdownStyling>
@@ -385,34 +405,3 @@ export default function Page(props: InferGetStaticPropsType<typeof getStaticProp
     </>
   );
 }
-
-export const getStaticProps = async ({ params }: { params: { filename: string } }) => {
-  const tinaProps = await client.queries.contentQuery({
-    relativePath: `${params.filename}.mdx`,
-  });
-
-  // pageConnection pulls every page's full body AST (~500KB serialized into __NEXT_DATA__).
-  // Only the <TLDR> renderer reads it, and that component appears solely on the tldr page - so
-  // fetching it everywhere made every other page ship ~16x its own content for nothing.
-  const needsAllPages = params.filename === 'tldr';
-  const pagesListData = needsAllPages ? await client.queries.pageConnection() : undefined;
-
-  const props = {
-    ...tinaProps,
-    allPages: pagesListData?.data.pageConnection?.edges?.map((page) => page?.node) ?? [],
-    enableVisualEditing: process.env.VERCEL_ENV === 'preview',
-  };
-  return {
-    props: JSON.parse(JSON.stringify(props)) as typeof props,
-  };
-};
-
-export const getStaticPaths = async () => {
-  const pagesListData = await client.queries.pageConnection();
-  return {
-    paths: pagesListData.data.pageConnection?.edges?.map((page) => ({
-      params: { filename: page?.node?._sys.filename },
-    })),
-    fallback: false,
-  };
-};

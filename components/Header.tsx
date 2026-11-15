@@ -3,15 +3,14 @@ import { GitHub, Lightbulb, Menu } from '@mui/icons-material';
 import { useState } from 'react';
 import { PAGES } from '@/application/constants';
 import Link from './Link';
-import { useRouter } from 'next/router';
-import Image from 'next/image';
+import { useLocation } from '@tanstack/react-router';
 import { useColorScheme } from '@mui/material/styles';
 
 export default function Header() {
   const theme = useTheme();
   const { mode, systemMode, setMode } = useColorScheme();
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
-  const router = useRouter();
+  const pathname = useLocation({ select: (location) => location.pathname });
 
   // N.B. Resolved only inside the click handler: `mode`/`systemMode` are undefined during SSR and
   // on the first client render, so branching on them while rendering would flash or mismatch.
@@ -37,7 +36,7 @@ export default function Header() {
             <Menu />
           </IconButton>
 
-          {router.asPath !== '/so-you-want-to-build-a-web-app' && (
+          {pathname !== '/so-you-want-to-build-a-web-app' && (
             <Typography variant="h4" component="div">
               <Link href="/">so, you want to build a web app</Link>
             </Typography>
@@ -74,12 +73,12 @@ export default function Header() {
               key={page.slug}
               style={{
                 padding: '8px 16px',
-                backgroundColor: router.asPath.slice(1) === page.slug ? theme.palette.primary.light : ' ',
+                backgroundColor: pathname.slice(1) === page.slug ? theme.palette.primary.light : ' ',
               }}
             >
               <Link
                 href={`/${page.slug}`}
-                sx={{ display: 'block', fontWeight: router.asPath.slice(1) === page.slug ? 'bold' : 'normal' }}
+                sx={{ display: 'block', fontWeight: pathname.slice(1) === page.slug ? 'bold' : 'normal' }}
                 onClick={() => setIsDrawerOpen(false)}
               >
                 {page.title}
@@ -93,7 +92,7 @@ export default function Header() {
             <GitHub sx={{ color: '#000', width: 32, height: 32 }} />
           </Link>
           <Link href="https://www.nightlight.rocks" target="_blank">
-            <Image alt="nightlight" src="/favicon.svg" width={29.5} height={29.5} style={{ borderRadius: '50%' }} />
+            <img alt="nightlight" src="/favicon.svg" width={29.5} height={29.5} style={{ borderRadius: '50%' }} />
           </Link>
         </Grid>
       </Drawer>

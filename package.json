@@ -1,6 +1,7 @@
 {
   "name": "so-you-want-to-build-a-web-app",
   "private": true,
+  "type": "module",
   "description": "So, you want to build a web app",
   "repository": {
     "type": "git",
@@ -14,27 +15,31 @@
     "url": "https://github.com/mimecuvalo/so-you-want-to-build-a-web-app/issues"
   },
   "scripts": {
-    "dev": "tinacms dev -c \"next dev --webpack\"",
+    "dev": "tinacms dev -c \"vite dev\"",
     "tina-generate-types": "tinacms dev --no-server",
-    "build": "tinacms build && next build --webpack",
-    "start": "tinacms build && next start",
+    "build": "tinacms build && vite build",
     "lint": "oxlint",
     "lint:fix": "oxlint --fix",
     "format": "oxfmt",
     "format:check": "oxfmt --check",
     "config": "node scripts/config.js",
     "prepare": "husky",
-    "type-check": "tsc --noEmit"
+    "type-check": "tsc --noEmit",
+    "preview": "vite preview"
   },
   "dependencies": {
     "@emotion/react": "11.14.0",
-    "@emotion/server": "11.11.0",
     "@emotion/styled": "11.14.1",
+    "@fontsource-variable/inter": "5.3.0",
+    "@fontsource/noto-color-emoji": "5.3.2",
+    "@fontsource/press-start-2p": "5.3.0",
     "@mui/icons-material": "9.5.0",
     "@mui/material": "9.5.0",
+    "@tanstack/react-router": "1.170.46",
+    "@tanstack/react-start": "1.169.5",
+    "@tanstack/start-static-server-functions": "1.167.44",
     "@vercel/analytics": "2.0.1",
     "classnames": "2.5.1",
-    "next": "16.4.3",
     "prism-react-renderer": "2.4.1",
     "prismjs": "1.30.0",
     "react": "19.3.1",
@@ -47,12 +52,14 @@
     "@types/node": "26.6.6",
     "@types/react": "19.3.0",
     "@types/react-dom": "19.3.0",
+    "@vitejs/plugin-react": "6.3.0",
     "axe-core": "4.14.0",
     "husky": "9.1.7",
     "lint-staged": "17.6.0",
     "oxfmt": "0.75.0",
     "oxlint": "1.90.0",
-    "typescript": "7.0.2"
+    "typescript": "7.0.2",
+    "vite": "8.3.8"
   },
   "lint-staged": {
     "**/*.{js,jsx,ts,tsx,json,css,scss,md}": [
@@ -63,6 +70,5 @@
     ]
   },
   "browserslist": "last 2 versions",
-  "sideEffects": false,
   "packageManager": "yarn@1.22.22"
 }
