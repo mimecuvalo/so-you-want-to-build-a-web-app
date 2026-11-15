@@ -20,7 +20,7 @@ Write your stunning description here.
 This is a project bootstrapped with [`all-the-things`](https://github.com/mimecuvalo/all-the-things).
 
 ```sh
-yarn
+bun install
 ```
 
 _Prerequisites: Node 14+ if you want proper internationalization (i18n) support (via full-icu)._
@@ -30,7 +30,7 @@ _Prerequisites: Node 14+ if you want proper internationalization (i18n) support 
 First, run the development server:
 
 ```bash
-yarn dev
+bun run dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
@@ -38,7 +38,7 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 To run tests:
 
 ```sh
-yarn test
+bun run test
 ```
 
 To setup your DB:
@@ -52,13 +52,13 @@ and set DATABASE_URL=postgresql://postgres:password@databasedomain.com:PORT/post
 Then, to sync your DB:
 
 ```sh
-npx prisma db push
+bunx prisma db push
 ```
 
 To view your DB locally:
 
 ```sh
-npx prisma studio
+bunx prisma studio
 ```
 
 To learn more about Prisma, read the docs [here](https://www.prisma.io/).
@@ -67,7 +67,7 @@ Supabase is pretty great to get a good Postgres DB: https://app.supabase.io/
 To add your name/email to relevant files:
 
 ```sh
-yarn config
+bun run config
 ```
 
 ## 📙 Learn More

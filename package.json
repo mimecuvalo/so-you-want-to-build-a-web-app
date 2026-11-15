@@ -15,7 +15,7 @@
     "url": "https://github.com/mimecuvalo/so-you-want-to-build-a-web-app/issues"
   },
   "scripts": {
-    "dev": "tinacms dev -c \"vite dev\"",
+    "dev": "tinacms dev -c \"bun --bun vite dev\"",
     "tina-generate-types": "tinacms dev --no-server",
     "build": "tinacms build && vite build",
     "lint": "oxlint",
@@ -28,6 +28,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@emotion/cache": "11.14.0",
     "@emotion/react": "11.14.0",
     "@emotion/styled": "11.14.1",
     "@fontsource-variable/inter": "5.3.0",
@@ -70,5 +71,5 @@
     ]
   },
   "browserslist": "last 2 versions",
-  "packageManager": "yarn@1.22.22"
+  "packageManager": "bun@1.4.2"
 }

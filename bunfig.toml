@@ -1,0 +1,7 @@
+[install]
+# Hoisted rather than isolated: @tinacms/schema-tools imports `yup` without declaring it, which
+# only resolves when it's hoisted to the top-level node_modules. Overrides ~/.bunfig.toml.
+linker = "hoisted"
+# Supply-chain age gate: don't install package versions published less than
+# 3 days (259200s) ago, so freshly-compromised releases can't be pulled in.
+minimumReleaseAge = 259200

@@ -11,24 +11,23 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: oven-sh/setup-bun@v2
         with:
-          node-version: 26
-      - name: Enable Corepack
-        run: corepack enable
+          bun-version: 1.4.2
+      - name: Get Bun cache directory
+        id: bun-cache
+        run: echo "dir=$(bun pm cache)" >> "$GITHUB_OUTPUT"
       - uses: actions/cache@v4
-        id: yarn-cache
         with:
-          path: '**/node_modules'
-          key: ${{ runner.os }}-modules-NODE-26-${{ hashFiles('**/yarn.lock', '**/schema.prisma') }}
+          path: ${{ steps.bun-cache.outputs.dir }}
+          key: ${{ runner.os }}-bun-${{ hashFiles('**/bun.lock') }}
       - name: Install
-        if: steps.yarn-cache.outputs.cache-hit != 'true'
-        run: yarn install --immutable
+        run: bun install --frozen-lockfile
       - name: Run oxlint
-        run: yarn lint
+        run: bun run lint
       - name: Check formatting
-        run: yarn format:check
+        run: bun run format:check
       - name: Generate Tina types
-        run: yarn tina-generate-types
+        run: bun run tina-generate-types
       - name: Run type-check
-        run: yarn type-check
+        run: bun run type-check
