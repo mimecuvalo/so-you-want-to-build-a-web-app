@@ -59,7 +59,7 @@
   --color-text-disabled: var(--color-grey-500);
 
   /* ---- Typography ---- */
-  /* Self-hosted via @fontsource (imported in app/routes/__root.tsx and styles/fonts.css). */
+  /* Self-hosted via @fontsource (declared in styles/fonts.css and styles/emoji.css). */
   --font-press-start-2p: 'Press Start 2P';
   --font-noto-color-emoji: 'Noto Color Emoji';
   --font-emojis: var(--font-noto-color-emoji), 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';

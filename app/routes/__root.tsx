@@ -2,7 +2,7 @@ import 'sanitize.css/sanitize.css';
 import 'sanitize.css/forms.css';
 import 'sanitize.css/typography.css';
 import 'styles/fonts.css';
-import '@fontsource/noto-color-emoji';
+import 'styles/emoji.css';
 import 'styles/globals.css';
 
 import { HeadContent, Outlet, Scripts, createRootRouteWithContext } from '@tanstack/react-router';
